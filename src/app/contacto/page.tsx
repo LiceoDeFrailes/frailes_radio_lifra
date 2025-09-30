@@ -1,11 +1,7 @@
 // pages/contact.tsx
 import Layout from '@/components/Layout/Layout'
 import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { Label } from '@/components/ui/label'
 
 export default function Contact() {
   const contactInfo = [
@@ -48,71 +44,27 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Contact Info & Form */}
+      {/* Contact Info */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8">Información de Contacto</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {contactInfo.map((info) => (
-                  <Card key={info.title} className="border-0 shadow-md">
-                    <CardContent className="p-6">
-                      <div className="text-2xl mb-3">{info.icon}</div>
-                      <h3 className="font-semibold mb-2">{info.title}</h3>
-                      <p className="text-primary font-medium mb-1">{info.content}</p>
-                      <p className="text-sm text-muted-foreground">{info.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8">Envíanos un Mensaje</h2>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">Nombre</Label>
-                    <Input id="firstName" placeholder="Tu nombre" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName">Apellido</Label>
-                    <Input id="lastName" placeholder="Tu apellido" />
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="tu@email.com" />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Teléfono</Label>
-                  <Input id="phone" placeholder="(123) 456-7890" />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Asunto</Label>
-                  <Input id="subject" placeholder="Motivo de tu consulta" />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="message">Mensaje</Label>
-                  <Textarea 
-                    id="message" 
-                    placeholder="Escribe tu mensaje aquí..." 
-                    rows={5}
-                  />
-                </div>
-                
-                <Button type="submit" size="lg" className="w-full">
-                  Enviar Mensaje
-                </Button>
-              </form>
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Información de Contacto</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Ponte en contacto con nosotros a través de los siguientes medios
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {contactInfo.map((info) => (
+              <Card key={info.title} className="border-0 shadow-lg text-center hover:shadow-xl transition-shadow">
+                <CardContent className="p-8">
+                  <div className="text-4xl mb-4">{info.icon}</div>
+                  <h3 className="text-xl font-semibold mb-3">{info.title}</h3>
+                  <p className="text-primary font-medium mb-2 text-lg">{info.content}</p>
+                  <p className="text-sm text-muted-foreground">{info.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -127,11 +79,22 @@ export default function Contact() {
             </p>
           </div>
           
-          {/* Map Placeholder */}
-          <div className="bg-muted rounded-lg h-96 flex items-center justify-center">
+          {/* Mapa de Google Maps */}
+          <div className="bg-muted rounded-lg overflow-hidden shadow-lg">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.166590472664!2d-84.05935712426326!3d9.751952677252266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa11b9ef81951c1%3A0x7b726c5c763de31d!2sLiceo%20de%20Frailes!5e0!3m2!1ses-419!2scr!4v1759167826947!5m2!1ses-419!2scr" 
+              className="w-full h-96 border-0" 
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
 
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.166590472664!2d-84.05935712426326!3d9.751952677252266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa11b9ef81951c1%3A0x7b726c5c763de31d!2sLiceo%20de%20Frailes!5e0!3m2!1ses-419!2scr!4v1759167826947!5m2!1ses-419!2scr" className='h-full w-full'   loading="lazy" ></iframe>
-
+          {/* Información adicional debajo del mapa */}
+          <div className="text-center mt-8">
+            <p className="text-lg text-muted-foreground">
+              📍 <strong>Dirección exacta:</strong> Liceo de Frailes, Desamparados, San José, 10306
+            </p>
           </div>
         </div>
       </section>
