@@ -7,15 +7,15 @@ export default function About() {
   const values = [
     {
       title: "Misión",
-      description: "Formar estudiantes integrales con excelencia académica, valores humanos y capacidad de liderazgo para contribuir positivamente a la sociedad."
+      description: "Promover el desarrollo integral, mediante una oferta educativa académica y tecnológica; que permita a la persona estudiante la adquisición de destrezas, habilidades, valores y principios de tal manera que pueda continuar con sus estudios superiores y enfrentarse a las demandas de la sociedad actual."
     },
     {
       title: "Visión",
-      description: "Ser el liceo referente en educación innovadora, reconocido por nuestra excelencia académica y formación en valores."
+      description: "Ser una institución que promueva el desarrollo integral, fomentando en la Comunidad Educativa un protagonismo activo entre sus estudiantes."
     },
     {
       title: "Valores",
-      description: "Respeto, responsabilidad, honestidad, solidaridad y excelencia son los pilares de nuestra comunidad educativa."
+      description: "Familiaridad, Compromiso, Respeto, Responsabilidad, Igualdad, Solidaridad."
     }
   ]
 
@@ -33,14 +33,14 @@ export default function About() {
     {
       role: "Coordinador de Disciplina",
       name: "Prof. Ana Martínez",
-      description: "Enfoque en desarrollo integral del estudiante"
+      description: "Enfoque en desarrollo integral del estudiante."
     }
   ]
 
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/90 text-primary-foreground">
+      <section className="py-20 bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-4">Sobre Nosotros</Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Nuestra Historia</h1>

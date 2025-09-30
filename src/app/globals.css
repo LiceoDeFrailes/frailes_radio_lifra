@@ -120,3 +120,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme {
+  --color-Dark-Green-Lifra: #4C811F;
+  --color-Light-Green-Lifra: #A1D43B;
+}
+

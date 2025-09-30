@@ -30,7 +30,7 @@ export default function Contact() {
     {
       icon: "🕒",
       title: "Horario",
-      content: "7:00 AM - 4:00 PM",
+      content: "7:00 AM - 4:15 PM",
       description: "Lunes a Viernes"
     }
   ]
@@ -38,7 +38,7 @@ export default function Contact() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/90 text-primary-foreground">
+      <section className="py-20 bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-4">Contáctanos</Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Estamos para Ayudarte</h1>

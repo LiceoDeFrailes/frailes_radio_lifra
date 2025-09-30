@@ -27,8 +27,8 @@ export default function Home() {
     },
     {
       icon: '🏫',
-      title: 'Instalaciones Modernas',
-      description: 'Infraestructura diseñada para el aprendizaje del siglo XXI'
+      title: 'Ambientes Educativos Innovadores',
+      description: 'Espacios diseñados para inspirar la creatividad y el aprendizaje'
     },
     {
       icon: '🌟',
@@ -48,12 +48,12 @@ export default function Home() {
     <Layout>
       {/* Hero Section */}
       <Hero
-        title="Bienvenidos al Liceo Moderno"
+        title="Bienvenidos al Liceo de Frailes"
         subtitle="Formando líderes del mañana con educación de calidad y valores humanos"
         ctaText="Conoce más"
-        ctaLink="/about"
+        ctaLink="/sobreNosotros"
         secondaryText="Solicitar información"
-        secondaryLink="/admissions"
+        secondaryLink="/contacto"
       />
 
       {/* Features Section */}
@@ -86,7 +86,7 @@ export default function Home() {
       <StatsSection stats={stats} />
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 bg-Dark-Green-Lifra text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-4">Únete a nosotros</Badge>
           <h2 className="text-4xl font-bold mb-6">

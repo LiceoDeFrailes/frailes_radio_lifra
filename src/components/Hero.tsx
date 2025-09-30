@@ -20,7 +20,7 @@ export default function Hero({
   secondaryLink 
 }: HeroProps) {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-primary to-primary/90">
+    <section className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-Dark-Green-Lifra to-primary/95">
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]" />
       
       <div className="relative container mx-auto px-4 text-center text-primary-foreground">
