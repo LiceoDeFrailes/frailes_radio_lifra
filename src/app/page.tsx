@@ -98,7 +98,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/admissions">Solicitar información</Link>
+              <Link href="/contacto">Solicitar información</Link>
             </Button>
           </div>
         </div>
