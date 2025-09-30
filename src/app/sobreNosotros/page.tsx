@@ -3,7 +3,7 @@ import Layout from '@/components/Layout/Layout'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-export default function About() {
+export default function SobreNosotros() {
   const values = [
     {
       title: "Misión",
