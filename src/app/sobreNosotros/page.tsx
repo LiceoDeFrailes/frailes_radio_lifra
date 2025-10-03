@@ -1,5 +1,5 @@
 // pages/about.tsx
-import Layout from '@/components/Layout/Layout'
+import Layout from '@/components/Layout/LayoutLiceo'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 

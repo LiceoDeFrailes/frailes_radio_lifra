@@ -1,8 +1,13 @@
 import React from 'react'
+import Layout from '@/components/Layout/HeaderRadioLifra'
 
 const RadioLifra = () => {
   return (
-    <div>Noticias</div>
+      <div>Noticias</div>
+
+      
+
+    
   )
 }
 

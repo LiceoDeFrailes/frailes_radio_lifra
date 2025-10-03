@@ -49,7 +49,7 @@ export default function HeaderRadioLifra() {
         <NavigationMenuList>
             {navItems.map((item) => (
 
-            <NavigationMenuItem>
+            <NavigationMenuItem key={item.href}>
             <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
               <Link href={item.href}>{item.title}</Link>
             </NavigationMenuLink>
@@ -65,10 +65,10 @@ export default function HeaderRadioLifra() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-                <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
-          <Separator/>
-        </SheetHeader>
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+                <Separator/>
+              </SheetHeader>
               <div className="flex flex-col gap-3 m-4">
                 {navItems.map((item) => (
                   <Link
@@ -81,14 +81,14 @@ export default function HeaderRadioLifra() {
                   </Link>
                 ))}
                 <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex w-full rounded-md">
-                Iniciar Sesion
+                <Link href="/iniciarSesion">Iniciar Sesión</Link>
                 </Button>           
               </div>
 
             </SheetContent>
           </Sheet> 
           <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex mt-4 ml-auto mr-4 h-9 w-max rounded-md max-md:hidden">
-            Iniciar Sesion
+            <Link href="/iniciarSesion">Iniciar Sesión</Link>
           </Button>
     </div>
         <Separator className="mt-4"/>

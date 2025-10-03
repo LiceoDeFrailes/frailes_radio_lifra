@@ -4,7 +4,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
+import { Separator } from '../ui/separator'
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '../ui/sheet'
 import { Menu } from 'lucide-react'
 import Image from 'next/image'
 
@@ -64,12 +65,16 @@ export default function Header() {
           {/* Mobile Navigation */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="ml-auto">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-              <div className="flex flex-col space-y-4 mt-8">
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+                <Separator/>
+              </SheetHeader>
+              <div className="flex flex-col gap-3 m-4">
                 {navItems.map((item) => (
                   <Link
                     key={item.href}

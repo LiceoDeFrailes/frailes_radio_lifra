@@ -7,7 +7,7 @@ interface LayoutProps {
   children: ReactNode
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function LayoutLiceo({ children }: LayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />

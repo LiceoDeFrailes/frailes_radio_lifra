@@ -1,5 +1,5 @@
 // pages/index.tsx
-import Layout from '@/components/Layout/Layout'
+import Layout from '@/components/Layout/LayoutLiceo'
 import Hero from '@/components/Hero'
 import FeatureCard from '@/components/FeatureCard'
 import StatsSection from '@/components/StatsSection'
