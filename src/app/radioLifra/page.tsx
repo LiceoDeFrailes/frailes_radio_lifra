@@ -1,22 +1,9 @@
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { CirclePlus } from 'lucide-react';
-import Link from 'next/link';
+// app/radioLifra/page.tsx
+import { redirect } from 'next/navigation';
 
-const RadioLifra = () => {
-  return (
-    <div className='flex flex-col gap-3'>
-      <CirclePlus>
-        <Link href='/'></Link>
-      </CirclePlus>
-      <div>Noticias</div>
-    </div>
-
-
-      
-
-    
-  )
+export default function RadioLifraPage() {
+  redirect('/radioLifra/noticias');
+  
+  // Este return no se ejecutará
+  return null;
 }
-
-export default RadioLifra
