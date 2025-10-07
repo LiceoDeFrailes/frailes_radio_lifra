@@ -7,17 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 
-interface Feature {
-  icon: string
-  title: string
-  description: string
-}
-
-interface Stat {
-  number: string
-  label: string
-}
-
 export default function Home() {
   const features: Feature[] = [
     {
