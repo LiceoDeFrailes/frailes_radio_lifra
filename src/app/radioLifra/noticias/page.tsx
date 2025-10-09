@@ -9,8 +9,6 @@ const RadioLifra = () => {
         <Link href='/radioLifra/noticias/agregarNoticia'>
           <CirclePlus/>
         </Link>
-
-      <div>Noticias</div>
     </div>
 
 

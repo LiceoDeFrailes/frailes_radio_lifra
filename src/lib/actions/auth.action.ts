@@ -1,28 +1,23 @@
-import { auth , getAuth, signOut } from "../../../firebase/auth";
-import { db } from "../../../firebase/firestore";
+import { auth , getAuth, signOut } from "../../../firebase/client";
+import { db } from "../../../firebase/client";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc, getDoc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore"; 
 
-export async function createUser(params: CreateUserParams){
-    const {name, email, password, isAdmin} = params;
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+export async function createUser(params: { name: string; email: string; password: string; isAdmin: boolean }) {
+  try {
+    const res = await fetch('/api/createUser', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
 
-        await setDoc(doc(db, "usuarios", user.uid), {
-            name,
-            email,
-            role: isAdmin ? "admin" : "estudiante",
-            createdAt: new Date(),
-
-        });
-        return {ok:true, user};
-    } catch (error: any) {
-        return {ok:false, error: error.message};
-        
-
-    }
+    const data = await res.json();
+    return data; // {ok: true, user} o {ok: false, error}
+  } catch (error: any) {
+    return { ok: false, error: error.message };
+  }
 }
+
 
 export async function loginUser(email: string, password: string) {
   try {
@@ -52,11 +47,12 @@ export async function loginUser(email: string, password: string) {
   }
 }
 
-export async function signUserOut(){
+export async function signUserOut() {
   const auth = getAuth();
-  await signOut(auth).then(() => {
-    return true
-  }).catch((error) => {
-    return false
-  });
+  try {
+    await signOut(auth);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
 }

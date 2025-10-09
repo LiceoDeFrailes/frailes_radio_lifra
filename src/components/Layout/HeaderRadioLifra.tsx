@@ -20,6 +20,8 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '../u
 import { Menu } from 'lucide-react'
 import { Separator } from "@/components/ui/separator";
 import { signUserOut } from '@/lib/actions/auth.action'
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const navItems: { title: string; href: string; }[] = [
   {
@@ -56,11 +58,18 @@ const gestionItems: { title: string; href: string; }[] = [
 
 
 export default function HeaderRadioLifra() {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-    if (loading) {
-    // Mientras Firebase revisa la sesión
-    return <p className="text-sm text-gray-500">Cargando...</p>;
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    const result = await signUserOut();
+  if (result.ok) {
+    toast.success('Sesión Cerrada')
+    router.push('/iniciarSesion')
+  } else {
+    toast.success('Error: No se pudo cerrar la sesión')
+  }
   }
   return (
     <div>
@@ -149,13 +158,13 @@ export default function HeaderRadioLifra() {
                 </div>
               :
                null}
-                
+    
                 {user === null ? 
                 <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex w-full rounded-md mt-3">
                 <Link href="/iniciarSesion">Iniciar Sesión</Link>
                 </Button>  
                 : 
-                <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex w-full rounded-md mt-3" onClick={signUserOut}>
+                <Button className="bg-red-600 hover:bg-red-700 flex w-full rounded-md mt-3" onClick={handleSignOut}>
                 Cerrar Sesión
                 </Button>
                 }
@@ -164,9 +173,15 @@ export default function HeaderRadioLifra() {
 
             </SheetContent>
           </Sheet> 
-          <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex mt-4 ml-auto mr-4 h-9 w-max rounded-md max-md:hidden">
-            <Link href="/iniciarSesion">Iniciar Sesión</Link>
-          </Button>
+                {user === null ? 
+                <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex rounded-md mt-3 w-auto max-md:hidden ml-auto">
+                <Link href="/iniciarSesion">Iniciar Sesión</Link>
+                </Button>  
+                : 
+                <Button className="bg-red-600 hover:bg-red-700 flex rounded-md mt-3 w-auto max-md:hidden ml-auto" onClick={handleSignOut}>
+                Cerrar Sesión
+                </Button>
+                }
     </div>
         <Separator className="mt-4"/>
     </div>
