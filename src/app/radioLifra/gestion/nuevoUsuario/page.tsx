@@ -20,25 +20,34 @@ export default function CrearUsuarioPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if(password != confirmPassword){
+      return toast.info('Contraseñas no Iguales');
+    }
     toast.custom((t) => (
         <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
           <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
           <h1 className="text-gray-700 font-medium">Cargando</h1>
         </div>
       ));
-    const res = await createUser({name, email, password, isAdmin});
+      try {
+            const res = await createUser({name, email, password, isAdmin});
 
+            if (res.ok) {
+              toast.success('Usuario Creado Exitosamente')
+              setName("");
+              setEmail("");
+              setPassword("");
+              setConfirmPassword("");
+              setIsAdmin(false);
+            } else {
+              toast.error('Error al Crear el Usuario')
+              console.log('Error: ', res.error)
+            }
+      } catch (error) {
+        toast.error('Error al Crear el Usuario')
+        console.log('Error: ', error)
+      }
     
-    if (res.ok) {
-      toast.success('Usuario Creado Exitosamente')
-      setName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setIsAdmin(false);
-    } else {
-      toast.error('Error al Crear el Usuario')
-    }
 
 
 

@@ -15,3 +15,8 @@ interface CreateUserParams {
     password: string,
     isAdmin: boolean,
 }
+
+interface LoginUserParams{
+  email: string,
+  password: string
+}

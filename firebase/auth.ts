@@ -2,4 +2,4 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 import { app } from "./config";
 
 export const auth = getAuth(app);
-export { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut };
+export { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, getAuth };

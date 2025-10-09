@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useAuth } from '@/context/AuthContext'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -18,6 +19,7 @@ import { Button } from '../ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '../ui/sheet'
 import { Menu } from 'lucide-react'
 import { Separator } from "@/components/ui/separator";
+import { signUserOut } from '@/lib/actions/auth.action'
 
 const navItems: { title: string; href: string; }[] = [
   {
@@ -54,7 +56,12 @@ const gestionItems: { title: string; href: string; }[] = [
 
 
 export default function HeaderRadioLifra() {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { user, loading } = useAuth();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+    if (loading) {
+    // Mientras Firebase revisa la sesión
+    return <p className="text-sm text-gray-500">Cargando...</p>;
+  }
   return (
     <div>
         <div className="flex flex-row items-center gap-1 m-2">
@@ -75,7 +82,8 @@ export default function HeaderRadioLifra() {
 
 
             {/*Gestion seccion*/}
-          <NavigationMenuItem>
+            {user?.role === 'admin' ? 
+            <NavigationMenuItem>
           <NavigationMenuTrigger>Gestión</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-1 lg:w-[600px]">
@@ -90,6 +98,10 @@ export default function HeaderRadioLifra() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+              : 
+              null
+            }
+          
 
         
         </NavigationMenuList>
@@ -119,7 +131,8 @@ export default function HeaderRadioLifra() {
                 ))}
                 
                 {/* Sección de Gestión para móvil */}
-                <div className="">
+                {user?.role === 'admin' ?
+              <div className="">
                   <h3 className="text-lg font-semibold mb-2">Gestión</h3>
                   <div className="flex flex-col gap-2 ml-8">
                     {gestionItems.map((item) => (
@@ -134,10 +147,19 @@ export default function HeaderRadioLifra() {
                     ))}
                   </div>
                 </div>
-
+              :
+               null}
+                
+                {user === null ? 
                 <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex w-full rounded-md mt-3">
                 <Link href="/iniciarSesion">Iniciar Sesión</Link>
-                </Button>           
+                </Button>  
+                : 
+                <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex w-full rounded-md mt-3" onClick={signUserOut}>
+                Cerrar Sesión
+                </Button>
+                }
+          
               </div>
 
             </SheetContent>

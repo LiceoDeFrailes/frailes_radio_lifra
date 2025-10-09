@@ -14,8 +14,8 @@ export default function Contacto() {
     {
       icon: "✉️",
       title: "Email",
-      content: "liceodefrailes@gmail.com",
-      description: "Respondemos en 24 horas"
+      content: "lic.defrailes@mep.go.cr",
+      description: "Atendemos tus consultas"
     },
     {
       icon: "📍",

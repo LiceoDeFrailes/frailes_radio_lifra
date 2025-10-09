@@ -24,7 +24,7 @@ export default function Footer() {
 
   const contactInfo: ContactInfo[] = [
     { icon: '📞', text: '(+506) 2544-0166' },
-    { icon: '✉️', text: 'liceodefrailes@gmail.com' },
+    { icon: '✉️', text: 'lic.defrailes@mep.go.cr' },
     { icon: '📍', text: 'Liceo de Frailes, Desamparados' },
   ]
 
