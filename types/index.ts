@@ -16,7 +16,24 @@ interface CreateUserParams {
     isAdmin: boolean,
 }
 
-interface LoginUserParams{
-  email: string,
+interface LoginParams{
+  email: string, 
   password: string
+}
+
+interface CreateNoticiaParams{
+  user: {
+    uid: string,
+    name: string,
+    email: string
+    role: string,
+    createdAt: Date
+
+   }
+  author: string,
+  title: string,
+  description: string,
+  images: FileList,
+  content: string,
+  
 }

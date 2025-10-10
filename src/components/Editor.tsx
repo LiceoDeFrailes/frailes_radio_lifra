@@ -7,7 +7,6 @@ import Italic from "@tiptap/extension-italic"
 import Underline from "@tiptap/extension-underline"
 import { TextStyle } from "@tiptap/extension-text-style"
 import FontFamily from "@tiptap/extension-font-family"
-
 import {
   Select,
   SelectContent,
@@ -15,10 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
 import { Button } from "@/components/ui/button"
 
-export default function Editor() {
+export default function Editor({ onChange }: { onChange?: (content: string) => void }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -30,6 +28,10 @@ export default function Editor() {
     ],
     content: "Escribe Aquí...",
     immediatelyRender: false,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML()
+      if (onChange) onChange(html) 
+    },
   })
 
   if (!editor) return null
@@ -38,9 +40,6 @@ export default function Editor() {
     <div className="w-full border rounded-md">
       {/* Toolbar */}
       <div className="flex items-center gap-2 border-b p-2 ">
-
-
-        {/* Fuente */}
         <Select
           onValueChange={(font) =>
             editor.chain().focus().setFontFamily(font).run()
@@ -56,7 +55,6 @@ export default function Editor() {
           </SelectContent>
         </Select>
 
-        {/* Botones de formato */}
         <Button
           type="button"
           variant="ghost"
@@ -88,11 +86,9 @@ export default function Editor() {
         </Button>
       </div>
 
-      {/* Editor */}
       <div className="min-h-[200px]">
-        <EditorContent editor={editor} className="h-full m-1"/>
+        <EditorContent editor={editor} className="h-full m-1" />
       </div>
-      
     </div>
   )
 }

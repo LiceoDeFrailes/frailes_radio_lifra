@@ -1,9 +1,9 @@
 import { auth , getAuth, signOut } from "../../../firebase/client";
 import { db } from "../../../firebase/client";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc, getDoc } from "firebase/firestore"; 
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore"; 
 
-export async function createUser(params: { name: string; email: string; password: string; isAdmin: boolean }) {
+export async function createUser(params: CreateUserParams) {
   try {
     const res = await fetch('/api/createUser', {
       method: 'POST',
@@ -18,14 +18,13 @@ export async function createUser(params: { name: string; email: string; password
   }
 }
 
-
-export async function loginUser(email: string, password: string) {
+export async function loginUser(params: LoginParams) {
+  const {email, password} = params;
   try {
-    // 1️⃣ Iniciar sesión con Firebase Auth
+
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // 2️⃣ Buscar datos del usuario en Firestore
     const userDoc = await getDoc(doc(db, "usuarios", user.uid));
     if (!userDoc.exists()) {
       throw new Error("No se encontró el perfil del usuario.");
@@ -33,7 +32,6 @@ export async function loginUser(email: string, password: string) {
 
     const userData = userDoc.data();
 
-    // 3️⃣ Retornar la información del usuario
     return {
       uid: user.uid,
       email: user.email,

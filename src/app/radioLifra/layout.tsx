@@ -6,7 +6,7 @@ export default function RadioLifraLayout({ children }: { children: React.ReactNo
   return (
     <div >
         <HeaderRadioLifra/>
-        <main className='mx-15 mt-5'>{children}</main>
+        <main className='mx-15 my-5'>{children}</main>
         <Footer/>
     </div>
   );

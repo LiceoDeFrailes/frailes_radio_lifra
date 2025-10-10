@@ -35,18 +35,18 @@ const FormIniciarSesion = () => {
       ));
     try {
 
-      const user = await loginUser(email, password);
+      const user = await loginUser({email, password});
       // Guardar datos en localStorage o estado global
       localStorage.setItem("user", JSON.stringify(user));
       // Redirigir según el rol
         router.push("/radioLifra");
+        toast.success('!Bienvenidos¡');
+
 
     } catch (error: any) {
       console.log('Error: ', error)
       toast.error('Credenciales Incorrectos');
     }
-
-
 
   };
 

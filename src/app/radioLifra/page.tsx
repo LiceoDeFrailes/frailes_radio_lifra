@@ -4,6 +4,6 @@ import { redirect } from 'next/navigation';
 export default function RadioLifraPage() {
   redirect('/radioLifra/noticias');
   
-  // Este return no se ejecutará
+  // Este return no se ejecuta
   return null;
 }
