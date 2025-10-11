@@ -126,5 +126,12 @@
   --color-Light-Green-Lifra: #A1D43B;
 }
 
+.tiptap p.is-editor-empty:first-child::before {
+  color: darkgray;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
 
 

@@ -5,7 +5,7 @@ import { CirclePlus } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
-const RadioLifra = () => {
+const AgregarNoticia = () => {
   const { user } = useAuth();
   return (
     <div className='flex flex-col gap-3'>
@@ -27,4 +27,4 @@ const RadioLifra = () => {
   )
 }
 
-export default RadioLifra
+export default AgregarNoticia

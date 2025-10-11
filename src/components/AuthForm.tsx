@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -27,30 +27,28 @@ const FormIniciarSesion = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    toast.custom((t) => (
+    const toastId = toast.custom(
+      (t) => (
         <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
           <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
           <h1 className="text-gray-700 font-medium">Cargando</h1>
         </div>
-      ));
+      ),
+      { duration: Infinity }
+    );
     try {
-
-      const user = await loginUser({email, password});
-      // Guardar datos en localStorage o estado global
+      const user = await loginUser({ email, password });
+      // (Importante)/Guardar datos en localStorage o estado global
       localStorage.setItem("user", JSON.stringify(user));
-      // Redirigir según el rol
-        router.push("/radioLifra");
-        toast.success('!Bienvenidos¡');
-
-
+      toast.dismiss(toastId)
+      router.push("/radioLifra");
+      toast.success("!Bienvenidos¡");
     } catch (error: any) {
-      console.log('Error: ', error)
-      toast.error('Credenciales Incorrectos');
+      console.log("Error: ", error);
+      toast.dismiss(toastId)
+      toast.error("Credenciales Incorrectos");
     }
-
   };
-
-
 
   return (
     <Card className="w-full max-w-sm mb-35">
@@ -81,16 +79,17 @@ const FormIniciarSesion = () => {
               <div className="flex items-center">
                 <Label htmlFor="password">Contraseña</Label>
               </div>
-              <Input 
-              id="password" 
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required />
+              <Input
+                id="password"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
           </div>
-                  <Button type="submit" className="w-full bg-Light-Green-Lifra mt-6">
-          Iniciar Sesión
-        </Button>
+          <Button type="submit" className="w-full bg-Light-Green-Lifra mt-6">
+            Iniciar Sesión
+          </Button>
         </form>
       </CardContent>
     </Card>

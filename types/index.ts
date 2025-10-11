@@ -28,12 +28,41 @@ interface CreateNoticiaParams{
     email: string
     role: string,
     createdAt: Date
-
    }
   author: string,
   title: string,
   description: string,
   images: FileList,
   content: string,
+  
+}
+
+interface CreateGaleriaParams{
+  user: {
+    uid: string,
+    name: string,
+    email: string
+    role: string,
+    createdAt: Date
+   }
+  author: string,
+  title: string,
+  description: string,
+  images: FileList
+  
+}
+
+interface CreateVideoParams{
+  user: {
+    uid: string,
+    name: string,
+    email: string
+    role: string,
+    createdAt: Date
+   }
+  author: string,
+  title: string,
+  url: string,
+  description: string,
   
 }

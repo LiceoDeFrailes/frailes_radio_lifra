@@ -1,9 +1,30 @@
-import React from 'react'
+"use client";
 
-const page = () => {
+import React from 'react'
+import { CirclePlus } from 'lucide-react';
+import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
+
+const AgregarVideos = () => {
+  const { user } = useAuth();
   return (
-    <div>Video</div>
+    <div className='flex flex-col gap-3'>
+      
+      {user?.role === "estudiante" ? 
+      <Link href='/radioLifra/videos/agregarVideos'>
+        <CirclePlus/>
+      </Link>
+      : 
+      null
+      }
+        
+    </div>
+
+
+      
+
+    
   )
 }
 
-export default page
+export default AgregarVideos
