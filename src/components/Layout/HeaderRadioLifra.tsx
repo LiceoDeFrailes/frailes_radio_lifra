@@ -17,11 +17,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from '../ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '../ui/sheet'
-import { Menu } from 'lucide-react'
+import { Menu, User, LogOut } from 'lucide-react'
 import { Separator } from "@/components/ui/separator";
 import { signUserOut } from '@/lib/actions/auth.action'
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navItems: { title: string; href: string; }[] = [
   {
@@ -29,7 +35,7 @@ const navItems: { title: string; href: string; }[] = [
     href: "/radioLifra",
   },
   {
-    title: "Galeria",
+    title: "Galería",
     href: "/radioLifra/galeria",
   },
   {
@@ -56,7 +62,6 @@ const gestionItems: { title: string; href: string; }[] = [
   },
 ]
 
-
 export default function HeaderRadioLifra() {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -64,86 +69,92 @@ export default function HeaderRadioLifra() {
 
   const handleSignOut = async () => {
     const result = await signUserOut();
-  if (result.ok) {
-    toast.success('Sesión Cerrada')
-    router.push('/iniciarSesion')
-  } else {
-    toast.success('Error: No se pudo cerrar la sesión')
+    if (result.ok) {
+      toast.success('Sesión Cerrada')
+      router.push('/iniciarSesion')
+    } else {
+      toast.error('Error: No se pudo cerrar la sesión')
+    }
   }
+
+  const getRoleDisplayName = (role: string) => {
+    const roleNames: { [key: string]: string } = {
+      'admin': 'Administrador',
+      'user': 'Usuario',
+      'editor': 'Editor'
+    };
+    return roleNames[role] || role;
   }
+
   return (
     <div>
-        <div className="flex flex-row items-center gap-1 m-2">
-        <Image src='/LogoRadioLifra.png' 
+      <div className="flex flex-row items-center gap-1 m-2">
+        <Image 
+          src='/LogoRadioLifra.png' 
           alt='Escudo Frailes' 
           width={70} 
-          height={70}/>
-      <NavigationMenu viewport={false} className="max-md:hidden">
-        <NavigationMenuList>
+          height={70}
+        />
+        
+        <NavigationMenu viewport={false} className="max-md:hidden">
+          <NavigationMenuList>
             {navItems.map((item) => (
-
-            <NavigationMenuItem key={item.href}>
-            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-              <Link href={item.href}>{item.title}</Link>
-            </NavigationMenuLink>
-            </NavigationMenuItem> 
+              <NavigationMenuItem key={item.href}>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link href={item.href}>{item.title}</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem> 
             ))}
 
+            {/* Gestión sección */}
+            {user?.role === 'admin' && (
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Gestión</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-2 md:w-[150px] md:grid-cols-1">
+                    {gestionItems.map((component) => (
+                      <ListItem
+                        key={component.title}
+                        title={component.title}
+                        href={component.href}
+                      />
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            )}
+          </NavigationMenuList>
+        </NavigationMenu>
 
-            {/*Gestion seccion*/}
-            {user?.role === 'admin' ? 
-            <NavigationMenuItem>
-          <NavigationMenuTrigger>Gestión</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-1 lg:w-[600px]">
-              {gestionItems.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+        {/* Menú móvil */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild className="md:hidden">
+            <Button variant="ghost" size="icon" className="ml-auto">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <SheetHeader>
+              <SheetTitle>Menu</SheetTitle>
+              <Separator/>
+            </SheetHeader>
+            <div className="flex flex-col gap-3 m-4">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-lg font-medium transition-colors hover:text-primary"
+                  onClick={() => setIsOpen(false)}
                 >
-                </ListItem>
+                  {item.title}
+                </Link>
               ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-              : 
-              null
-            }
-          
-
-        
-        </NavigationMenuList>
-      </NavigationMenu>
-
-       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="ml-auto">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-                <Separator/>
-              </SheetHeader>
-              <div className="flex flex-col gap-3 m-4">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-lg font-medium transition-colors hover:text-primary"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.title}
-                  </Link>
-                ))}
-                
-                {/* Sección de Gestión para móvil */}
-                {user?.role === 'admin' ?
-              <div className="">
+              
+              {/* Sección de Gestión para móvil */}
+              {user?.role === 'admin' && (
+                <div>
                   <h3 className="text-lg font-semibold mb-2">Gestión</h3>
-                  <div className="flex flex-col gap-2 ml-8">
+                  <div className="flex flex-col gap-2 ml-4">
                     {gestionItems.map((item) => (
                       <Link
                         key={item.href}
@@ -156,35 +167,62 @@ export default function HeaderRadioLifra() {
                     ))}
                   </div>
                 </div>
-              :
-               null}
+              )}
     
-                {user === null ? 
+              {/* Estado de autenticación para móvil */}
+              {user === null ? (
                 <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex w-full rounded-md mt-3">
-                <Link href="/iniciarSesion">Iniciar Sesión</Link>
+                  <Link href="/iniciarSesion" className="w-full text-center">Iniciar Sesión</Link>
                 </Button>  
-                : 
-                <Button className="bg-red-600 hover:bg-red-700 flex w-full rounded-md mt-3" onClick={handleSignOut}>
-                Cerrar Sesión
-                </Button>
-                }
-          
-              </div>
+              ) : (
+                <div className="space-y-3 mt-3">
+                  <div className="flex items-center gap-2 p-2 bg-gray-100 rounded-md">
+                    <User className="h-4 w-4" />
+                    <span className="text-sm font-medium">
+                      {getRoleDisplayName(user.role)}
+                    </span>
+                  </div>
+                  <Button 
+                    className="bg-red-600 hover:bg-red-700 flex w-full rounded-md" 
+                    onClick={handleSignOut}
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Cerrar Sesión
+                  </Button>
+                </div>
+              )}
+            </div>
+          </SheetContent>
+        </Sheet> 
 
-            </SheetContent>
-          </Sheet> 
-                {user === null ? 
-                <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex rounded-md mt-3 w-auto max-md:hidden ml-auto">
-                <Link href="/iniciarSesion">Iniciar Sesión</Link>
-                </Button>  
-                : 
-                <Button className="bg-red-600 hover:bg-red-700 flex rounded-md mt-3 w-auto max-md:hidden ml-auto" onClick={handleSignOut}>
-                Cerrar Sesión
+        {/* Estado de autenticación para desktop */}
+        <div className="ml-auto mr-3 mt-2 max-md:hidden">
+          {user === null ? (
+            <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex rounded-md">
+              <Link href="/iniciarSesion">Iniciar Sesión</Link>
+            </Button>  
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  <span>{getRoleDisplayName(user.role)}</span>
                 </Button>
-                }
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem 
+                  onClick={handleSignOut}
+                  className="text-red-600 cursor-pointer"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Cerrar Sesión
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </div>
+      </div>
+      <Separator className="mt-4"/>
     </div>
-        <Separator className="mt-4"/>
-    </div>
-    
   );
 }

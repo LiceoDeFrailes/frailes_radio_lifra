@@ -4,6 +4,7 @@ import React from 'react'
 import { CirclePlus } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import NoticiaCard from '@/components/NoticiaCard';
 
 const AgregarNoticia = () => {
   const { user } = useAuth();

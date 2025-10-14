@@ -72,7 +72,7 @@ export default function NuevaGaleriaPage() {
 
   const handlePublish = async () => {
     if (!user) return toast.info('Debes iniciar sesión para publicar una noticia.');
-    if (user.role !== "estudiante") return toast.info('Solo los estudiantes pueden publicar noticias.');
+    if (user.role !== "estudiante") return toast.info('Solo los estudiantes pueden publicar galerías.');
     if (!author || !title || !description || images.length === 0) {
       return toast.info("Por favor completa todos los campos.");
     }
@@ -92,16 +92,16 @@ export default function NuevaGaleriaPage() {
     const res = await uploadGaleria({user, author, title, description, images: fileList});
     if(res.ok){
       toast.dismiss(toastId)
-      toast.success("Galeria enviada correctamente. Espera aprobación del administrador.");
+      toast.success("Galería enviada correctamente. Espera aprobación del administrador.");
       setAuthor("");
       setTitle("");
       setDescription("");
       setImages([]);
       setImagePreviews([]);
     }else{
-      console.error("Error al publicar noticia:", res.error);
+      console.error("Error al publicar galería:", res.error);
       toast.dismiss(toastId)
-      toast.error("Ocurrió un error al publicar la noticia.");
+      toast.error("Ocurrió un error al publicar la Galería.");
     }
   };
 
@@ -122,7 +122,7 @@ export default function NuevaGaleriaPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Titulo de la Galeria
+              Titulo de la Galería
             </label>
             <Input
               placeholder="Ingrese el Título"

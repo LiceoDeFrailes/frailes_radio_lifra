@@ -34,7 +34,6 @@ interface CreateNoticiaParams{
   description: string,
   images: FileList,
   content: string,
-  
 }
 
 interface CreateGaleriaParams{
@@ -49,7 +48,6 @@ interface CreateGaleriaParams{
   title: string,
   description: string,
   images: FileList
-  
 }
 
 interface CreateVideoParams{
@@ -64,5 +62,26 @@ interface CreateVideoParams{
   title: string,
   url: string,
   description: string,
-  
+}
+
+interface CreatePodcastParams{
+  user: {
+    uid: string,
+    name: string,
+    email: string
+    role: string,
+    createdAt: Date
+   }
+  author: string,
+  title: string,
+  url: string,
+  description: string,
+}
+
+// 🔹 Tipo base que representa cualquier publicación
+interface PublicacionBase {
+  id: string;
+  tipo: string;
+  createdAt?: any; // Firestore Timestamp
+  [key: string]: any; // permite otros campos dinámicos (title, description, etc.)
 }

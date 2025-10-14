@@ -6,6 +6,19 @@ import StatsSection from '@/components/StatsSection'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
+import Image from 'next/image'
+
+// Definir tipos si no los tienes
+type Feature = {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+type Stat = {
+  number: string;
+  label: string;
+}
 
 export default function Home() {
   const features: Feature[] = [
@@ -27,23 +40,63 @@ export default function Home() {
   ]
 
   const stats: Stat[] = [
-    { number: '500+', label: 'Estudiantes' },
+    { number: '250+', label: 'Estudiantes' },
     { number: '25+', label: 'Años de experiencia' },
-    { number: '98%', label: 'Egresados universitarios' },
-    { number: '15+', label: 'Actividades extracurriculares' }
+    { number: '9+', label: 'Alumnos de Distintos Sectores' },
+    { number: '3+', label: 'Talleres Tecnologicos' }
   ]
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <Hero
-        title="Bienvenidos al Liceo de Frailes"
-        subtitle="Formando líderes del mañana con educación de calidad y valores humanos"
-        ctaText="Conoce más"
-        ctaLink="/sobreNosotros"
-        secondaryText="Solicitar información"
-        secondaryLink="/contacto"
-      />
+      {/* Hero Section con imagen */}
+      <section className="relative py-5 min-h-[80vh] flex items-center bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Texto principal */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6">
+                Bienvenidos al Liceo de Frailes
+              </h1>
+              <p className="text-xl lg:text-2xl mb-8 max-w-2xl">
+                Formando líderes del mañana con educación de calidad y valores humanos
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/sobreNosotros" className='text-black'>Conoce más</Link>
+                </Button>
+                <Button size="lg" variant="outline" className='text-black' asChild>
+                  <Link href="/contacto">Solicitar información</Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Imagen del Ciclo Diversificado Vocacional */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-200 max-w-md transform hover:scale-105 transition-transform duration-300">
+                <Image 
+                  src="/entradaFrailes.jpg" 
+                  alt="Ciclo Diversificado Vocacional - Liceo de Frailes"
+                  width={400}
+                  height={300}
+                  className="rounded-md w-full h-auto border-1 border-gray-300"
+                  priority
+                />
+                <div className="mt-4 text-center">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    Liceo en Orientacion Tecnologica
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Programas especializados para el desarrollo profesional y académico
+                  </p>
+                  {/* <Button variant="outline" size="sm" asChild>
+                    <Link href="/programas" className='text-black'>Ver programas</Link>
+                  </Button> */}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="py-20 bg-muted/50">
@@ -86,8 +139,11 @@ export default function Home() {
             una institución con tradición y visión de futuro.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contacto">Solicitar información</Link>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/contacto" className='text-black'>Solicitar información</Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/admisiones" className='text-black'>Proceso de admisión</Link>
             </Button>
           </div>
         </div>

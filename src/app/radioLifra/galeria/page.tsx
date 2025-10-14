@@ -4,6 +4,7 @@ import React from 'react'
 import { CirclePlus } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import GaleriaCard from '@/components/GaleriaCard';
 
 const AgregarGaleria = () => {
   const { user } = useAuth();

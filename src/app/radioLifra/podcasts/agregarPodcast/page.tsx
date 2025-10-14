@@ -8,29 +8,29 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
-import { uploadVideo } from "@/lib/actions/general.actions";
+import { uploadPodcast } from "@/lib/actions/general.actions";
 
-export default function AgregarVideoPage() {
+export default function AgregarPodcastPage() {
   const { user } = useAuth();
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [urlYouTube, setUrlYouTube] = useState("");
+  const [urlSpotify, setUrlSpotify] = useState("");
 
-function isYouTubeVideoURL(url: string) {
-  const regex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)[\w-]{11}(\?.*)?$/;
-  return regex.test(url);
-}
+  const isSpotifyURL = (url: string) => {
+    const regex = /^(https?:\/\/)?(open\.spotify\.com)\/(episode|show|playlist|track)\/[A-Za-z0-9]+/;
+    return regex.test(url);
+  };
     const getEmbedUrl = (url: string) => {
-    return url.replace("youtu.be", "www.youtube.com/embed");
+    return url.replace("open.spotify.com", "open.spotify.com/embed");
   };
 
 
   const handlePublish = async () => {
-    if (!user) return toast.info("Debes iniciar sesión para publicar una noticia.");
-    if (user.role !== "estudiante") return toast.info("Solo los estudiantes pueden publicar videos.");
-    if (!author || !title || !urlYouTube || !description) return toast.info("Por favor completa todos los campos.");
-    if(!isYouTubeVideoURL(urlYouTube)) return toast.info("La procedencia de la URL debe ser de YouTube");
+    if (!user) return toast.info("Debes iniciar sesión para publicar un podcast.");
+    if (user.role !== "estudiante") return toast.info("Solo los estudiantes pueden publicar Podcast.");
+    if (!author || !title || !urlSpotify || !description) return toast.info("Por favor completa todos los campos.");
+    if(!isSpotifyURL(urlSpotify)) return toast.info("La procedencia de la URL debe ser de Spotify");
     const toastId = toast.custom(
       (t) => (
         <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
@@ -40,22 +40,21 @@ function isYouTubeVideoURL(url: string) {
       ),
       { duration: Infinity }
     );
-
-    const url = await getEmbedUrl(urlYouTube);
-    const res = await uploadVideo({user, author, title, url, description})
+    const url = await getEmbedUrl(urlSpotify);
+    const res = await uploadPodcast({user, author, title, url, description})
     if (res.ok) {
       toast.dismiss(toastId)
       toast.success(
-        "Video enviado correctamente. Espera aprobación del administrador."
+        "Podcast enviado correctamente. Espera aprobación del administrador."
       );
       setAuthor("");
       setTitle("");
-      setUrlYouTube("")
+      setUrlSpotify("")
       setDescription("");
     } else {
-      console.error("Error al publicar video:", res.error);
+      console.error("Error al publicar podcast:", res.error);
       toast.dismiss(toastId)
-      toast.error("Ocurrió un error al publicar el Video.");
+      toast.error("Ocurrió un error al publicar el Podcast.");
     }
   };
 
@@ -87,12 +86,12 @@ function isYouTubeVideoURL(url: string) {
 
           <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-              URL del Video
+              URL del Podcast
             </label>
             <Input
-              placeholder="https://youtu.be/MJR3YbsJ5o..."
-              value={urlYouTube}
-              onChange={(e) => setUrlYouTube(e.target.value)}
+              placeholder="https://open.spotify.com/track/4fPBB4..."
+              value={urlSpotify}
+              onChange={(e) => setUrlSpotify(e.target.value)}
             />
           </div>
 

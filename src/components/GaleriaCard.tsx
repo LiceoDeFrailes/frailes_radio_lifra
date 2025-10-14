@@ -1,0 +1,125 @@
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { Check, Trash2 } from "lucide-react";
+import { rechazarGaleria, aceptarGaleria } from "@/lib/actions/general.actions";
+import { toast } from "sonner";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+  CarouselItem,
+} from "@/components/ui/carousel";
+
+const GaleriaCard = ({ item, validationMode = false }: any) => {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) return null;
+
+  const handleAceptar = async () => {
+    try {
+      await aceptarGaleria(item.id);
+      toast.success("Galería aprobada correctamente");
+      setVisible(false);
+    } catch (error) {
+      console.error("Error al aprobar galería:", error);
+      toast.error("Ocurrió un error al aprobar la galería");
+    }
+  };
+
+  const handleRechazar = async () => {
+    try {
+      await rechazarGaleria(item.id, item.imageUrls || []);
+      toast.error("Galería eliminada correctamente");
+      setVisible(false);
+    } catch (error) {
+      console.error("Error al eliminar galería:", error);
+      toast.error("Ocurrió un error al eliminar la galería");
+    }
+  };
+
+  return (
+    <Link href={`/radioLifra/galeria/${item?.id}`} className="w-full block">
+      <Card className="flex flex-col justify-center items-center px-3 md:py-3 gap-3 hover:shadow-md transition-all">
+        <div className="flex flex-col w-full">
+
+          <p className="text-2xl font-bold px-1.5">{item?.title}</p>
+          <p className="text-sm text-gray-600 max-h-[150px] overflow-y-auto px-1.5">
+            {item?.description}
+          </p>
+
+          <div className="flex flex-col justify-center items-center lg:items-start lg:ml-12 mt-2">
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="w-full max-w-55 md:max-w-lg"
+            >
+              <CarouselContent>
+                {item?.imageUrls && item?.imageUrls.length > 0 ? (
+                  item?.imageUrls.map((img: string, index: number) => (
+                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                      <div className="p-1">
+                        <Card>
+                          <CardContent className="flex items-center justify-center p-1">
+                            <div className="relative w-[150px] h-[150px] rounded-md overflow-hidden">
+                              <Image
+                                src={img}
+                                alt={`Imagen ${index + 1}`}
+                                fill
+                                className="object-cover"
+                              />
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))
+                ) : (
+                  <CarouselItem>
+                    <Card>
+                      <CardContent className="flex max-h-35 items-center justify-center">
+                        <span className="text-gray-500 p-0">Sin imágenes</span>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                )}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+          {validationMode && (
+            <div className="flex gap-2 justify-end mt-2 mr-3">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAceptar();
+                }}
+                className="bg-transparent hover:bg-green-100"
+              >
+                <Check className="text-black size-5" />
+              </Button>
+
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRechazar();
+                }}
+                className="bg-transparent hover:bg-red-100"
+              >
+                <Trash2 className="text-black size-5" />
+              </Button>
+            </div>
+          )}
+        </div>
+      </Card>
+    </Link>
+  );
+};
+
+export default GaleriaCard;

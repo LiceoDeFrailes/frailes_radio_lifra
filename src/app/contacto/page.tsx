@@ -2,6 +2,7 @@
 import Layout from '@/components/Layout/LayoutLiceo'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Phone } from 'lucide-react';
 
 export default function Contacto() {
   const contactInfo = [
@@ -9,7 +10,7 @@ export default function Contacto() {
       icon: "📞",
       title: "Teléfono",
       content: "(+506) 2544-0166",
-      description: "Lunes a Viernes 7:00 AM - 4:00 PM"
+      description: "Lunes a Viernes 7:00 AM - 4:15 PM"
     },
     {
       icon: "✉️",
