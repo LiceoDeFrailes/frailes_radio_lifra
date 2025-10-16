@@ -7,13 +7,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { name, email, password, isAdmin } = req.body;
 
   try {
-    // 1. Crear usuario en Firebase Auth sin afectar sesión
+    
     const userRecord = await adminAuth.createUser({
       email,
       password,
     });
 
-    // 2. Guardar datos adicionales en Firestore
     await adminDb.collection('usuarios').doc(userRecord.uid).set({
       name,
       email,

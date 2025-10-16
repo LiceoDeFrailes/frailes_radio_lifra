@@ -29,7 +29,7 @@ export default function Editor({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // Configuración específica si es necesaria
+        // configuración específica si es necesaria
         bulletList: {
           HTMLAttributes: {
             class: "list-disc list-outside ml-4",
@@ -62,7 +62,7 @@ export default function Editor({
     },
   });
 
-  // 🔁 Reset del contenido
+  // Para resetear del contenido
   useEffect(() => {
     if (reset && editor) {
       editor.commands.clearContent(true);
@@ -74,7 +74,7 @@ export default function Editor({
 
   return (
     <div className="w-full border rounded-md">
-      {/* 🧭 Toolbar */}
+      {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2 border-b p-2">
         <Select
           onValueChange={(font) =>
@@ -147,7 +147,7 @@ export default function Editor({
         </Button>
       </div>
 
-      {/* ✏️ Contenido */}
+      {/* Contenido */}
       <div className="min-h-[200px] p-4">
         <EditorContent 
           editor={editor} 

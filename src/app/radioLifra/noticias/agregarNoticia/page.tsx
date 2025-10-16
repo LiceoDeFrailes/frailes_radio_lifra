@@ -18,9 +18,9 @@ export default function NuevaNoticiaPage() {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<FileList | null>(null);
   const [content, setContent] = useState("");
-  const [imageKey, setImageKey] = useState(Date.now()); // clave única
+  const [imageKey, setImageKey] = useState(Date.now()); 
   const [resetEditor, setResetEditor] = useState(false);
-  const MAX_FILE_SIZE = 3 * 1024 * 1024; // (3 MB)
+  const MAX_FILE_SIZE = 3 * 1024 * 1024; 
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -69,7 +69,7 @@ export default function NuevaNoticiaPage() {
       setImages(null);
       setImageKey(Date.now());
       setResetEditor(true);
-      setTimeout(() => setResetEditor(false), 0); // permite reutilizar el reset después
+      setTimeout(() => setResetEditor(false), 0);
     } else {
       console.error("Error al publicar noticia:", res.error);
       toast.dismiss(toastId)
@@ -80,7 +80,6 @@ export default function NuevaNoticiaPage() {
   return (
     <div className="min-h-screen max-w-7xl mx-auto mt-20">
       <div className="bg-white shadow rounded-2xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Columna izquierda */}
         <div className="flex flex-col gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -130,7 +129,6 @@ export default function NuevaNoticiaPage() {
           </div>
         </div>
 
-        {/* Columna derecha con Editor */}
         <Editor onChange={(html) => setContent(html)} reset={resetEditor} />
         <div className="flex mt-6 gap-4">
           <Button
@@ -149,10 +147,6 @@ export default function NuevaNoticiaPage() {
           </Link>
         </div>
       </div>
-      {/* <div className="mt-4 border-t pt-2">
-        <h2 className="font-semibold">Vista previa HTML:</h2>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
-      </div> */}
     </div>
   );
 }

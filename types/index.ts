@@ -78,10 +78,19 @@ interface CreatePodcastParams{
   description: string,
 }
 
-// 🔹 Tipo base que representa cualquier publicación
 interface PublicacionBase {
   id: string;
   tipo: string;
-  createdAt?: any; // Firestore Timestamp
-  [key: string]: any; // permite otros campos dinámicos (title, description, etc.)
+  createdAt?: any; 
+  [key: string]: any; 
+}
+
+interface Noticia {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  createdAt: string;
+  estado: string;
+  author?: string;
 }

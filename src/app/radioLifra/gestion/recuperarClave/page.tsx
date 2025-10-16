@@ -4,52 +4,66 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
+import { Spinner } from "@/components/ui/spinner";
+import { updateUserPassword } from "@/lib/actions/auth.action";
 import Link from "next/link";
 
 export default function RecuperarContrasenaPage() {
-  const [formData, setFormData] = useState({
-    email: "",
-    nuevaContrasena: "",
-    confirmarContrasena: "",
-  });
+  const { user } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validar que las contraseñas coincidan
-    if (formData.nuevaContrasena !== formData.confirmarContrasena) {
-      alert("Las contraseñas no coinciden");
-      return;
-    }
+    if(user?.role !== 'admin') 
+      return toast.info('Solo los Administradores pueden recuperar contraseñas.');
+    if (!email || !password || !confirmPassword) 
+      return toast.info('Por favor completa todos los campos.');
+    if (password !== confirmPassword) 
+      return toast.info('Las contraseñas deben ser Iguales');
+        const toastId = toast.custom((t) => (
+      <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
+        <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
+        <h1 className="text-gray-700 font-medium">Cargando</h1>
+      </div>
+    ), { duration: Infinity });
 
-    console.log("Datos para recuperar contraseña:", formData);
-    // Aquí iría la lógica para recuperar/actualizar la contraseña
-    alert("Contraseña actualizada correctamente");
+    try {
+      await updateUserPassword(email, password);
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      toast.dismiss(toastId);
+      toast.success("Contraseña Cambiada");
+    } catch (error) {
+      console.log("Ocurrio un error" , error);
+      toast.dismiss(toastId);
+      toast.success("Error. No se pudo cambiar la contraseña");
+
+    }
   };
 
   return (
     <div className="min-h-screen flex justify-center py-12 px-4 sm:px-6 lg:px-8 ">
       <div className="max-w-md w-full space-y-8">
-        {/* Encabezado */}
-
-
-        <form onSubmit={handleSubmit} className="bg-white shadow rounded-2xl p-6 space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow rounded-2xl p-6 space-y-6"
+        >
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Recuperar Contraseña
             </h1>
-          </div>          
-          {/* Email */}
+          </div>
+
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="email"
+              className="text-sm font-medium text-gray-700"
+            >
               Email
             </Label>
             <Input
@@ -57,16 +71,18 @@ export default function RecuperarContrasenaPage() {
               name="email"
               type="email"
               placeholder="tu@email.com"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full"
             />
           </div>
 
-          {/* Nueva Contraseña */}
           <div className="space-y-2">
-            <Label htmlFor="nuevaContrasena" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="nuevaContrasena"
+              className="text-sm font-medium text-gray-700"
+            >
               Nueva Contraseña
             </Label>
             <Input
@@ -74,17 +90,19 @@ export default function RecuperarContrasenaPage() {
               name="nuevaContrasena"
               type="password"
               placeholder="***********"
-              value={formData.nuevaContrasena}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
               className="w-full"
             />
           </div>
 
-          {/* Confirmar Nueva Contraseña */}
           <div className="space-y-2">
-            <Label htmlFor="confirmarContrasena" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="confirmarContrasena"
+              className="text-sm font-medium text-gray-700"
+            >
               Confirmar Nueva Contraseña
             </Label>
             <Input
@@ -92,16 +110,15 @@ export default function RecuperarContrasenaPage() {
               name="confirmarContrasena"
               type="password"
               placeholder="***********"
-              value={formData.confirmarContrasena}
-              onChange={handleChange}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
               minLength={6}
               className="w-full"
             />
           </div>
 
-          {/* Botón Principal */}
-<div className="flex gap-4 pt-4">
+          <div className="flex gap-4 pt-4">
             <Button
               type="submit"
               className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white flex-1 py-3 text-base font-medium"
@@ -109,9 +126,9 @@ export default function RecuperarContrasenaPage() {
               Recuperar Contraseña
             </Button>
             <Link href="/radioLifra" className="flex-1">
-              <Button 
+              <Button
                 type="button"
-                variant="outline" 
+                variant="outline"
                 className="w-full py-3 text-base font-medium"
               >
                 Cancelar

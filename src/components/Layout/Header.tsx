@@ -42,7 +42,6 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
             {navItems.map((item) => (
               <Link
@@ -55,14 +54,12 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Button Desktop */}
           <div className="hidden md:block">
             <Button asChild>
               <Link href="/contacto">Solicitar Info</Link>
             </Button>
           </div>
-
-          {/* Mobile Navigation */}
+          
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon" className="ml-auto">

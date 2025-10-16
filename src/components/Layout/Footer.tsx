@@ -32,7 +32,7 @@ export default function Footer() {
     <footer className="bg-background border-t">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
+
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
                 <Image src='/escudoFrailes.png' 
@@ -50,7 +50,6 @@ export default function Footer() {
             </Button>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="font-semibold mb-4">Enlaces rápidos</h3>
             <ul className="space-y-3">
@@ -67,7 +66,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
             <h3 className="font-semibold mb-4">Contacto</h3>
             <ul className="space-y-3 text-muted-foreground">

@@ -19,7 +19,7 @@ import { Button } from '../ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '../ui/sheet'
 import { Menu, User, LogOut } from 'lucide-react'
 import { Separator } from "@/components/ui/separator";
-import { signUserOut } from '@/lib/actions/auth.action'
+import { signUserOut } from '@/lib/actions/general.actions'
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
@@ -80,8 +80,7 @@ export default function HeaderRadioLifra() {
   const getRoleDisplayName = (role: string) => {
     const roleNames: { [key: string]: string } = {
       'admin': 'Administrador',
-      'user': 'Usuario',
-      'editor': 'Editor'
+      'estudiante': 'Estudiante',
     };
     return roleNames[role] || role;
   }
@@ -94,6 +93,7 @@ export default function HeaderRadioLifra() {
           alt='Escudo Frailes' 
           width={70} 
           height={70}
+          className="max-sm:ml-auto"
         />
         
         <NavigationMenu viewport={false} className="max-md:hidden">
@@ -106,7 +106,6 @@ export default function HeaderRadioLifra() {
               </NavigationMenuItem> 
             ))}
 
-            {/* Gestión sección */}
             {user?.role === 'admin' && (
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Gestión</NavigationMenuTrigger>
@@ -126,7 +125,6 @@ export default function HeaderRadioLifra() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Menú móvil */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="md:hidden">
             <Button variant="ghost" size="icon" className="ml-auto">
@@ -150,7 +148,6 @@ export default function HeaderRadioLifra() {
                 </Link>
               ))}
               
-              {/* Sección de Gestión para móvil */}
               {user?.role === 'admin' && (
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Gestión</h3>
@@ -169,7 +166,6 @@ export default function HeaderRadioLifra() {
                 </div>
               )}
     
-              {/* Estado de autenticación para móvil */}
               {user === null ? (
                 <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex w-full rounded-md mt-3">
                   <Link href="/iniciarSesion" className="w-full text-center">Iniciar Sesión</Link>
@@ -195,7 +191,6 @@ export default function HeaderRadioLifra() {
           </SheetContent>
         </Sheet> 
 
-        {/* Estado de autenticación para desktop */}
         <div className="ml-auto mr-3 mt-2 max-md:hidden">
           {user === null ? (
             <Button className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra flex rounded-md">

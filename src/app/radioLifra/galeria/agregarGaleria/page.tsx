@@ -19,7 +19,7 @@ export default function NuevaGaleriaPage() {
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
-  const MAX_FILE_SIZE = 3 * 1024 * 1024; // (3 MB)
+  const MAX_FILE_SIZE = 3 * 1024 * 1024; 
   const MAX_IMAGES = 6;
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +84,6 @@ export default function NuevaGaleriaPage() {
       </div>
     ), { duration: Infinity });
     
-    // Convertir File[] a FileList para la función uploadNoticia
     const dataTransfer = new DataTransfer();
     images.forEach(file => dataTransfer.items.add(file));
     const fileList = dataTransfer.files;
@@ -108,7 +107,6 @@ export default function NuevaGaleriaPage() {
   return (
     <div className="min-h-screen max-w-7xl mx-auto mt-20">
       <div className="bg-white shadow rounded-2xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Columna izquierda */}
         <div className="flex flex-col gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -167,7 +165,6 @@ export default function NuevaGaleriaPage() {
           </div>
         </div>
 
-        {/* Columna derecha - Vista previa de imágenes */}
         <div className="space-y-4">
           <div className="flex justify-between items-center border-b pb-2">
             <p className="text-md font-semibold text-gray-800">

@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
-import { loginUser } from "@/lib/actions/auth.action";
+import { loginUser } from "@/lib/actions/general.actions";
 import { useRouter } from "next/navigation";
 import {
   Card,
@@ -34,8 +34,7 @@ const FormIniciarSesion = () => {
           <h1 className="text-gray-700 font-medium">Cargando</h1>
         </div>
       ),
-      { duration: Infinity }
-    );
+      { duration: Infinity });
     try {
       const user = await loginUser({ email, password });
       // (Importante)/Guardar datos en localStorage o estado global
@@ -82,6 +81,7 @@ const FormIniciarSesion = () => {
               <Input
                 id="password"
                 type="password"
+                placeholder="***********"
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
