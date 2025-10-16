@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎙️ Radio Lifra — Plataforma Web de Gestión de Contenidos
 
-## Getting Started
+> Sistema web desarrollado para la administración y publicación de contenidos multimedia del **Liceo de Frailes**, integrando roles de usuario (administrador y estudiante), autenticación con Firebase y gestión centralizada de noticias, galerías, videos y podcasts.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🧩 Características Principales
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔐 **Autenticación con Firebase Authentication**
+  - Registro y login de usuarios (administradores y estudiantes)
+  - Control de acceso basado en roles
+  - Cierre de sesión seguro sin necesidad de reiniciar la aplicación
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 📰 **Módulo de Noticias**
+  - Creación de noticias con texto enriquecido (editor con TipTap)
+  - Subida y validación de imágenes en Firebase Storage
+  - Publicación sujeta a aprobación del administrador
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 🖼️ **Módulo de Galería**
+  - Subida múltiple de imágenes con validación de tamaño (3 MB máx.)
+  - Visualización mediante carrusel responsivo con Shadcn/UI
 
-## Learn More
+- 🎧 **Módulo de Podcasts**
+  - Ingreso de URLs de Spotify
+  - Renderizado automático mediante `iframe` con soporte para `embed`
 
-To learn more about Next.js, take a look at the following resources:
+- 🎥 **Módulo de Videos**
+  - Registro de videos mediante enlaces
+  - Renderizado seguro con `iframe` optimizado y `loading="lazy"`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🧾 **Validación de Contenido**
+  - Panel de administrador para aprobar o rechazar publicaciones
+  - Ordenamiento por fecha (más antiguas primero)
+  - Eliminación segura de imágenes desde Cloud Storage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 🧠 **Diseño Modular**
+  - Cada tipo de publicación (noticia, galería, video, podcast) cuenta con su propio componente y lógica interna
+  - Estructura escalable y mantenible
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tecnologías Utilizadas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Tipo | Herramientas |
+|------|---------------|
+| **Frontend** | [Next.js 15](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/) |
+| **UI / UX** | [Tailwind CSS](https://tailwindcss.com/), [Shadcn/UI](https://ui.shadcn.com/), [Lucide Icons](https://lucide.dev/), [Sonner](https://sonner.emilkowal.ski/) |
+| **Backend / BaaS** | [Firebase](https://firebase.google.com/) (Authentication, Firestore, Storage) |
+| **Editor de Texto** | [TipTap](https://tiptap.dev/) |
+| **Deploy / Hosting** | [Vercel](https://vercel.com/) (recomendado) |
+
+---
+
+## 🚀 Instalación y Configuración
+
+1. **Clonar el repositorio**
+
+   git clone https://github.com/LiceoDeFrailes/frailes_radio_lifra.git
+   cd radio-lifra
+   npm install
+   npm run dev
+
+

@@ -310,6 +310,36 @@ export async function getNoticias(){
     orderBy("createdAt", "asc")
   )
   const snapShot = await getDocs(q);
-  return snapShot.docs.map((d) => ({id: d.id, ...d.data()})) as Noticia[];
+  return snapShot.docs.map((d) => ({id: d.id, ...d.data()})) as any;
  
+}
+
+export async function getGalerias(){
+  const q = await query(
+    collection(db, "galerias"),
+    where("state", "==", "aprobado"),
+    orderBy("createdAt", "asc")
+)
+const snapShot = await getDocs(q);
+return snapShot.docs.map((g) => ({id: g.id, ...g.data()})) as any
+}
+
+export async function getVideos(){
+  const q = await query(
+    collection(db, "videos"),
+    where("state","==","aprobado"),
+    orderBy("createdAt", "asc")
+  )
+  const snapShot = await getDocs(q);
+  return snapShot.docs.map((v)=>({id: v.id, ...v.data()})) as any
+}
+
+export async function getPodcasts(){
+  const q = await query(
+    collection(db, "podcasts"),
+    where("state","==","aprobado"),
+    orderBy("createdAt", "asc")
+  )
+  const snapShot = await getDocs(q);
+  return snapShot.docs.map((p)=>({id: p.id, ...p.data()})) as any
 }

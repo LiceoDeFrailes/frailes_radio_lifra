@@ -16,7 +16,11 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 
-const GaleriaCard = ({ item, validationMode = false }: any) => {
+const GaleriaCard = ({
+  item,
+  validationMode = false,
+  isAdmin = false,
+}: any) => {
   const [visible, setVisible] = useState(true);
 
   const handleAceptar = async () => {
@@ -65,17 +69,18 @@ const GaleriaCard = ({ item, validationMode = false }: any) => {
   if (!visible) return null;
   return (
     <Card className="flex flex-col justify-center items-center px-3 md:py-3 gap-3 hover:shadow-md transition-all">
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full mb-auto mr-auto">
         <Link
           href={`/radioLifra/galeria/${item?.id}`}
-          className={validationMode && "pointer-events-none"}
+          className={validationMode ? "pointer-events-none" : ""}
         >
-          <p className="text-2xl font-bold px-1.5">{item?.title}</p>
-          <p className="text-sm text-gray-600 max-h-[150px] overflow-y-auto px-1.5">
-            {item?.description}
+          <p className="text-2xl font-bold px-1.5 hover:text-Light-Green-Lifra">
+            {item?.title}
           </p>
         </Link>
-
+        <p className="text-sm text-gray-600 max-h-[150px] overflow-y-auto px-1.5">
+          {item?.description}
+        </p>
         <div className="flex flex-col justify-center items-center lg:items-start lg:ml-12 mt-2">
           <Carousel
             opts={{
@@ -120,29 +125,36 @@ const GaleriaCard = ({ item, validationMode = false }: any) => {
             <CarouselNext />
           </Carousel>
         </div>
-        {validationMode && (
-          <div className="flex gap-2 justify-end mt-2 mr-3">
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                handleAceptar();
-              }}
-              className="bg-transparent hover:bg-green-100"
-            >
-              <Check className="text-black size-5" />
-            </Button>
 
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                handleRechazar();
-              }}
-              className="bg-transparent hover:bg-red-100"
-            >
-              <Trash2 className="text-black size-5" />
-            </Button>
-          </div>
-        )}
+        <div className="flex gap-2 justify-end mt-2 mr-3">
+          {validationMode && (
+            <>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAceptar();
+                }}
+                className="bg-transparent hover:bg-green-100"
+              >
+                <Check className="text-black size-5" />
+              </Button>
+            </>
+          )}
+
+          {isAdmin && (
+            <>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRechazar();
+                }}
+                className="bg-transparent hover:bg-red-100"
+              >
+                <Trash2 className="text-black size-5" />
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </Card>
   );

@@ -14,7 +14,7 @@ import {
   ListItem,
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from '../ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '../ui/sheet'
 import { Menu, User, LogOut } from 'lucide-react'
@@ -64,8 +64,18 @@ const gestionItems: { title: string; href: string; }[] = [
 
 export default function HeaderRadioLifra() {
   const { user } = useAuth();
+  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
+
+    useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    // Evita el render en SSR (nada se genera hasta estar en cliente)
+    return null;
+  }
 
   const handleSignOut = async () => {
     const result = await signUserOut();

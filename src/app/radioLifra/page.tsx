@@ -1,4 +1,3 @@
-// app/radioLifra/page.tsx
 import { redirect } from 'next/navigation';
 
 export default function RadioLifraPage() {

@@ -84,13 +84,3 @@ interface PublicacionBase {
   createdAt?: any; 
   [key: string]: any; 
 }
-
-interface Noticia {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  createdAt: string;
-  estado: string;
-  author?: string;
-}

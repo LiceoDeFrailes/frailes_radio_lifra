@@ -7,7 +7,11 @@ import { toast } from "sonner";
 import { Spinner } from "./ui/spinner";
 import { aceptarVideo, rechazarVideo } from "@/lib/actions/general.actions";
 
-const NoticiaCard = ({ item, validationMode = false }: any) => {
+const NoticiaCard = ({
+  item,
+  validationMode = false,
+  isAdmin = false,
+}: any) => {
   const [visible, setVisible] = useState(true);
 
   const handleAceptar = async () => {
@@ -59,69 +63,81 @@ const NoticiaCard = ({ item, validationMode = false }: any) => {
       <div className="flex flex-col gap-2 ">
         <iframe
           src={item.url}
-          frameBorder="0"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
           className="min-h-full min-w-full"
         ></iframe>
 
-        {validationMode && (
-          <div className="hidden md:flex gap-2 justify-end mt-2">
-            <Button
-              className="bg-transparent hover:bg-green-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleAceptar();
-              }}
-            >
-              <Check className="text-black size-5" />
-            </Button>
-            <Button
-              className="bg-transparent hover:bg-red-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleRechazar();
-              }}
-            >
-              <Trash2 className="text-black size-5" />
-            </Button>
-          </div>
-        )}
+        <div className="hidden md:flex gap-2 justify-end mt-2">
+          {validationMode && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-green-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAceptar();
+                }}
+              >
+                <Check className="text-black size-5" />
+              </Button>
+            </>
+          )}
+
+          {isAdmin && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-red-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRechazar();
+                }}
+              >
+                <Trash2 className="text-black size-5" />
+              </Button>
+            </>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-col gap-1 mx-2 item">
+      <div className="flex flex-col gap-1 mx-2 mb-auto mr-auto">
         <Link
           href={`/radioLifra/galeria/${item?.id}`}
-          className={validationMode ? "pointer-events-none" : undefined}
+          className={validationMode ? "pointer-events-none" : ""}
         >
-          <p className="text-2xl font-bold">{item?.title}</p>
-          <p className="text-sm text-gray-600 max-h-[150] overflow-y-auto px-1.5">
-            {item?.description}
-          </p>
+          <p className="text-2xl font-bold hover:text-Light-Green-Lifra">{item?.title}</p>
         </Link>
+        <p className="text-sm text-gray-600 max-h-[150] overflow-y-auto px-1.5">
+          {item?.description}
+        </p>
+        <div className="flex gap-2 justify-center mt-2 md:hidden ml-auto mr-2">
+          {validationMode && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-green-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAceptar();
+                }}
+              >
+                <Check className="text-black size-5" />
+              </Button>
+            </>
+          )}
 
-        {validationMode && (
-          <div className="flex gap-2 justify-center mt-2 md:hidden ml-auto mr-2">
-            <Button
-              className="bg-transparent hover:bg-green-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleAceptar();
-              }}
-            >
-              <Check className="text-black size-5" />
-            </Button>
-            <Button
-              className="bg-transparent hover:bg-red-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleRechazar();
-              }}
-            >
-              <Trash2 className="text-black size-5" />
-            </Button>
-          </div>
-        )}
+          {isAdmin && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-red-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRechazar();
+                }}
+              >
+                <Trash2 className="text-black size-5" />
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </Card>
   );

@@ -7,7 +7,11 @@ import { toast } from "sonner";
 import { aceptarPodcast, rechazarPodcast } from "@/lib/actions/general.actions";
 import { Spinner } from "./ui/spinner";
 
-const NoticiaCard = ({ item, validationMode = false }: any) => {
+const NoticiaCard = ({
+  item,
+  validationMode = false,
+  isAdmin = false,
+}: any) => {
   const [visible, setVisible] = useState(true);
 
   const handleAceptar = async () => {
@@ -56,71 +60,84 @@ const NoticiaCard = ({ item, validationMode = false }: any) => {
   if (!visible) return null;
   return (
     <Card className="flex flex-col md:flex-row-reverse justify-center items-center px-3 md:py-3 gap-3">
-      <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2 justify-center">
         <iframe
           src={item.url}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
-          className=" min-h-[190] min-w-full"
-        ></iframe>
+          className="min-h-[190px] min-w-full bg-transparent"
+        />
 
-        {validationMode && (
-          <div className="hidden md:flex gap-2 justify-end mt-2">
-            <Button
-              className="bg-transparent hover:bg-green-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleAceptar();
-              }}
-            >
-              <Check className="text-black size-5" />
-            </Button>
-            <Button
-              className="bg-transparent hover:bg-red-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleRechazar();
-              }}
-            >
-              <Trash2 className="text-black size-5" />
-            </Button>
-          </div>
-        )}
+        <div className="hidden md:flex gap-2 justify-end mt-2 md:-mt-10">
+          {validationMode && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-green-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAceptar();
+                }}
+              >
+                <Check className="text-black size-5" />
+              </Button>
+            </>
+          )}
+          {isAdmin && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-red-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRechazar();
+                }}
+              >
+                <Trash2 className="text-black size-5" />
+              </Button>
+            </>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-col gap-1 mx-2 item">
+      <div className="flex flex-col gap-1 mx-2 mb-auto mr-auto -mt-10 md:mt-2">
         <Link
           href={`/radioLifra/galeria/${item?.id}`}
-          className={validationMode ? "pointer-events-none" : undefined}
+          className={validationMode ? "pointer-events-none" : ""}
         >
-          <p className="text-2xl font-bold">{item?.title}</p>
-          <p className="text-sm text-gray-600 max-h-[150] overflow-y-auto px-1.5">
-            {item?.description}
+          <p className="text-3xl font-bold hover:text-Light-Green-Lifra">
+            {item?.title}
           </p>
         </Link>
-
-        {validationMode && (
-          <div className="flex gap-2 justify-center mt-2 md:hidden ml-auto mr-2">
-            <Button
-              className="bg-transparent hover:bg-green-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleAceptar();
-              }}
-            >
-              <Check className="text-black size-5" />
-            </Button>
-            <Button
-              className="bg-transparent hover:bg-red-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleRechazar();
-              }}
-            >
-              <Trash2 className="text-black size-5" />
-            </Button>
-          </div>
-        )}
+        <p className="text-sm text-gray-600 max-h-[150] overflow-y-auto px-1.5">
+          {item?.description}
+        </p>
+        <div className="flex gap-2 justify-center mt-2 md:hidden ml-auto mr-2">
+          {validationMode && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-green-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAceptar();
+                }}
+              >
+                <Check className="text-black size-5" />
+              </Button>
+            </>
+          )}
+          {isAdmin && (
+            <>
+              <Button
+                className="bg-transparent hover:bg-red-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRechazar();
+                }}
+              >
+                <Trash2 className="text-black size-5" />
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </Card>
   );

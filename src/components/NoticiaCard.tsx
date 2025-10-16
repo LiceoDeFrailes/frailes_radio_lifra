@@ -103,7 +103,7 @@ const NoticiaCard = ({
       <div className="flex flex-col gap-1 mx-2 mb-auto mr-auto">
         <Link
           href={`/radioLifra/galeria/${item?.id}`}
-          className={validationMode ? "pointer-events-none" : undefined}
+          className={validationMode ? "pointer-events-none" : ""}
         >
           <p className="text-2xl font-bold hover:text-Light-Green-Lifra">
             {item?.title}
