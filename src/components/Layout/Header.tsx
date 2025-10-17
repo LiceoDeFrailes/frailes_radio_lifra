@@ -29,7 +29,6 @@ export default function Header() {
     <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
           <Image src='/escudoFrailes.png' 
           alt='Escudo Frailes' 
@@ -65,7 +64,7 @@ export default function Header() {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left">
+            <SheetContent side="left" aria-describedby={undefined}>
               <SheetHeader>
                 <SheetTitle>Menu</SheetTitle>
                 <Separator/>

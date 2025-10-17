@@ -140,7 +140,7 @@ export default function HeaderRadioLifra() {
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left">
+          <SheetContent side="left" aria-describedby={undefined}>
             <SheetHeader>
               <SheetTitle>Menu</SheetTitle>
               <Separator/>
