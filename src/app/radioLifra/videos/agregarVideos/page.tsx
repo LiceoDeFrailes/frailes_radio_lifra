@@ -17,20 +17,24 @@ export default function AgregarVideoPage() {
   const [description, setDescription] = useState("");
   const [urlYouTube, setUrlYouTube] = useState("");
 
-function isYouTubeVideoURL(url: string) {
-  const regex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)[\w-]{11}(\?.*)?$/;
-  return regex.test(url);
-}
-    const getEmbedUrl = (url: string) => {
+  function isYouTubeVideoURL(url: string) {
+    const regex =
+      /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)[\w-]{11}(\?.*)?$/;
+    return regex.test(url);
+  }
+  const getEmbedUrl = (url: string) => {
     return url.replace("youtu.be", "www.youtube.com/embed");
   };
 
-
   const handlePublish = async () => {
-    if (!user) return toast.info("Debes iniciar sesión para publicar una noticia.");
-    if (user.role !== "estudiante") return toast.info("Solo los estudiantes pueden publicar videos.");
-    if (!author || !title || !urlYouTube || !description) return toast.info("Por favor completa todos los campos.");
-    if(!isYouTubeVideoURL(urlYouTube)) return toast.info("La procedencia de la URL debe ser de YouTube");
+    if (!user)
+      return toast.info("Debes iniciar sesión para publicar una noticia.");
+    if (user.role !== "estudiante")
+      return toast.info("Solo los estudiantes pueden publicar videos.");
+    if (!author || !title || !urlYouTube || !description)
+      return toast.info("Por favor completa todos los campos.");
+    if (!isYouTubeVideoURL(urlYouTube))
+      return toast.info("La procedencia de la URL debe ser de YouTube");
     const toastId = toast.custom(
       (t) => (
         <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
@@ -42,19 +46,19 @@ function isYouTubeVideoURL(url: string) {
     );
 
     const url = await getEmbedUrl(urlYouTube);
-    const res = await uploadVideo({user, author, title, url, description})
+    const res = await uploadVideo({ user, author, title, url, description });
     if (res.ok) {
-      toast.dismiss(toastId)
+      toast.dismiss(toastId);
       toast.success(
         "Video enviado correctamente. Espera aprobación del administrador."
       );
       setAuthor("");
       setTitle("");
-      setUrlYouTube("")
+      setUrlYouTube("");
       setDescription("");
     } else {
       console.error("Error al publicar video:", res.error);
-      toast.dismiss(toastId)
+      toast.dismiss(toastId);
       toast.error("Ocurrió un error al publicar el Video.");
     }
   };
@@ -62,7 +66,7 @@ function isYouTubeVideoURL(url: string) {
   return (
     <div className="min-h-screen max-w-md mx-auto mt-20">
       <div className="bg-white shadow rounded-2xl p-6 flex flex-col gap-6">
-        {/* Columna izquierda */}
+        
         <div className="flex flex-col gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -86,7 +90,7 @@ function isYouTubeVideoURL(url: string) {
           </div>
 
           <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               URL del Video
             </label>
             <Input
@@ -97,33 +101,32 @@ function isYouTubeVideoURL(url: string) {
           </div>
 
           <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                Breve descripcion
-                </label>
-                <Textarea
-                placeholder="Descripción"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                />
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Breve descripcion
+            </label>
+            <Textarea
+              placeholder="Descripción"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
           <div className="flex flex-row gap-2">
-          <Button
-            className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white flex-1 min-w-0 py-3 text-base font-medium"
-            onClick={handlePublish}
-          >
-            Publicar
-          </Button>
-          <Link href="/radioLifra" className="flex-1">
             <Button
-              variant="destructive"
-              className="w-full min-w-0 py-3 text-base font-medium"
+              className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white flex-1 min-w-0 py-3 text-base font-medium"
+              onClick={handlePublish}
             >
-              Cancelar
+              Publicar
             </Button>
-          </Link>
+            <Link href="/radioLifra" className="flex-1">
+              <Button
+                variant="destructive"
+                className="w-full min-w-0 py-3 text-base font-medium"
+              >
+                Cancelar
+              </Button>
+            </Link>
+          </div>
         </div>
-        </div>
-        
       </div>
     </div>
   );

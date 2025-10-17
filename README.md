@@ -55,9 +55,8 @@
 
 1. **Clonar el repositorio**
 
-   git clone https://github.com/LiceoDeFrailes/frailes_radio_lifra.git
-   cd radio-lifra
-   npm install
-   npm run dev
+   - git clone https://github.com/LiceoDeFrailes/frailes_radio_lifra.git
+   - npm install
+   - npm run dev
 
 

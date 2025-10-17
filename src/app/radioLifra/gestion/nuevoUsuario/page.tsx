@@ -59,13 +59,11 @@ export default function CrearUsuarioPage() {
   return (
     <div className="min-h-screen max-w-2xl mx-auto mt-20">
       <div className="bg-white shadow rounded-2xl p-6">
-        {/* Título */}
         <h1 className="text-2xl text-center font-bold text-gray-800 mb-6">
           Crear Nuevo Usuario
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Nombre Completo */}
           <div className="space-y-2">
             <Label htmlFor="nombreCompleto" className="text-sm font-medium text-gray-700">
               Nombre Completo
@@ -81,7 +79,6 @@ export default function CrearUsuarioPage() {
             />
           </div>
 
-          {/* Email */}
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium text-gray-700">
               Email
@@ -97,7 +94,6 @@ export default function CrearUsuarioPage() {
             />
           </div>
 
-          {/* Contraseña */}
           <div className="space-y-2">
             <Label htmlFor="password" className="text-sm font-medium text-gray-700">
               Contraseña
@@ -113,7 +109,6 @@ export default function CrearUsuarioPage() {
             />
           </div>
 
-          {/* Confirmar Contraseña */}
           <div className="space-y-2">
             <Label htmlFor="confirmarPassword" className="text-sm font-medium text-gray-700">
               Confirmar Contraseña
@@ -129,7 +124,6 @@ export default function CrearUsuarioPage() {
             />
           </div>
 
-          {/* Checkbox Administrador */}
           <div className="flex items-center space-x-2">
             <Checkbox
               id="isAdmin"
@@ -142,7 +136,6 @@ export default function CrearUsuarioPage() {
             </Label>
           </div>
 
-          {/* Botones */}
           <div className="flex gap-4 pt-4">
             <Button
               type="submit"

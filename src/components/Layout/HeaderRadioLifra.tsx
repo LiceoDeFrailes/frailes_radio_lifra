@@ -64,16 +64,15 @@ const gestionItems: { title: string; href: string; }[] = [
 
 export default function HeaderRadioLifra() {
   const { user } = useAuth();
-  const [isMounted, setIsMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
 
     useEffect(() => {
-    setIsMounted(true);
+    setLoading(true);
   }, []);
 
-  if (!isMounted) {
-    // Evita el render en SSR (nada se genera hasta estar en cliente)
+  if (!loading) {
     return null;
   }
 

@@ -1,24 +1,10 @@
-// pages/index.tsx
 import Layout from '@/components/Layout/LayoutLiceo'
-import Hero from '@/components/Hero'
 import FeatureCard from '@/components/FeatureCard'
 import StatsSection from '@/components/StatsSection'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import Image from 'next/image'
-
-// Definir tipos si no los tienes
-type Feature = {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-type Stat = {
-  number: string;
-  label: string;
-}
 
 export default function Home() {
   const features: Feature[] = [
@@ -48,11 +34,11 @@ export default function Home() {
 
   return (
     <Layout>
-      {/* Hero Section con imagen */}
+
       <section className="relative py-5 min-h-[80vh] flex items-center bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Texto principal */}
+
             <div className="text-center lg:text-left">
               <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6">
                 Bienvenidos al Liceo de Frailes
@@ -70,7 +56,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Imagen del Ciclo Diversificado Vocacional */}
             <div className="flex justify-center lg:justify-end">
               <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-200 max-w-md transform hover:scale-105 transition-transform duration-300">
                 <Image 
@@ -98,7 +83,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -124,10 +108,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <StatsSection stats={stats} />
 
-      {/* CTA Section */}
       <section className="py-20 bg-Dark-Green-Lifra text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-4">Únete a nosotros</Badge>

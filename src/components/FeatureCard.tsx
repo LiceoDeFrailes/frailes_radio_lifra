@@ -1,4 +1,3 @@
-// components/UI/FeatureCard.tsx
 import { Card, CardContent } from '@/components/ui/card'
 
 interface FeatureCardProps {

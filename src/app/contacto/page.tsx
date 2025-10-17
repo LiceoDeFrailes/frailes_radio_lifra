@@ -1,8 +1,6 @@
-// pages/contact.tsx
 import Layout from '@/components/Layout/LayoutLiceo'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Phone } from 'lucide-react';
 
 export default function Contacto() {
   const contactInfo = [
@@ -34,7 +32,7 @@ export default function Contacto() {
 
   return (
     <Layout>
-      {/* Hero Section */}
+
       <section className="py-20 bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-4">Contáctanos</Badge>
@@ -45,7 +43,6 @@ export default function Contacto() {
         </div>
       </section>
 
-      {/* Contact Info */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -70,7 +67,6 @@ export default function Contacto() {
         </div>
       </section>
 
-      {/* Map Section */}
       <section className="py-20 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -80,7 +76,6 @@ export default function Contacto() {
             </p>
           </div>
           
-          {/* Mapa de Google Maps */}
           <div className="bg-muted rounded-lg overflow-hidden shadow-lg">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.166590472664!2d-84.05935712426326!3d9.751952677252266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa11b9ef81951c1%3A0x7b726c5c763de31d!2sLiceo%20de%20Frailes!5e0!3m2!1ses-419!2scr!4v1759167826947!5m2!1ses-419!2scr" 
@@ -91,7 +86,6 @@ export default function Contacto() {
             ></iframe>
           </div>
 
-          {/* Información adicional debajo del mapa */}
           <div className="text-center mt-8">
             <p className="text-lg text-muted-foreground">
               📍 <strong>Dirección exacta:</strong> Liceo de Frailes, Desamparados, San José, 10306

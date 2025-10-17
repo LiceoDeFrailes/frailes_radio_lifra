@@ -61,7 +61,6 @@ export default function AgregarPodcastPage() {
   return (
     <div className="min-h-screen max-w-md mx-auto mt-20">
       <div className="bg-white shadow rounded-2xl p-6 flex flex-col gap-6">
-        {/* Columna izquierda */}
         <div className="flex flex-col gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">

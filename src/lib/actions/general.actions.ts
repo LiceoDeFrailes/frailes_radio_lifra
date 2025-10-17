@@ -1,4 +1,4 @@
-import { db, storage, auth , getAuth, signOut } from "../../../firebase/client";
+import { db, storage, auth, getAuth, signOut } from "../../../firebase/client";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {
   collection,
@@ -21,10 +21,13 @@ import {
 } from "firebase/storage";
 
 export async function loginUser(params: LoginParams) {
-  const {email, password} = params;
+  const { email, password } = params;
   try {
-
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const user = userCredential.user;
 
     const userDoc = await getDoc(doc(db, "usuarios", user.uid));
@@ -39,7 +42,6 @@ export async function loginUser(params: LoginParams) {
       email: user.email,
       nombre: userData.nombre,
       rol: userData.rol,
-      
     };
   } catch (error: any) {
     console.error("Error en login:", error.message);
@@ -193,14 +195,13 @@ export async function getAllPendingPublications(): Promise<PublicacionBase[]> {
 
 export async function aceptarNoticia(id: string) {
   try {
-  const ref = doc(db, "noticias", id);
-  await updateDoc(ref, { state: "aprobado" });
-  return { ok: true }; 
+    const ref = doc(db, "noticias", id);
+    await updateDoc(ref, { state: "aprobado" });
+    return { ok: true };
   } catch (error) {
-    console.error('Error al aprobar la noticia', error);
+    console.error("Error al aprobar la noticia", error);
     return { ok: false, error: error };
   }
-
 }
 
 export async function rechazarNoticia(id: string, imageUrl: string) {
@@ -224,14 +225,13 @@ export async function rechazarNoticia(id: string, imageUrl: string) {
 
 export async function aceptarGaleria(id: string) {
   try {
-  const ref = doc(db, "galerias", id);
-  await updateDoc(ref, { state: "aprobado" });
-  return { ok: true };  
+    const ref = doc(db, "galerias", id);
+    await updateDoc(ref, { state: "aprobado" });
+    return { ok: true };
   } catch (error) {
-    console.error('Error al aprobar la galeria', error);
+    console.error("Error al aprobar la galeria", error);
     return { ok: false, error: error };
   }
-
 }
 
 export async function rechazarGaleria(id: string, imageUrl: string[]) {
@@ -265,13 +265,12 @@ export async function rechazarGaleria(id: string, imageUrl: string[]) {
 
 export async function aceptarVideo(id: string) {
   try {
-  const ref = doc(db, "videos", id);
-  await updateDoc(ref, { state: "aprobado" });    
+    const ref = doc(db, "videos", id);
+    await updateDoc(ref, { state: "aprobado" });
   } catch (error) {
-  console.error('Error al aprobar el video', error);
-  return { ok: false, error: error };
+    console.error("Error al aprobar el video", error);
+    return { ok: false, error: error };
   }
-
 }
 
 export async function rechazarVideo(id: string) {
@@ -285,13 +284,12 @@ export async function rechazarVideo(id: string) {
 
 export async function aceptarPodcast(id: string) {
   try {
-  const ref = doc(db, "podcasts", id);
-  await updateDoc(ref, { state: "aprobado" });    
+    const ref = doc(db, "podcasts", id);
+    await updateDoc(ref, { state: "aprobado" });
   } catch (error) {
-  console.error('Error al aprobar el podcast', error);
-  return { ok: false, error: error };
+    console.error("Error al aprobar el podcast", error);
+    return { ok: false, error: error };
   }
-
 }
 
 export async function rechazarPodcast(id: string) {
@@ -303,43 +301,60 @@ export async function rechazarPodcast(id: string) {
   }
 }
 
-export async function getNoticias(){
-    const q = await query(
+export async function getNoticias() {
+  const q = await query(
     collection(db, "noticias"),
     where("state", "==", "aprobado"),
     orderBy("createdAt", "asc")
-  )
+  );
   const snapShot = await getDocs(q);
-  return snapShot.docs.map((d) => ({id: d.id, ...d.data()})) as any;
- 
+  return snapShot.docs.map((d) => ({ id: d.id, ...d.data() })) as any;
 }
 
-export async function getGalerias(){
+export async function getGalerias() {
   const q = await query(
     collection(db, "galerias"),
     where("state", "==", "aprobado"),
     orderBy("createdAt", "asc")
-)
-const snapShot = await getDocs(q);
-return snapShot.docs.map((g) => ({id: g.id, ...g.data()})) as any
+  );
+  const snapShot = await getDocs(q);
+  return snapShot.docs.map((g) => ({ id: g.id, ...g.data() })) as any;
 }
 
-export async function getVideos(){
+export async function getVideos() {
   const q = await query(
     collection(db, "videos"),
-    where("state","==","aprobado"),
+    where("state", "==", "aprobado"),
     orderBy("createdAt", "asc")
-  )
+  );
   const snapShot = await getDocs(q);
-  return snapShot.docs.map((v)=>({id: v.id, ...v.data()})) as any
+  return snapShot.docs.map((v) => ({ id: v.id, ...v.data() })) as any;
 }
 
-export async function getPodcasts(){
+export async function getPodcasts() {
   const q = await query(
     collection(db, "podcasts"),
-    where("state","==","aprobado"),
+    where("state", "==", "aprobado"),
     orderBy("createdAt", "asc")
-  )
+  );
   const snapShot = await getDocs(q);
-  return snapShot.docs.map((p)=>({id: p.id, ...p.data()})) as any
+  return snapShot.docs.map((p) => ({ id: p.id, ...p.data() })) as any;
+}
+
+export async function getNoticiaById(id: string) {
+  const ref = await doc(db, "noticias", id);
+  const docSnap = await getDoc(ref);
+  return docSnap.data();
+}
+
+export async function getGaleriaById(id: string) {
+  const ref = await doc(db, "galerias", id);
+  const docSnap = await getDoc(ref);
+  return docSnap.data();
+}
+
+export async function getVideoById(id: string) {
+  const ref = await doc(db, "videos", id);
+  const docSnap = await getDoc(ref);
+  return docSnap.data();
 }

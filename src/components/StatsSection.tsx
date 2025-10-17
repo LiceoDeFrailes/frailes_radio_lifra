@@ -1,4 +1,3 @@
-// components/UI/StatsSection.tsx
 import { Card, CardContent } from '@/components/ui/card'
 
 interface Stat {

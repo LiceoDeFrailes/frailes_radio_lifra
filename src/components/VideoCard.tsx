@@ -65,7 +65,7 @@ const NoticiaCard = ({
           src={item.url}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
-          className="min-h-full min-w-full"
+          className="min-h-[190px] min-w-[300px]"
         ></iframe>
 
         <div className="hidden md:flex gap-2 justify-end mt-2">
@@ -101,7 +101,7 @@ const NoticiaCard = ({
 
       <div className="flex flex-col gap-1 mx-2 mb-auto mr-auto">
         <Link
-          href={`/radioLifra/galeria/${item?.id}`}
+          href={`/radioLifra/videos/${item?.id}`}
           className={validationMode ? "pointer-events-none" : ""}
         >
           <p className="text-2xl font-bold hover:text-Light-Green-Lifra">{item?.title}</p>

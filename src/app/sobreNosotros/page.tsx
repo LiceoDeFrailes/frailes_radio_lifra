@@ -1,4 +1,3 @@
-// pages/about.tsx
 import Layout from '@/components/Layout/LayoutLiceo'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -39,7 +38,6 @@ export default function SobreNosotros() {
 
   return (
     <Layout>
-      {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-4">Sobre Nosotros</Badge>
@@ -50,7 +48,6 @@ export default function SobreNosotros() {
         </div>
       </section>
 
-      {/* Mission, Vision, Values */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -66,7 +63,6 @@ export default function SobreNosotros() {
         </div>
       </section>
 
-      {/* Team Section */}
       <section className="py-20 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">

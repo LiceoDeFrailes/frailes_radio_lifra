@@ -84,3 +84,9 @@ interface PublicacionBase {
   createdAt?: any; 
   [key: string]: any; 
 }
+
+
+  type DetailCardType = {
+    item: any,
+    type: "noticia" | "galeria" | "video";
+  }
