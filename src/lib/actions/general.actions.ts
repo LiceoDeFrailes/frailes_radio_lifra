@@ -59,6 +59,31 @@ export async function signUserOut() {
   }
 }
 
+async function notifyMailAdmins(type: string, title: string, author: string){
+  let admins = "";
+
+  const q = query(
+    collection(db, 'usuarios'),
+    where("role", "==", "admin")
+  )
+  const snapShot = await getDocs(q);
+  const data = snapShot.docs.map((d)=> ({id: d.id, ...d.data() as any}))
+  await data.forEach((user)=>{
+    admins = admins + user.email + ", "
+  })
+  await fetch('/api/notifyAdmin', {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    tipo: type,
+    title,
+    author,
+    admins,
+  }),
+});
+
+}
+
 export async function uploadNoticia(params: CreateNoticiaParams) {
   const { user, author, title, description, images, content } = params;
 
@@ -82,6 +107,7 @@ export async function uploadNoticia(params: CreateNoticiaParams) {
       state: "pendiente",
       createdAt: Timestamp.now(),
     });
+    notifyMailAdmins("Noticia", title, author);
     return { ok: true };
   } catch (error) {
     return { ok: false, error: error };
