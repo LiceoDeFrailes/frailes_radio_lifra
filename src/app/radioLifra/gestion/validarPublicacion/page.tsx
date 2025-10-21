@@ -1,17 +1,28 @@
-'use client'
-import React from 'react'
+"use client";
+import React from "react";
 import { useEffect, useState } from "react";
 import { getAllPendingPublications } from "@/lib/actions/general.actions";
 import CardNoticia from "@/components/NoticiaCard";
 import VideoCard from "@/components/VideoCard";
 import CardGaleria from "@/components/GaleriaCard";
 import PodcastCard from "@/components/PodcastCard";
-import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const validarPublicacion = () => {
-    const [publicaciones, setPublicaciones] = useState<PublicacionBase[]>([]);;
+  const router = useRouter();
+  const { user } = useAuth();
+  const [publicaciones, setPublicaciones] = useState<PublicacionBase[]>([]);
+  
+  useEffect(() => {
+    if (!user || user.role !== "admin") {
+      toast.info("Nivel de Acceso Prohibido");
+      return router.push("/radioLifra");
+    }
+  }, []);
 
-      useEffect(() => {
+  useEffect(() => {
     async function fetchData() {
       const data = await getAllPendingPublications();
       setPublicaciones(data);
@@ -20,30 +31,64 @@ const validarPublicacion = () => {
   }, []);
 
   if (publicaciones.length === 0)
-    return <p className="text-center text-gray-500 mt-10">No hay publicaciones pendientes.</p>;
+    return (
+      <p className="text-center text-gray-500 mt-10">
+        No hay publicaciones pendientes.
+      </p>
+    );
 
   return (
-     <div className="max-w-7xl mx-auto mt-10 space-y-8">
-      <h1 className="text-2xl font-bold max-sm:hidden">Validar Publicaciones</h1>
+    <div className="max-w-7xl mx-auto mt-10 space-y-8">
+      <h1 className="text-2xl font-bold max-sm:hidden">
+        Validar Publicaciones
+      </h1>
 
       <div className="grid gap-6">
         {publicaciones.map((pub) => {
           switch (pub.tipo) {
             case "noticia":
-              return <CardNoticia key={pub.id} item={pub} validationMode={true}/>;
+              return (
+                <CardNoticia
+                  key={pub.id}
+                  item={pub}
+                  validationMode={true}
+                  isAdmin={true}
+                />
+              );
             case "video":
-              return <VideoCard key={pub.id} item={pub} validationMode={true}/>;
+              return (
+                <VideoCard
+                  key={pub.id}
+                  item={pub}
+                  validationMode={true}
+                  isAdmin={true}
+                />
+              );
             case "galeria":
-              return <CardGaleria key={pub.id} item={pub} validationMode={true} />;
+              return (
+                <CardGaleria
+                  key={pub.id}
+                  item={pub}
+                  validationMode={true}
+                  isAdmin={true}
+                />
+              );
             case "podcast":
-              return <PodcastCard key={pub.id} item={pub} validationMode={true}/>;
+              return (
+                <PodcastCard
+                  key={pub.id}
+                  item={pub}
+                  validationMode={true}
+                  isAdmin={true}
+                />
+              );
             default:
               return null;
           }
         })}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default validarPublicacion
+export default validarPublicacion;

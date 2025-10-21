@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -9,14 +9,23 @@ import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { uploadVideo } from "@/lib/actions/general.actions";
+import { useRouter } from "next/navigation";
 
 export default function AgregarVideoPage() {
+  const router = useRouter();
   const { user } = useAuth();
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [urlYouTube, setUrlYouTube] = useState("");
 
+  useEffect(() => {
+    if (!user || user.role !== "estudiante") {
+      toast.info("Nivel de Acceso Prohibido");
+      return router.push("/radioLifra");
+    }
+  }, []);
+  
   function isYouTubeVideoURL(url: string) {
     const regex =
       /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)[\w-]{11}(\?.*)?$/;
@@ -28,7 +37,7 @@ export default function AgregarVideoPage() {
 
   const handlePublish = async () => {
     if (!user)
-      return toast.info("Debes iniciar sesión para publicar una noticia.");
+      return toast.info("Debes iniciar sesión para publicar una video.");
     if (user.role !== "estudiante")
       return toast.info("Solo los estudiantes pueden publicar videos.");
     if (!author || !title || !urlYouTube || !description)
@@ -66,7 +75,6 @@ export default function AgregarVideoPage() {
   return (
     <div className="min-h-screen max-w-md mx-auto mt-20">
       <div className="bg-white shadow rounded-2xl p-6 flex flex-col gap-6">
-        
         <div className="flex flex-col gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">

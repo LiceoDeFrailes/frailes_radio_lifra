@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -10,17 +10,27 @@ import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import { uploadNoticia } from "@/lib/actions/general.actions";
 import { Spinner } from "@/components/ui/spinner";
+import { useRouter } from "next/navigation";
 
 export default function NuevaNoticiaPage() {
+  const router = useRouter();
   const { user } = useAuth();
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<FileList | null>(null);
   const [content, setContent] = useState("");
-  const [imageKey, setImageKey] = useState(Date.now()); 
+  const [imageKey, setImageKey] = useState(Date.now());
   const [resetEditor, setResetEditor] = useState(false);
-  const MAX_FILE_SIZE = 3 * 1024 * 1024; 
+  const MAX_FILE_SIZE = 3 * 1024 * 1024;
+    useEffect(() => {
+    if (!user || user.role !== "estudiante") {
+      toast.info(
+        "Nivel de Acceso Prohibido"
+      );
+      return router.push("/radioLifra");
+    }
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -37,18 +47,17 @@ export default function NuevaNoticiaPage() {
   };
 
   const handlePublish = async () => {
-    if (!user)
-      return toast.info("Debes iniciar sesión para publicar una noticia.");
-    if (user.role !== "estudiante")
-      return toast.info("Solo los estudiantes pueden publicar noticias.");
     if (!author || !title || !description || !content || !images)
       return toast.info("Por favor completa todos los campos.");
-    const toastId = toast.custom((t) => (
-      <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
-        <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
-        <h1 className="text-gray-700 font-medium">Cargando</h1>
-      </div>
-    ), { duration: Infinity });
+    const toastId = toast.custom(
+      (t) => (
+        <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
+          <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
+          <h1 className="text-gray-700 font-medium">Cargando</h1>
+        </div>
+      ),
+      { duration: Infinity }
+    );
     const res = await uploadNoticia({
       user,
       author,
@@ -58,7 +67,7 @@ export default function NuevaNoticiaPage() {
       content,
     });
     if (res.ok) {
-      toast.dismiss(toastId)
+      toast.dismiss(toastId);
       toast.success(
         "Noticia enviada correctamente. Espera aprobación del administrador."
       );
@@ -72,7 +81,7 @@ export default function NuevaNoticiaPage() {
       setTimeout(() => setResetEditor(false), 0);
     } else {
       console.error("Error al publicar noticia:", res.error);
-      toast.dismiss(toastId)
+      toast.dismiss(toastId);
       toast.error("Ocurrió un error al publicar la noticia.");
     }
   };

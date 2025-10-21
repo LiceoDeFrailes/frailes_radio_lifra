@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -9,17 +9,28 @@ import Link from "next/link";
 import { createUser } from "@/lib/actions/auth.action";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner"
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function CrearUsuarioPage() {
+  const router = useRouter();
+  const { user } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
+
+    useEffect(() => {
+    if (!user || user.role !== "admin") {
+      toast.info("Nivel de Acceso Prohibido");
+      return router.push("/radioLifra");
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if(password != confirmPassword){
       return toast.info('Contraseñas no Iguales');
     }

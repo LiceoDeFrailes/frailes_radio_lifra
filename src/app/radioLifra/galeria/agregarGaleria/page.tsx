@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -9,15 +9,26 @@ import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import { uploadGaleria } from "@/lib/actions/general.actions";
 import { Spinner } from "@/components/ui/spinner";
-import { X, Image as ImageIcon, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { X, Image as ImageIcon } from "lucide-react";
 
 export default function NuevaGaleriaPage() {
+  const router = useRouter();
   const { user } = useAuth();
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
+    useEffect(() => {
+    if (!user || user.role !== "estudiante") {
+      toast.info(
+        "Nivel de Acceso Prohibido"
+      );
+      return router.push("/radioLifra");
+    }
+  }, []);
 
   const MAX_FILE_SIZE = 3 * 1024 * 1024; 
   const MAX_IMAGES = 6;
@@ -71,8 +82,6 @@ export default function NuevaGaleriaPage() {
   };
 
   const handlePublish = async () => {
-    if (!user) return toast.info('Debes iniciar sesión para publicar una noticia.');
-    if (user.role !== "estudiante") return toast.info('Solo los estudiantes pueden publicar galerías.');
     if (!author || !title || !description || images.length === 0) {
       return toast.info("Por favor completa todos los campos.");
     }

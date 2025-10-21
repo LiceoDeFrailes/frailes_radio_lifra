@@ -138,6 +138,7 @@ export async function uploadGaleria(params: CreateGaleriaParams) {
       state: "pendiente",
       createdAt: Timestamp.now(),
     });
+    notifyMailAdmins("Galería", title, author);
     return { ok: true };
   } catch (error) {
     return { ok: false, error: error };
@@ -157,6 +158,7 @@ export async function uploadVideo(params: CreateVideoParams) {
       state: "pendiente",
       createdAt: Timestamp.now(),
     });
+    notifyMailAdmins("Video", title, author);
     return { ok: true };
   } catch (error) {
     return { ok: false, error: error };
@@ -176,6 +178,7 @@ export async function uploadPodcast(params: CreatePodcastParams) {
       state: "pendiente",
       createdAt: Timestamp.now(),
     });
+    notifyMailAdmins("Podcast", title, author);
     return { ok: true };
   } catch (error) {
     return { ok: false, error: error };

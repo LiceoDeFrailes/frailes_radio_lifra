@@ -30,11 +30,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             <li><b>Título:</b> ${title}</li>
             <li><b>Autor:</b> ${author}</li>
           </ul>
-          <p>Revisa la publicación en el panel:</p>
-          <a href="https://radiolifra.vercel.app/radioLifra/gestion/validarPublicacion"
-             style="background-color:#006400;color:white;padding:10px 16px;border-radius:6px;text-decoration:none">
-             Revisar publicación
-          </a>
         </div>
       `,
     };
