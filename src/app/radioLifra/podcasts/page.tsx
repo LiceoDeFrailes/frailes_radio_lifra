@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { getPodcasts } from '@/lib/actions/general.actions';
 import PodcastCard from '@/components/PodcastCard'
 
-const AgregarPodcast = () => {
+const PodcastPage = () => {
   const { user } = useAuth();
   const [podcasts, setPodcasts] = useState<any>([]);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -58,4 +58,4 @@ const AgregarPodcast = () => {
   )
 }
 
-export default AgregarPodcast
+export default PodcastPage

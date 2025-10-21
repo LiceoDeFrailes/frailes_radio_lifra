@@ -5,7 +5,7 @@ import { getGaleriaById } from "@/lib/actions/general.actions";
 import ContentDetailCard from "@/components/ContentDetailCard";
 import { Spinner } from "@/components/ui/spinner";
 
-const page = ({ params, }: {params: Promise<{ id: string }>}) => {
+const Page = ({ params, }: {params: Promise<{ id: string }>}) => {
     const { id } = use(params)
     const [galeria, setGaleria] = useState<any>({});
     const [loading, setLoading] = useState(true);
@@ -31,4 +31,4 @@ const page = ({ params, }: {params: Promise<{ id: string }>}) => {
   )
 };
 
-export default page;
+export default Page;

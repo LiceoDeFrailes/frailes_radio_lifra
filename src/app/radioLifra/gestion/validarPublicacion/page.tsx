@@ -10,24 +10,22 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
-const validarPublicacion = () => {
+const ValidarPublicacion = () => {
   const router = useRouter();
   const { user } = useAuth();
   const [publicaciones, setPublicaciones] = useState<PublicacionBase[]>([]);
-  
+
   useEffect(() => {
     if (!user || user.role !== "admin") {
       toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
+    } else {
+      async function fetchData() {
+        const data = await getAllPendingPublications();
+        setPublicaciones(data);
+      }
+      fetchData();
     }
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getAllPendingPublications();
-      setPublicaciones(data);
-    }
-    fetchData();
   }, []);
 
   if (publicaciones.length === 0)
@@ -91,4 +89,4 @@ const validarPublicacion = () => {
   );
 };
 
-export default validarPublicacion;
+export default ValidarPublicacion;
