@@ -53,7 +53,7 @@ export default function CrearUsuarioPage() {
               setConfirmPassword("");
               setIsAdmin(false);
             } else {
-              console.log('Error: ', res.error)
+              console.log('Error: ')
               toast.dismiss(toastId);
               toast.error('Error al Crear el Usuario')
             }

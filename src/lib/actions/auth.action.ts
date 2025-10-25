@@ -1,30 +1,36 @@
-'use server'
+"use server";
 
-import { adminAuth } from "../../../firebase/admin";
+import { adminAuth, adminDb } from "../../../firebase/admin";
 
 export async function createUser(params: CreateUserParams) {
+  const { name, email, password, isAdmin } = params;
   try {
-    const res = await fetch('/api/createUser', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
+    const userRecord = await adminAuth.createUser({
+      email,
+      password,
     });
 
-    const data = await res.json();
-    return data; 
+    await adminDb
+      .collection("usuarios")
+      .doc(userRecord.uid)
+      .set({
+        name,
+        email,
+        role: isAdmin ? "admin" : "estudiante",
+        createdAt: new Date(),
+      });
+    return { ok: true };
   } catch (error: any) {
-    return { ok: false, error: error.message };
+    return { ok: false };
   }
 }
 
-export async function updateUserPassword(email: string, newPassword: string){
+export async function updateUserPassword(email: string, newPassword: string) {
   try {
-
     const user = await adminAuth.getUserByEmail(email);
     await adminAuth.updateUser(user.uid, { password: newPassword });
-    return {ok: true}
-
+    return { ok: true };
   } catch (error) {
-    return {ok: true, error: error}
+    return { ok: true, error: error };
   }
 }
