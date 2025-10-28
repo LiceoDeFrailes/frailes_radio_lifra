@@ -87,7 +87,7 @@ export default function AgregarPodcastPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Titulo del Video
+              Titulo del Podcast
             </label>
             <Input
               placeholder="Ingrese el Título"

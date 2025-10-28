@@ -25,9 +25,10 @@ const Page = ({ params, }: {params: Promise<{ id: string }>}) => {
           </div>;
 }
   return (
-    <div>
-        <ContentDetailCard item={galeria} type="galeria" />
-    </div>
+    <>
+        <ContentDetailCard
+        key={galeria.Id} item={galeria} type="galeria" />
+    </>
   )
 };
 

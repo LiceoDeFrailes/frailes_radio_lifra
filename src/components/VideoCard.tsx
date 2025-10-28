@@ -89,8 +89,14 @@ const NoticiaCard = ({
                 className="bg-transparent hover:bg-red-100"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleRechazar();
-                }}
+                  toast.warning("Eliminar Contenido", {
+                    description: "Desea eliminar este contenido? Esta accion no es revercible.",
+                    action: {
+                      label: "Confirmar",
+                      onClick: () => handleRechazar(),
+                    },
+                  })}
+                }
               >
                 <Trash2 className="text-black size-5" />
               </Button>
@@ -130,8 +136,14 @@ const NoticiaCard = ({
                 className="bg-transparent hover:bg-red-100"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleRechazar();
-                }}
+                  toast.warning("Eliminar Contenido", {
+                    description: "Desea eliminar este contenido? Esta accion no es revercible.",
+                    action: {
+                      label: "Confirmar",
+                      onClick: () => handleRechazar(),
+                    },
+                  })}
+                }
               >
                 <Trash2 className="text-black size-5" />
               </Button>

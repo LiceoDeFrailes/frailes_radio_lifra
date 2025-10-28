@@ -78,6 +78,7 @@ const GaleriaCard = ({
             {item?.title}
           </p>
         </Link>
+        
         <p className="text-sm text-gray-600 max-h-[150px] overflow-y-auto px-1.5">
           {item?.description}
         </p>
@@ -146,8 +147,14 @@ const GaleriaCard = ({
               <Button
                 onClick={(e) => {
                   e.preventDefault();
-                  handleRechazar();
-                }}
+                  toast.warning("Eliminar Contenido", {
+                    description: "Desea eliminar este contenido? Esta accion no es revercible.",
+                    action: {
+                      label: "Confirmar",
+                      onClick: () => handleRechazar(),
+                    },
+                  })}
+                }
                 className="bg-transparent hover:bg-red-100"
               >
                 <Trash2 className="text-black size-5" />

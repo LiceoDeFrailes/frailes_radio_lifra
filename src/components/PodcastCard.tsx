@@ -88,8 +88,14 @@ const NoticiaCard = ({
                 className="bg-transparent hover:bg-red-100"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleRechazar();
-                }}
+                  toast.warning("Eliminar Contenido", {
+                    description: "Desea eliminar este contenido? Esta accion no es revercible.",
+                    action: {
+                      label: "Confirmar",
+                      onClick: () => handleRechazar(),
+                    },
+                  })}
+                }
               >
                 <Trash2 className="text-black size-5" />
               </Button>
@@ -99,14 +105,8 @@ const NoticiaCard = ({
       </div>
 
       <div className="flex flex-col gap-1 mx-2 mb-auto mr-auto -mt-10 md:mt-2">
-        <Link
-          href={`/radioLifra/galeria/${item?.id}`}
-          className={validationMode ? "pointer-events-none" : ""}
-        >
-          <p className="text-3xl font-bold hover:text-Light-Green-Lifra">
-            {item?.title}
-          </p>
-        </Link>
+        <p className="text-3xl font-bold">{item?.title}</p>
+
         <p className="text-sm text-gray-600 max-h-[150] overflow-y-auto px-1.5">
           {item?.description}
         </p>
@@ -130,8 +130,14 @@ const NoticiaCard = ({
                 className="bg-transparent hover:bg-red-100"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleRechazar();
-                }}
+                  toast.warning("Eliminar Contenido", {
+                    description: "Desea eliminar este contenido? Esta accion no es revercible.",
+                    action: {
+                      label: "Confirmar",
+                      onClick: () => handleRechazar(),
+                    },
+                  })}
+                }
               >
                 <Trash2 className="text-black size-5" />
               </Button>
