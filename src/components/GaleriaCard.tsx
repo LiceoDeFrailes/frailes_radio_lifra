@@ -109,8 +109,11 @@ const GaleriaCard = ({
                               sizes="(max-width: 768px) 150px, (max-width: 1024px) 200px, 250px"
                               alt={`Imagen ${index + 1}`}
                               fill
-                              priority={index < 3}
+                              priority={index === 0}
+                              fetchPriority={index === 0 ? "high" : "auto"}
                               quality={60}
+                              placeholder="blur"
+                              blurDataURL={img}
                               className="object-cover"
                             />
                           </div>
