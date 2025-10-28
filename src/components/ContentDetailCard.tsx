@@ -2,13 +2,19 @@ import React from "react";
 import { Card, CardContent } from "./ui/card";
 import { CircleUserRound, Divide } from "lucide-react";
 import Image from "next/image";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselPrevious,
-  CarouselNext,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import dynamic from 'next/dynamic';
+import { Spinner } from "./ui/spinner";
+
+const Carousel = dynamic(() => import("@/components/ui/carousel").then(mod => mod.Carousel), {
+  loading: () => <div className="min-h-[170px] flex items-center justify-center"><Spinner className="w-4 h-4" /></div>,
+  ssr: false
+});
+
+const CarouselContent = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselContent));
+const CarouselItem = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselItem));
+const CarouselPrevious = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselPrevious));
+const CarouselNext = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselNext));
+
 
 const ContentDetailCard = ({ item, type }: DetailCardType) => {
   return (

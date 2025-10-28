@@ -8,13 +8,17 @@ import { Check, Trash2 } from "lucide-react";
 import { rechazarGaleria, aceptarGaleria } from "@/lib/actions/general.actions";
 import { toast } from "sonner";
 import { Spinner } from "./ui/spinner";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselPrevious,
-  CarouselNext,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import dynamic from 'next/dynamic';
+
+const Carousel = dynamic(() => import("@/components/ui/carousel").then(mod => mod.Carousel), {
+  loading: () => <div className="min-h-[170px] flex items-center justify-center"><Spinner className="w-4 h-4" /></div>,
+  ssr: false
+});
+
+const CarouselContent = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselContent));
+const CarouselItem = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselItem));
+const CarouselPrevious = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselPrevious));
+const CarouselNext = dynamic(() => import("@/components/ui/carousel").then(mod => mod.CarouselNext));
 
 const GaleriaCard = ({
   item,
@@ -87,7 +91,7 @@ const GaleriaCard = ({
             opts={{
               align: "start",
             }}
-            className="w-full max-w-55 md:max-w-lg"
+            className="w-full max-w-55 md:max-w-lg min-h-[170px]"
           >
             <CarouselContent>
               {item?.imageUrls && item?.imageUrls.length > 0 ? (
@@ -102,8 +106,11 @@ const GaleriaCard = ({
                           <div className="relative w-[150px] h-[150px] rounded-md overflow-hidden">
                             <Image
                               src={img}
+                              sizes="(max-width: 768px) 150px, (max-width: 1024px) 200px, 250px"
                               alt={`Imagen ${index + 1}`}
                               fill
+                              priority={index < 3}
+                              quality={60}
                               className="object-cover"
                             />
                           </div>
