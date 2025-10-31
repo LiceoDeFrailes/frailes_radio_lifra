@@ -31,7 +31,7 @@ const AgregarVideos = () => {
     <div className="flex flex-col gap-3">
       {user?.role === "estudiante" ? (
         <Link href="/radioLifra/videos/agregarVideos">
-          <CirclePlus />
+          <CirclePlus className="hover:text-Light-Green-Lifra"/>
         </Link>
       ) : null}
 

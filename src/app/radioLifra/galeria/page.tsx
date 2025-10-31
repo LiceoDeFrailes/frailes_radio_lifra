@@ -32,7 +32,7 @@ const AgregarGaleria = () => {
     <div className="flex flex-col gap-3">
       {user?.role === "estudiante" ? (
         <Link href="/radioLifra/galeria/agregarGaleria">
-          <CirclePlus />
+          <CirclePlus className="hover:text-Light-Green-Lifra"/>
         </Link>
       ) : null}
       {galerias.length > 0 ? (

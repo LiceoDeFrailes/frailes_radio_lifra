@@ -33,7 +33,7 @@ const PodcastPage = () => {
       
       {user?.role === "estudiante" ? 
       <Link href='/radioLifra/podcasts/agregarPodcast'>
-        <CirclePlus/>
+        <CirclePlus className="hover:text-Light-Green-Lifra"/>
       </Link>
       : 
       null
