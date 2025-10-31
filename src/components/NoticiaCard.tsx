@@ -64,6 +64,8 @@ const NoticiaCard = ({
       <div className="flex flex-col gap-2 ">
         <Image
           src={item?.imageUrl}
+          priority={true}
+          fetchPriority="high"
           height={250}
           width={260}
           alt="Foto de Liceo"
@@ -90,7 +92,14 @@ const NoticiaCard = ({
                 className="bg-transparent hover:bg-red-100"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleRechazar();
+                  toast.warning("Eliminar Contenido", {
+                    description:
+                      "Desea eliminar este contenido? Esta accion no es revercible.",
+                    action: {
+                      label: "Confirmar",
+                      onClick: () => handleRechazar(),
+                    },
+                  });
                 }}
               >
                 <Trash2 className="text-black size-5" />
@@ -116,32 +125,37 @@ const NoticiaCard = ({
         <div className="flex gap-2 justify-center mt-2 md:hidden ml-auto mr-2">
           {validationMode && (
             <>
-          <Button
-            className="bg-transparent hover:bg-green-100"
-            onClick={(e) => {
-              e.preventDefault();
-              handleAceptar();
-            }}
-          >
-            <Check className="text-black size-5" />
-          </Button>
+              <Button
+                className="bg-transparent hover:bg-green-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAceptar();
+                }}
+              >
+                <Check className="text-black size-5" />
+              </Button>
             </>
           )}
           {isAdmin && (
             <>
-          <Button
-            className="bg-transparent hover:bg-red-100"
-            onClick={(e) => {
-              e.preventDefault();
-              handleRechazar();
-            }}
-          >
-            <Trash2 className="text-black size-5" />
-          </Button>
+              <Button
+                className="bg-transparent hover:bg-red-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  toast.warning("Eliminar Contenido", {
+                    description:
+                      "Desea eliminar este contenido? Esta accion no es revercible.",
+                    action: {
+                      label: "Confirmar",
+                      onClick: () => handleRechazar(),
+                    },
+                  });
+                }}
+              >
+                <Trash2 className="text-black size-5" />
+              </Button>
             </>
           )}
-
-
         </div>
       </div>
     </Card>

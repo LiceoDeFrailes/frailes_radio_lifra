@@ -102,6 +102,8 @@ export default function HeaderRadioLifra() {
           alt='Escudo Frailes' 
           width={70} 
           height={70}
+          priority={true}
+          fetchPriority="high"
           className="max-sm:ml-auto"
         />
         

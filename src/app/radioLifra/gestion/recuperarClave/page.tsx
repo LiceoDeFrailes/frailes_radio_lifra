@@ -44,7 +44,7 @@ export default function RecuperarContrasenaPage() {
       setPassword("");
       setConfirmPassword("");
       toast.dismiss(toastId);
-      toast.success("Contraseña Cambiada");
+      toast.success("Contraseña Actualizada");
     } catch (error) {
       console.log("Ocurrio un error" , error);
       toast.dismiss(toastId);
@@ -77,7 +77,7 @@ export default function RecuperarContrasenaPage() {
               id="email"
               name="email"
               type="email"
-              placeholder="tu@email.com"
+              placeholder="correo@ejemplo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

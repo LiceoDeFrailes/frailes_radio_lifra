@@ -64,7 +64,7 @@ const NoticiaCard = ({
         <iframe
           src={item.url}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
+          loading="eager"
           className="min-h-[190px] min-w-[300px]"
         ></iframe>
 

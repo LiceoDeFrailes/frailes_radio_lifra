@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { aceptarPodcast, rechazarPodcast } from "@/lib/actions/general.actions";
 import { Spinner } from "./ui/spinner";
 
-const NoticiaCard = ({
+const PodcastCard = ({
   item,
   validationMode = false,
   isAdmin = false,
@@ -149,4 +149,4 @@ const NoticiaCard = ({
   );
 };
 
-export default NoticiaCard;
+export default PodcastCard;
