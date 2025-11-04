@@ -28,20 +28,17 @@ const ValidarPublicacion = () => {
     }
   }, []);
 
-  if (publicaciones.length === 0)
-    return (
+  return (
+    <div className="max-w-7xl mx-auto mt-17">
+      <h1 className="text-2xl font-bold">
+        Validar Publicaciones
+      </h1>
+      {publicaciones.length === 0 ? 
+      (
       <p className="text-center text-gray-500 mt-10">
         No hay publicaciones pendientes.
       </p>
-    );
-
-  return (
-    <div className="max-w-7xl mx-auto mt-10 space-y-8">
-      <h1 className="text-2xl font-bold max-sm:hidden">
-        Validar Publicaciones
-      </h1>
-
-      <div className="grid gap-6">
+    ) : <div className="grid gap-6">
         {publicaciones.map((pub) => {
           switch (pub.tipo) {
             case "noticia":
@@ -85,6 +82,8 @@ const ValidarPublicacion = () => {
           }
         })}
       </div>
+      }
+      
     </div>
   );
 };

@@ -32,20 +32,15 @@ export default function PageEliminarUsuarios() {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-auto mt-20">
-      <h1 className="text-2xl font-bold max-sm:hidden">
-        Eliminar Usuarios
-      </h1>
-
-      <div className="grid gap-6 mx-15">
-        {usuarios.length > 0 ? (
-          usuarios.map((user) => <DeleteUserCard key={user.id} user={user} />)
-        ) : (
-          <p className="text-gray-500 text-center col-span-3">
-            No se encontraron usuarios.
-          </p>
-        )}
-      </div>
+    <div className="max-w-7xl mx-auto mt-17">
+      <h1 className="text-2xl font-bold  ">Eliminar Usuarios</h1>
+      {usuarios.length > 0 ? (
+        <p className="text-center text-gray-500 mt-10">No hay usuarios.</p>
+      ) : (
+        <div className="grid gap-6">
+          {usuarios.map((user) => <DeleteUserCard key={user.id} user={user} />)}
+        </div>
+      )}
     </div>
   );
 }
