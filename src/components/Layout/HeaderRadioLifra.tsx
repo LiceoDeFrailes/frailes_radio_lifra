@@ -29,7 +29,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const navItems: { title: string; href: string; }[] = [
+
+
+export default function HeaderRadioLifra() {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router = useRouter();
+
+  const navItems: { title: string; href: string; }[] = [
   {
     title: "Noticias",
     href: "/radioLifra",
@@ -57,16 +65,14 @@ const gestionItems: { title: string; href: string; }[] = [
     href: "/radioLifra/gestion/recuperarClave",
   },
   {
+    title: "Eliminar Usuario",
+    href: "/radioLifra/gestion/eliminarUsuario",
+  },  
+  {
     title: "Validar Publicación",
     href: "/radioLifra/gestion/validarPublicacion",
   },
 ]
-
-export default function HeaderRadioLifra() {
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const router = useRouter();
 
     useEffect(() => {
     setLoading(true);
@@ -102,6 +108,7 @@ export default function HeaderRadioLifra() {
           alt='Escudo Frailes' 
           width={70} 
           height={70}
+          
           priority={true}
           fetchPriority="high"
           className="max-sm:ml-auto"
@@ -121,7 +128,7 @@ export default function HeaderRadioLifra() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Gestión</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-2 md:w-[150px] md:grid-cols-1">
+                  <ul className="grid w-[400px] gap-2 md:w-[250px] md:grid-cols-1">
                     {gestionItems.map((component) => (
                       <ListItem
                         key={component.title}

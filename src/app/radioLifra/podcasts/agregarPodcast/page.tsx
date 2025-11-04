@@ -101,7 +101,7 @@ export default function AgregarPodcastPage() {
               URL del Podcast
             </label>
             <Input
-              placeholder="https://open.spotify.com/track/4fPBB4..."
+              placeholder="https://open.spotify.com/episode/4fPBB4..."
               value={urlSpotify}
               onChange={(e) => setUrlSpotify(e.target.value)}
             />

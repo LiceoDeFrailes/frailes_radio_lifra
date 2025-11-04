@@ -29,10 +29,21 @@ export default function CrearUsuarioPage() {
     }
   }, []);
 
+  function isSecurePassword(password: string): boolean {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[^\s]{8,}$/;
+  return regex.test(password);
+}
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if(password != confirmPassword){
       return toast.info('Contraseñas no Iguales');
+    }
+    if(!isSecurePassword(password)){
+      return toast.warning("Contraseña insegura", {
+      description:
+        "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un símbolo. No debe contener espacios.",
+    });
     }
     const toastId = toast.custom(
       (t) => (
@@ -118,6 +129,9 @@ export default function CrearUsuarioPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <p className="text-xs text-gray-500 ml-2">
+              La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un símbolo. No debe contener espacios.
+            </p>
           </div>
 
           <div className="space-y-2">

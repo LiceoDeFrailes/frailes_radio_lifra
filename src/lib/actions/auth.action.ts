@@ -1,6 +1,8 @@
 "use server";
 
 import { adminAuth, adminDb } from "../../../firebase/admin";
+import { db } from "../../../firebase/client";
+import { collection, getDocs } from "firebase/firestore";
 
 export async function createUser(params: CreateUserParams) {
   const { name, email, password, isAdmin } = params;
@@ -34,3 +36,31 @@ export async function updateUserPassword(email: string, newPassword: string) {
     return { ok: true, error: error };
   }
 }
+
+export async function deleteUser(uid: string){
+  
+  try {
+    await adminAuth.deleteUser(uid);
+    await adminDb.collection("usuarios").doc(uid).delete();
+    return { ok: true, message: "Usuario eliminado completamente." };
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+    return { ok: false, message: "Error al eliminar usuario" };
+  }
+}
+
+export async function getAllUsers() {
+  const snapshot = await getDocs(collection(db, "usuarios"));
+  const users = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt
+        ? data.createdAt.toDate().toISOString()
+        : null,
+    };
+  });
+  return users;
+}
+
