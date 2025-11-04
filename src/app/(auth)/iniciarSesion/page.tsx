@@ -9,7 +9,7 @@ const Page = () => {
   return (
       <div className='min-h-screen flex flex-col items-center 
       justify-center gap-10'>
-        <Image src='/LogoRadioLifra.png' height={150} 
+        <Image src='/LogoRadioLifraProducciones.png' height={150} 
         width={150} alt='LogoRadioLifra'
         onClick={() => {router.push('/radioLifra')}}/>
         <AuthForm/>

@@ -21,7 +21,7 @@ export default function Header() {
     { href: '/', label: 'Inicio' },
     { href: '/sobreNosotros', label: 'Nosotros' },
     { href: '/contacto', label: 'Contacto' },
-    { href: '/radioLifra', label: 'RadioLifra' },
+    { href: '/radioLifra', label: 'RadioLiFra' },
 
   ]
 
