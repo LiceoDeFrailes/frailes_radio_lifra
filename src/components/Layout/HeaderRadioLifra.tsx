@@ -114,7 +114,7 @@ const gestionItems: { title: string; href: string; }[] = [
           className="max-sm:ml-auto"
         />
         
-        <NavigationMenu viewport={false} className="max-md:hidden">
+        <NavigationMenu viewport={false} className="max-md:hidden relative z-50">
           <NavigationMenuList>
             {navItems.map((item) => (
               <NavigationMenuItem key={item.href}>
