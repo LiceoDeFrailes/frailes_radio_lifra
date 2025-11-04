@@ -22,7 +22,7 @@ const DeleteUserCard = ({ user }: any) => {
     <>
       <Card key={user.id} className="shadow-sm border border-gray-200">
         <CardHeader>
-          <CardTitle>{user.name || "Sin nombre"}</CardTitle>
+          <CardTitle className="font-bold">{user.name || "Sin nombre"}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-gray-700 mb-1">

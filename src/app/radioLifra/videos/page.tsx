@@ -7,11 +7,15 @@ import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { getVideos } from "@/lib/actions/general.actions";
 import VideoCard from "@/components/VideoCard";
+import { Spinner } from "@/components/ui/spinner";
+
 
 const AgregarVideos = () => {
   const { user } = useAuth();
   const [videos, setVideos] = useState<any>([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     if (user?.role === "admin") {
@@ -24,6 +28,7 @@ const AgregarVideos = () => {
     async function fetchVideos() {
       const videosCollection = await getVideos();
       setVideos(videosCollection);
+      setLoading(false);
     }
     fetchVideos();
   }, []);
@@ -45,9 +50,20 @@ const AgregarVideos = () => {
           />
         ))
       ) : (
-        <p className="text-gray-500 text-center mt-4">
-          No hay videos disponibles
+        <div className="flex justify-center items-center mt-20">
+          {loading && <Spinner className="w-8 h-8 text-Light-Green-Lifra" />}
+          <p className="text-gray-500 text-center">
+          {loading ? 
+          <>
+            Cargando publicaciones...
+          </>
+           : 
+           <>
+           No hay galerias disponibles
+           </>
+           }
         </p>
+        </div>
       )}
     </div>
   );

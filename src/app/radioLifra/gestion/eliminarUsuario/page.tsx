@@ -2,31 +2,37 @@
 
 import { useEffect, useState } from "react";
 import { getAllUsers } from "@/lib/actions/auth.action";
-import { deleteUser } from "@/lib/actions/auth.action";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Trash2 } from "lucide-react";
 import DeleteUserCard from "@/components/DeleteUserCard";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function PageEliminarUsuarios() {
   const { user } = useAuth();
   const router = useRouter();
   const [usuarios, setUsuarios] = useState<any[]>([]);
+   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user || user.role !== "admin") {
       toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
     }
-  }, []);
+  }, [user, router]);
 
   useEffect(() => {
     async function fetchUsuarios() {
-      const data = await getAllUsers();
-      setUsuarios(data);
+      try {
+        setLoading(true);
+        const data = await getAllUsers();
+        setUsuarios(data);
+      } catch (error) {
+        console.error("Error al obtener usuarios:", error);
+        toast.error("Error al cargar usuarios");
+      } finally {
+        setLoading(false);
+      }
     }
     fetchUsuarios();
   }, []);
@@ -34,14 +40,19 @@ export default function PageEliminarUsuarios() {
   return (
     <div className="max-w-7xl mx-auto mt-17">
       <h1 className="text-2xl font-bold  ">Eliminar Usuarios</h1>
-      {usuarios.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center mt-20">
+          <Spinner className="w-8 h-8 text-Light-Green-Lifra" />
+          <p className="ml-3 text-gray-500">Cargando usuarios...</p>
+        </div>
+      ) : usuarios.length === 0 ? (
+        <p className="text-center text-gray-500 mt-10">No hay usuarios.</p>
+      ) : (
         <div className="grid gap-6">
           {usuarios.map((user) => (
             <DeleteUserCard key={user.id} user={user} />
           ))}
         </div>
-      ) : (
-        <p className="text-center text-gray-500 mt-10">No hay usuarios.</p>
       )}
     </div>
   );

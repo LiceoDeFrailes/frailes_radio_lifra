@@ -7,11 +7,13 @@ import { useAuth } from "@/context/AuthContext";
 import GaleriaCard from "@/components/GaleriaCard";
 import { useEffect, useState } from "react";
 import { getGalerias } from "@/lib/actions/general.actions";
+import { Spinner } from "@/components/ui/spinner";
 
 const AgregarGaleria = () => {
   const { user } = useAuth();
   const [galerias, setGalerias] = useState<any>([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user?.role === "admin") {
@@ -25,6 +27,7 @@ const AgregarGaleria = () => {
     async function fetchGalerias() {
       const galeriasCollection = await getGalerias();
       setGalerias(galeriasCollection);
+      setLoading(false)
     }
     fetchGalerias();
   }, []);
@@ -45,9 +48,21 @@ const AgregarGaleria = () => {
           />
         ))
       ) : (
-        <p className="text-gray-500 text-center mt-4">
-          No hay galerias disponibles
+        <div className="flex justify-center items-center mt-20">
+          {loading && <Spinner className="w-8 h-8 text-Light-Green-Lifra" />}
+          <p className="text-gray-500 text-center">
+          {loading ? 
+          <>
+            Cargando publicaciones...
+          </>
+           : 
+           <>
+           No hay galerias disponibles
+           </>
+           }
         </p>
+        </div>
+        
       )}
     </div>
   );
