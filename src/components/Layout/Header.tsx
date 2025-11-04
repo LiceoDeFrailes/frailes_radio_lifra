@@ -63,7 +63,7 @@ export default function Header() {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon" className="ml-auto">
-                <Menu className="size-10" />
+                <Menu className="size-7" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" aria-describedby={undefined}>

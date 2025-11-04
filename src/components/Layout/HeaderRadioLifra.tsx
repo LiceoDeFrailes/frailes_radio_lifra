@@ -106,8 +106,8 @@ const gestionItems: { title: string; href: string; }[] = [
         <Image 
           src='/LogoRadioLifraProducciones.png' 
           alt='Escudo Frailes' 
-          width={70} 
-          height={70}
+          width={55} 
+          height={55}
           priority={true}
           fetchPriority="high"
           className="max-sm:ml-auto h-auto w-auto"
@@ -145,7 +145,7 @@ const gestionItems: { title: string; href: string; }[] = [
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="md:hidden">
             <Button variant="ghost" size="icon" className="ml-auto">
-              <Menu className="mt-3 mr-3 size-10" />
+              <Menu className="mt-3 mr-3 size-7" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" aria-describedby={undefined}>
