@@ -104,11 +104,10 @@ const gestionItems: { title: string; href: string; }[] = [
     <div>
       <div className="flex flex-row items-center gap-1 m-2">
         <Image 
-          src='/LogoRadioLifra.png' 
+          src='/LogoRadioLifraProducciones.png' 
           alt='Escudo Frailes' 
           width={70} 
           height={70}
-          
           priority={true}
           fetchPriority="high"
           className="max-sm:ml-auto"

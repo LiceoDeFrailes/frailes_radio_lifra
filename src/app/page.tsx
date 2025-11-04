@@ -34,7 +34,6 @@ export default function Home() {
 
   return (
     <Layout>
-
       <section className="relative py-5 min-h-[80vh] flex items-center bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

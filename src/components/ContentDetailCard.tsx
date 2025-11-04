@@ -141,7 +141,7 @@ const ContentDetailCard = ({ item, type }: DetailCardType) => {
         {type === "noticia" ? (
           <div
             dangerouslySetInnerHTML={{ __html: item.content }}
-            className="max-h-[450px] md:max-h-[900px] overflow-y-auto"
+            className="max-h-[450px] md:max-h-[900px] overflow-y-auto p-2"
           ></div>
         ) : null}
 
