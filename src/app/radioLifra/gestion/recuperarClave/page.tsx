@@ -18,7 +18,7 @@ export default function RecuperarContrasenaPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-      useEffect(() => {
+  useEffect(() => {
     if (!user || user.role !== "admin") {
       toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
@@ -27,16 +27,19 @@ export default function RecuperarContrasenaPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password || !confirmPassword) 
-      return toast.info('Por favor completa todos los campos.');
-    if (password !== confirmPassword) 
-      return toast.info('Las contraseñas deben ser Iguales');
-        const toastId = toast.custom((t) => (
-      <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
-        <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
-        <h1 className="text-gray-700 font-medium">Cargando</h1>
-      </div>
-    ), { duration: Infinity });
+    if (!email || !password || !confirmPassword)
+      return toast.info("Por favor completa todos los campos.");
+    if (password !== confirmPassword)
+      return toast.info("Las contraseñas deben ser Iguales");
+    const toastId = toast.custom(
+      (t) => (
+        <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
+          <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
+          <h1 className="text-gray-700 font-medium">Cargando</h1>
+        </div>
+      ),
+      { duration: Infinity }
+    );
 
     try {
       await updateUserPassword(email, password);
@@ -46,10 +49,9 @@ export default function RecuperarContrasenaPage() {
       toast.dismiss(toastId);
       toast.success("Contraseña Actualizada");
     } catch (error) {
-      console.log("Ocurrio un error" , error);
+      console.log("Ocurrio un error", error);
       toast.dismiss(toastId);
       toast.success("Error. No se pudo cambiar la contraseña");
-
     }
   };
 
@@ -128,15 +130,15 @@ export default function RecuperarContrasenaPage() {
           <div className="flex gap-4 pt-4">
             <Button
               type="submit"
-              className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white flex-1 py-3 text-base font-medium"
+              className="bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white flex-1 min-w-0 py-3 text-base font-medium"
             >
-              Recuperar Contraseña
+              Recuperar
             </Button>
-            <Link href="/radioLifra" className="flex-1">
+            <Link href="/radioLifra" className="flex-1 min-w-0">
               <Button
                 type="button"
                 variant="outline"
-                className="w-full py-3 text-base font-medium"
+                className="w-full py-3 text-base font-medium border-gray-300 hover:bg-gray-50"
               >
                 Cancelar
               </Button>

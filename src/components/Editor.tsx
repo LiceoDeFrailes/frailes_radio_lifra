@@ -55,7 +55,6 @@ export default function Editor({
       }),
     ],
     content: "",
-    immediatelyRender: false,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       if (onChange) onChange(html);

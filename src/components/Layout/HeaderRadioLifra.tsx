@@ -110,7 +110,7 @@ const gestionItems: { title: string; href: string; }[] = [
           height={70}
           priority={true}
           fetchPriority="high"
-          className="max-sm:ml-auto"
+          className="max-sm:ml-auto h-auto w-auto"
         />
         
         <NavigationMenu viewport={false} className="max-md:hidden relative z-50">
@@ -145,7 +145,7 @@ const gestionItems: { title: string; href: string; }[] = [
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="md:hidden">
             <Button variant="ghost" size="icon" className="ml-auto">
-              <Menu className="h-5 w-5" />
+              <Menu className="mt-3 mr-3 size-10" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" aria-describedby={undefined}>

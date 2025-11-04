@@ -22,7 +22,9 @@ export default function NuevaNoticiaPage() {
   const [content, setContent] = useState("");
   const [imageKey, setImageKey] = useState(Date.now());
   const [resetEditor, setResetEditor] = useState(false);
+
   const MAX_FILE_SIZE = 3 * 1024 * 1024;
+  
     useEffect(() => {
     if (!user || user.role !== "estudiante") {
       toast.info(

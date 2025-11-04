@@ -21,7 +21,7 @@ export default function Header() {
     { href: '/', label: 'Inicio' },
     { href: '/sobreNosotros', label: 'Nosotros' },
     { href: '/contacto', label: 'Contacto' },
-    { href: '/radioLifra', label: 'RadioLiFra' },
+    { href: '/radioLifra', label: 'RadioLifra' },
 
   ]
 
@@ -33,7 +33,9 @@ export default function Header() {
           <Image src='/escudoFrailes.png' 
           alt='Escudo Frailes' 
           width={40} 
-          height={40}/>
+          height={40}
+          className={undefined}
+          />
             <div>
               <span className="text-xl font-bold">Liceo De Frailes</span>
               <p className="text-sm text-muted-foreground">Excelencia Educativa</p>
@@ -61,7 +63,7 @@ export default function Header() {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon" className="ml-auto">
-                <Menu className="h-5 w-5" />
+                <Menu className="size-10" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" aria-describedby={undefined}>
