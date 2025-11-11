@@ -59,4 +59,5 @@
    - npm install
    - npm run dev
 
-
+## 💻 Desarrollador Inicial
+- [Angel Gabriel Cortes Morales](https://github.com/AngelCortes2005)
