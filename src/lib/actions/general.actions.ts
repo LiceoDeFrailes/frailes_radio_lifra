@@ -354,7 +354,7 @@ export async function getVideos() {
   const q = await query(
     collection(db, "videos"),
     where("state", "==", "aprobado"),
-    orderBy("createdAt", "asc")
+    orderBy("createdAt", "desc")
   );
   const snapShot = await getDocs(q);
   return snapShot.docs.map((v) => ({ id: v.id, ...v.data() })) as any;
