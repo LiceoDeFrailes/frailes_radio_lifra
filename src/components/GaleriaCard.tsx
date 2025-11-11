@@ -106,7 +106,7 @@ const GaleriaCard = ({
                           <div className="relative w-[150px] h-[150px] rounded-md overflow-hidden max-w-55">
                             <Image
                               src={img}
-                              sizes="(max-width: 768px) 150px, (max-width: 1024px) 200px, 250px"
+                              sizes="(max-width: 768px) 150px, (max-width: 1024px) 200px, max-w-55"
                               alt={`Imagen ${index + 1}`}
                               fill
                               priority={index === 0}

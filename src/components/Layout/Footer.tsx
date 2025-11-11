@@ -35,7 +35,7 @@ export default function Footer() {
 
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-                <Image src='/escudoFrailes.png' 
+                <Image src='/escudoFrailes.webp' 
                 alt='Escudo Frailes' 
                 width={40} 
                  height={40}/>
