@@ -91,7 +91,7 @@ const GaleriaCard = ({
             opts={{
               align: "start",
             }}
-            className="w-full max-w-55 md:max-w-lg min-h-[170px]"
+            className="max-w-55 md:max-w-lg min-h-[170px]"
           >
             <CarouselContent>
               {item?.imageUrls && item?.imageUrls.length > 0 ? (

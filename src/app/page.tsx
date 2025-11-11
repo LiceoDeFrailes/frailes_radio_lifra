@@ -58,7 +58,7 @@ export default function Home() {
             <div className="flex justify-center lg:justify-end">
               <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-200 max-w-md transform hover:scale-105 transition-transform duration-300">
                 <Image 
-                  src="/entradaFrailes.jpg" 
+                  src="/entradaFrailes.webp" 
                   alt="Ciclo Diversificado Vocacional - Liceo de Frailes"
                   width={400}
                   height={300}

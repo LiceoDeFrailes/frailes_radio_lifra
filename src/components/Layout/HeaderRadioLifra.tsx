@@ -104,7 +104,7 @@ const gestionItems: { title: string; href: string; }[] = [
     <div>
       <div className="flex flex-row items-center gap-1 m-2">
         <Image 
-          src='/LogoRadioLifraProducciones.png' 
+          src='/LogoRadioLifraProducciones.webp' 
           alt='Escudo Frailes' 
           width={55} 
           height={55}
