@@ -102,8 +102,8 @@ const GaleriaCard = ({
                   >
                     <div className="p-1">
                       <Card>
-                        <CardContent className="flex items-center justify-center p-1">
-                          <div className="relative w-[150px] h-[150px] rounded-md overflow-hidden">
+                        <CardContent className="max-w-55 flex items-center justify-center p-1">
+                          <div className="relative w-[150px] h-[150px] rounded-md overflow-hidden max-w-55">
                             <Image
                               src={img}
                               sizes="(max-width: 768px) 150px, (max-width: 1024px) 200px, 250px"
