@@ -34,7 +34,6 @@ export default function Header() {
           alt='Escudo Frailes' 
           width={40} 
           height={40}
-          className={undefined}
           />
             <div>
               <span className="text-xl font-bold">Liceo De Frailes</span>

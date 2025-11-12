@@ -1,12 +1,9 @@
-import { ReactNode } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 
-interface LayoutProps {
-  children: ReactNode
-}
 
-export default function LayoutLiceo({ children }: LayoutProps) {
+
+export default function LayoutLiceo({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
