@@ -57,8 +57,6 @@ const ContentDetailCard = ({ item, type }: DetailCardType) => {
                     ? "max-w-[300px]"
                     : item?.imageUrls?.length === 2
                     ? "max-w-[500px]"
-                    : item?.imageUrls?.length === 3
-                    ? "max-w-[600px]"
                     : "max-w-55 md:max-w-lg lg:max-w-4xl"
                 } mx-auto`}
               >
@@ -127,12 +125,9 @@ const ContentDetailCard = ({ item, type }: DetailCardType) => {
                   )}
                 </CarouselContent>
 
-                {item?.imageUrls && item.imageUrls.length > 1 && (
-                  <>
+
                     <CarouselPrevious />
                     <CarouselNext />
-                  </>
-                )}
               </Carousel>
             </div>
           </div>
