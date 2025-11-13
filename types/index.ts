@@ -8,6 +8,23 @@ interface Stat {
   number: string
   label: string
 }
+interface StatsSectionProps {
+  stats: Stat[];
+}
+
+interface FooterLink {
+  href: string
+  label: string
+}
+
+interface ContactInfo {
+  icon: string
+  text: string
+}
+interface SocialLink {
+  href: string
+  label: string
+}
 
 interface CreateUserParams {
     name: string,

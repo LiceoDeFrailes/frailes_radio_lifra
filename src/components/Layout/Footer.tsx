@@ -3,16 +3,6 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 
-interface FooterLink {
-  href: string
-  label: string
-}
-
-interface ContactInfo {
-  icon: string
-  text: string
-}
-
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
@@ -28,10 +18,17 @@ export default function Footer() {
     { icon: '📍', text: 'Liceo de Frailes, Desamparados' },
   ]
 
+    const socialLinks: SocialLink[] = [
+    { href: 'https://www.facebook.com/people/Liceo-De-Frailes/100057346785579/', label: 'Facebook' },
+    { href: 'https://www.instagram.com/liceo_de_frailes/', label: 'Instagram' },
+    { href: 'https://www.tiktok.com/@liceo_de_frailes', label: 'TikTok' },
+  
+  ]
+
   return (
     <footer className="bg-background border-t">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-8">
 
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
@@ -77,7 +74,30 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+
+                    <div>
+            <h3 className="font-semibold mb-4">Redes Sociales</h3>
+            <ul className="space-y-3">
+              {socialLinks.map((link) => (
+                <li key={link.href}>
+                  <Link 
+                    href={link.href} 
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
+
+        
+
+
+
+        
 
         <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
           <p>&copy; {currentYear} Liceo de Frailes. Todos los derechos reservados.</p>

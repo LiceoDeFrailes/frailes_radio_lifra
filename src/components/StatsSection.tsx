@@ -1,13 +1,9 @@
-import { Card, CardContent } from '@/components/ui/card'
+"use client";
 
-interface Stat {
-  number: string
-  label: string
-}
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
-interface StatsSectionProps {
-  stats: Stat[]
-}
+const MotionCard = motion(Card);
 
 export default function StatsSection({ stats }: StatsSectionProps) {
   return (
@@ -15,25 +11,26 @@ export default function StatsSection({ stats }: StatsSectionProps) {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
-            <Card key={stat.label} className="text-center border-0 shadow-lg">
+            <MotionCard
+              key={stat.label}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="text-center border-0 shadow-lg"
+            >
               <CardContent className="p-6">
-                <div 
-                  className="text-3xl font-bold text-primary mb-2"
-                  style={{ 
-                    animationDelay: `${index * 0.1}s`,
-                    animation: 'fadeInUp 0.6s ease-out both'
-                  } as React.CSSProperties}
-                >
+                <div className="text-3xl font-bold text-primary mb-2">
                   {stat.number}
                 </div>
                 <div className="text-sm text-muted-foreground font-medium">
                   {stat.label}
                 </div>
               </CardContent>
-            </Card>
+            </MotionCard>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

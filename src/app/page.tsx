@@ -1,3 +1,5 @@
+"use client";
+
 import Layout from '@/components/Layout/LayoutLiceo'
 import FeatureCard from '@/components/FeatureCard'
 import StatsSection from '@/components/StatsSection'
@@ -5,8 +7,15 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import Image from 'next/image'
+import { motion } from "framer-motion";
 
 export default function Home() {
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0 }
+  };
+
   const features: Feature[] = [
     {
       icon: '🎓',
@@ -34,11 +43,19 @@ export default function Home() {
 
   return (
     <Layout>
+
+      {/* HERO */}
       <section className="relative py-5 min-h-[80vh] flex items-center bg-gradient-to-br from-Dark-Green-Lifra to-primary/95 text-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            <div className="text-center lg:text-left">
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={fadeUp}
+              transition={{ duration: 0.6 }}
+              className="text-center lg:text-left"
+            >
               <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6">
                 Bienvenidos al Liceo de Frailes
               </h1>
@@ -53,9 +70,18 @@ export default function Home() {
                   <Link href="/contacto">Solicitar información</Link>
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex justify-center lg:justify-end">
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: { opacity: 0, y: -40 },
+                show: { opacity: 1, y: 0 }
+              }}
+              transition={{ duration: 0.7 }}
+              className="flex justify-center lg:justify-end"
+            >
               <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-200 max-w-md transform hover:scale-105 transition-transform duration-300">
                 <Image 
                   src="/entradaFrailes.webp" 
@@ -72,18 +98,26 @@ export default function Home() {
                   <p className="text-gray-600 mb-4">
                     Programas especializados para el desarrollo profesional y académico
                   </p>
-                  {/* <Button variant="outline" size="sm" asChild>
-                    <Link href="/programas" className='text-black'>Ver programas</Link>
-                  </Button> */}
                 </div>
               </div>
-            </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
 
+
+
+      {/* FEATURES */}
       <section className="py-20 bg-muted/50">
-        <div className="container mx-auto px-4">
+        <motion.div 
+          className="container mx-auto px-4"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5 }}
+          variants={fadeUp}
+        >
           <div className="text-center mb-16">
             <Badge variant="secondary" className="mb-4">Por qué elegirnos</Badge>
             <h2 className="text-4xl font-bold tracking-tight mb-4">
@@ -97,20 +131,46 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <FeatureCard
+              <motion.div
                 key={feature.title}
-                {...feature}
-                delay={index * 0.1}
-              />
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+              >
+                <FeatureCard {...feature} />
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      <StatsSection stats={stats} />
 
+
+      {/* STATS */}
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={fadeUp}
+        transition={{ duration: 0.6 }}
+      >
+        <StatsSection stats={stats} />
+      </motion.div>
+
+
+
+      {/* CTA FINAL */}
       <section className="py-20 bg-Dark-Green-Lifra text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
+        <motion.div 
+          className="container mx-auto px-4 text-center"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          transition={{ duration: 0.6 }}
+        >
           <Badge variant="secondary" className="mb-4">Únete a nosotros</Badge>
           <h2 className="text-4xl font-bold mb-6">
             ¿Listo para formar parte de nuestra comunidad?
@@ -127,8 +187,9 @@ export default function Home() {
               <Link href="/admisiones" className='text-black'>Proceso de admisión</Link>
             </Button>
           </div>
-        </div>
+        </motion.div>
       </section>
+
     </Layout>
   )
 }
