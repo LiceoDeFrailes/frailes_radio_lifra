@@ -192,7 +192,7 @@ async function getPendingFromCollection(
   const q = query(
     collection(db, nombreColeccion),
     where("state", "==", "pendiente"),
-    orderBy("createdAt", "asc")
+    orderBy("createdAt", "desc")
   );
 
   const snapshot = await getDocs(q);

@@ -42,7 +42,7 @@ export default function PageEliminarUsuarios() {
   return (
     <div className="max-w-7xl mx-auto mt-17">
       <h1 className="text-2xl font-bold  ">Eliminar Usuarios</h1>
-      {loading ? (
+      {loadingUsers ? (
         <div className="flex justify-center items-center mt-20">
           <Spinner className="w-8 h-8 text-Light-Green-Lifra" />
           <p className="ml-3 text-gray-500">Cargando usuarios...</p>
