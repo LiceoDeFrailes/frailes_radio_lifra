@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 export default function NuevaNoticiaPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -24,15 +24,15 @@ export default function NuevaNoticiaPage() {
   const [resetEditor, setResetEditor] = useState(false);
 
   const MAX_FILE_SIZE = 3 * 1024 * 1024;
-  
-    useEffect(() => {
+
+  useEffect(() => {
+    if (loading) return;
+
     if (!user || user.role !== "estudiante") {
-      toast.info(
-        "Nivel de Acceso Prohibido"
-      );
+      toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
     }
-  }, []);
+  }, [loading]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

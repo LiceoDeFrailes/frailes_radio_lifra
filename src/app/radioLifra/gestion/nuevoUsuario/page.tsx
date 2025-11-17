@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 export default function CrearUsuarioPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,11 +23,13 @@ export default function CrearUsuarioPage() {
 
 
     useEffect(() => {
+    if (loading) return;
+
     if (!user || user.role !== "admin") {
       toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
     }
-  }, []);
+  }, [loading]);
 
   function isSecurePassword(password: string): boolean {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[^\s]{8,}$/;

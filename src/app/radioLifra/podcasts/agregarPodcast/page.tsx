@@ -13,18 +13,20 @@ import { useRouter } from "next/navigation";
 
 export default function AgregarPodcastPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [urlSpotify, setUrlSpotify] = useState("");
 
   useEffect(() => {
+    if (loading) return;
+    
     if (!user || user.role !== "estudiante") {
       toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
     }
-  }, []);
+  }, [loading]);
 
   const isSpotifyURL = (url: string) => {
     const regex =
