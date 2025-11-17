@@ -13,17 +13,19 @@ import { useRouter } from "next/navigation";
 
 export default function RecuperarContrasenaPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
+    if (loading) return;
+
     if (!user || user.role !== "admin") {
       toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
     }
-  }, []);
+  }, [loading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

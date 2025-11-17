@@ -9,29 +9,31 @@ import DeleteUserCard from "@/components/DeleteUserCard";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function PageEliminarUsuarios() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
-  const [usuarios, setUsuarios] = useState<any[]>([]);
-   const [loading, setLoading] = useState(true);
+    const [usuarios, setUsuarios] = useState<any[]>([]);
+    const [loadingUsers, setLoadingUsers] = useState(true);
 
   useEffect(() => {
+    if (loading) return;
+    
     if (!user || user.role !== "admin") {
       toast.info("Nivel de Acceso Prohibido");
       return router.push("/radioLifra");
     }
-  }, [user, router]);
+  }, [loading]);
 
   useEffect(() => {
     async function fetchUsuarios() {
       try {
-        setLoading(true);
+        setLoadingUsers(true);
         const data = await getAllUsers();
         setUsuarios(data);
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
         toast.error("Error al cargar usuarios");
       } finally {
-        setLoading(false);
+        setLoadingUsers(false);
       }
     }
     fetchUsuarios();

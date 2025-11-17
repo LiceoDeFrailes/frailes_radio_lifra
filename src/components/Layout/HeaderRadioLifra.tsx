@@ -32,8 +32,7 @@ import {
 
 
 export default function HeaderRadioLifra() {
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const { user, loading } = useAuth();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
 
@@ -75,12 +74,8 @@ const gestionItems: { title: string; href: string; }[] = [
 ]
 
     useEffect(() => {
-    setLoading(true);
-  }, []);
-
-  if (!loading) {
-    return null;
-  }
+    if (loading) return;
+  }, [loading]);
 
   const handleSignOut = async () => {
     const result = await signUserOut();

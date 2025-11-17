@@ -14,7 +14,7 @@ import { X, Image as ImageIcon } from "lucide-react";
 
 export default function NuevaGaleriaPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -22,13 +22,14 @@ export default function NuevaGaleriaPage() {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
     useEffect(() => {
+      if (loading) return;
     if (!user || user.role !== "estudiante") {
       toast.info(
         "Nivel de Acceso Prohibido"
       );
       return router.push("/radioLifra");
     }
-  }, []);
+  }, [loading]);
 
   const MAX_FILE_SIZE = 3 * 1024 * 1024; 
   const MAX_IMAGES = 6;

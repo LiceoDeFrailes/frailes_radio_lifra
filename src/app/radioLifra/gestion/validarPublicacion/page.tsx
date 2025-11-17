@@ -12,11 +12,13 @@ import { Spinner } from "@/components/ui/spinner";
 
 const ValidarPublicacion = () => {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [publicaciones, setPublicaciones] = useState<PublicacionBase[]>([]);
-  const [loading, setLoading] = useState(true); 
+  const [loadingData, setLoadingData] = useState(true); 
 
   useEffect(() => {
+    if (loading) return;
+    
     if (!user || user.role !== "admin") {
       toast.info("Nivel de Acceso Prohibido");
       router.push("/radioLifra");
@@ -25,18 +27,18 @@ const ValidarPublicacion = () => {
 
     async function fetchData() {
       try {
-        setLoading(true);
+        setLoadingData(true);
         const data = await getAllPendingPublications();
         setPublicaciones(data);
       } catch (error) {
         console.error("Error al obtener publicaciones:", error);
         toast.error("Error al cargar publicaciones");
       } finally {
-        setLoading(false);
+        setLoadingData(false);
       }
     }
     fetchData();
-  }, []);
+  }, [loading]);
 
   return (
     <div className="max-w-7xl mx-auto mt-17">

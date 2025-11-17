@@ -28,6 +28,7 @@ export default function Editor({
 }) {
   const editor = useEditor({
     extensions: [
+      
       StarterKit.configure({
         // configuración específica si es necesaria
         bulletList: {
@@ -53,12 +54,14 @@ export default function Editor({
         placeholder: "Escribe Aqui...",
         emptyEditorClass: "is-editor-empty",
       }),
+      
     ],
     content: "",
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       if (onChange) onChange(html);
     },
+     immediatelyRender: false,
   });
 
   // Para resetear del contenido
