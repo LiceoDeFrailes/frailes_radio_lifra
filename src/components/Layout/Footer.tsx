@@ -9,7 +9,7 @@ export default function Footer() {
   const quickLinks: FooterLink[] = [
     { href: '/sobreNosotros', label: 'Nosotros' },
     { href: '/contacto', label: 'Contacto' },
-    { href: '/RadioLifra', label: 'RadioLifra' },
+    { href: '/radioLifra', label: 'RadioLifra' },
   ]
 
   const contactInfo: ContactInfo[] = [

@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { createUser } from "@/lib/actions/auth.action";
 import { toast } from "sonner";
-import { Spinner } from "@/components/ui/spinner"
+import { Spinner } from "@/components/ui/spinner";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -21,8 +21,7 @@ export default function CrearUsuarioPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (loading) return;
 
     if (!user || user.role !== "admin") {
@@ -32,52 +31,52 @@ export default function CrearUsuarioPage() {
   }, [loading]);
 
   function isSecurePassword(password: string): boolean {
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[^\s]{8,}$/;
-  return regex.test(password);
-}
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[^\s]{8,}$/;
+    return regex.test(password);
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(password != confirmPassword){
-      return toast.info('Contraseñas no Iguales');
-    }
-    if(!isSecurePassword(password)){
+    if (!isSecurePassword(password)) {
       return toast.warning("Contraseña insegura", {
-      description:
-        "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un símbolo. No debe contener espacios.",
-    });
+        description:
+          "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un símbolo. No debe contener espacios.",
+      });
     }
+
+    if (password != confirmPassword) {
+      return toast.info("Contraseñas no Iguales");
+    }
+
     const toastId = toast.custom(
       (t) => (
         <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
           <Spinner className="w-4 h-4 text-Light-Green-Lifra" />
           <h1 className="text-gray-700 font-medium">Cargando</h1>
         </div>
-      ), { duration: Infinity });
-      try {
-            const res = await createUser({name, email, password, isAdmin});
+      ),
+      { duration: Infinity }
+    );
+    try {
+      const res = await createUser({ name, email, password, isAdmin });
 
-            if (res.ok) {
-              toast.success('Usuario Creado Exitosamente')
-              toast.dismiss(toastId);
-              setName("");
-              setEmail("");
-              setPassword("");
-              setConfirmPassword("");
-              setIsAdmin(false);
-            } else {
-              console.log('Error: ')
-              toast.dismiss(toastId);
-              toast.error('Error al Crear el Usuario')
-            }
-      } catch (error) {
-        toast.error('Error al Crear el Usuario')
-        console.log('Error: ', error)
+      if (res.ok) {
+        toast.success("Usuario Creado Exitosamente");
+        toast.dismiss(toastId);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setIsAdmin(false);
+      } else {
+        console.log("Error:, ", res.error);
+        toast.dismiss(toastId);
+        toast.error("Error al Crear el Usuario");
       }
-    
-
-
-
+    } catch (error) {
+      toast.error("Error al Crear el Usuario");
+      console.log("Error: ", error);
+    }
   };
 
   return (
@@ -89,7 +88,10 @@ export default function CrearUsuarioPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="nombreCompleto" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="nombreCompleto"
+              className="text-sm font-medium text-gray-700"
+            >
               Nombre Completo
             </Label>
             <Input
@@ -104,7 +106,10 @@ export default function CrearUsuarioPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="email"
+              className="text-sm font-medium text-gray-700"
+            >
               Email
             </Label>
             <Input
@@ -119,7 +124,10 @@ export default function CrearUsuarioPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="password"
+              className="text-sm font-medium text-gray-700"
+            >
               Contraseña
             </Label>
             <Input
@@ -132,12 +140,17 @@ export default function CrearUsuarioPage() {
               required
             />
             <p className="text-xs text-gray-500 ml-2">
-              La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un símbolo. No debe contener espacios.
+              La contraseña debe tener al menos 8 caracteres, incluir
+              mayúsculas, minúsculas, un número y un símbolo. No debe contener
+              espacios.
             </p>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="confirmarPassword" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="confirmarPassword"
+              className="text-sm font-medium text-gray-700"
+            >
               Confirmar Contraseña
             </Label>
             <Input
@@ -158,7 +171,10 @@ export default function CrearUsuarioPage() {
               checked={isAdmin}
               onCheckedChange={(checked) => setIsAdmin(checked as boolean)}
             />
-            <Label htmlFor="esAdministrador" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="esAdministrador"
+              className="text-sm font-medium text-gray-700"
+            >
               Administrador
             </Label>
           </div>
@@ -171,9 +187,9 @@ export default function CrearUsuarioPage() {
               Crear Usuario
             </Button>
             <Link href="/radioLifra" className="flex-1">
-              <Button 
+              <Button
                 type="button"
-                variant="outline" 
+                variant="outline"
                 className="w-full py-3 text-base font-medium"
               >
                 Cancelar

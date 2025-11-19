@@ -27,12 +27,26 @@ export default function RecuperarContrasenaPage() {
     }
   }, [loading]);
 
+  function isSecurePassword(password: string): boolean {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[^\s]{8,}$/;
+    return regex.test(password);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password || !confirmPassword)
       return toast.info("Por favor completa todos los campos.");
+
+    if (!isSecurePassword(password)) {
+      return toast.warning("Contraseña insegura", {
+        description:
+          "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un símbolo. No debe contener espacios.",
+      });
+    }
+
     if (password !== confirmPassword)
       return toast.info("Las contraseñas deben ser Iguales");
+
     const toastId = toast.custom(
       (t) => (
         <div className="flex gap-2 justify-center items-center bg-white px-5 py-3 rounded-xl shadow-md border border-gray-100">
@@ -107,6 +121,11 @@ export default function RecuperarContrasenaPage() {
               minLength={6}
               className="w-full"
             />
+            <p className="text-xs text-gray-500 ml-2">
+              La contraseña debe tener al menos 8 caracteres, incluir
+              mayúsculas, minúsculas, un número y un símbolo. No debe contener
+              espacios.
+            </p>
           </div>
 
           <div className="space-y-2">

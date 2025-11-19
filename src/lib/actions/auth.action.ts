@@ -23,7 +23,7 @@ export async function createUser(params: CreateUserParams) {
       });
     return { ok: true };
   } catch (error: any) {
-    return { ok: false };
+    return { ok: false, error: error.message};
   }
 }
 

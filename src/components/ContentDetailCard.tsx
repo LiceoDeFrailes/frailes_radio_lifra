@@ -148,7 +148,7 @@ const ContentDetailCard = ({ item, type }: DetailCardType) => {
               </p>
             </div>
 
-            <div>
+            <div className="lg:ml-auto lg:mr-20">
               <iframe
                 src={item.url}
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
