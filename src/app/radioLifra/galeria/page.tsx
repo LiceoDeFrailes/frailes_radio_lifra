@@ -27,7 +27,7 @@ const AgregarGaleria = () => {
     async function fetchGalerias() {
       const galeriasCollection = await getGalerias();
       setGalerias(galeriasCollection);
-      setLoading(false)
+      setLoading(false);
     }
     fetchGalerias();
   }, []);
@@ -35,7 +35,7 @@ const AgregarGaleria = () => {
     <div className="flex flex-col gap-3">
       {user?.role === "estudiante" ? (
         <Link href="/radioLifra/galeria/agregarGaleria">
-          <CirclePlus className="hover:text-Light-Green-Lifra"/>
+          <CirclePlus className="hover:text-Light-Green-Lifra" />
         </Link>
       ) : null}
       {galerias.length > 0 ? (
@@ -51,18 +51,13 @@ const AgregarGaleria = () => {
         <div className="flex justify-center items-center mt-20">
           {loading && <Spinner className="w-8 h-8 text-Light-Green-Lifra" />}
           <p className="text-gray-500 text-center">
-          {loading ? 
-          <>
-            Cargando publicaciones...
-          </>
-           : 
-           <>
-           No hay galerias disponibles
-           </>
-           }
-        </p>
+            {loading ? (
+              <>Cargando publicaciones...</>
+            ) : (
+              <>No hay galerias disponibles</>
+            )}
+          </p>
         </div>
-        
       )}
     </div>
   );
