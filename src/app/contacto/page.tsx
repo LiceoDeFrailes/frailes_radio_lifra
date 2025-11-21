@@ -152,8 +152,8 @@ export default function Contacto() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-lg text-muted-foreground">
-              📍 <strong>Dirección exacta:</strong> Liceo de Frailes, Desamparados,
-              San José, 10306
+              📍 <strong>Dirección exacta:</strong> Liceo de Frailes,
+              Desamparados, San José, 10306
             </p>
           </MotionDiv>
         </div>
