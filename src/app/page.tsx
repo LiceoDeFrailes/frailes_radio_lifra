@@ -148,7 +148,6 @@ export default function Home() {
 
 
 
-      {/* STATS */}
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -160,8 +159,6 @@ export default function Home() {
       </motion.div>
 
 
-
-      {/* CTA FINAL */}
       <section className="py-20 bg-Dark-Green-Lifra text-primary-foreground">
         <motion.div 
           className="container mx-auto px-4 text-center"

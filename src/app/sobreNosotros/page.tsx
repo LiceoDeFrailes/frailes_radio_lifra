@@ -35,18 +35,15 @@ export default function SobreNosotros() {
   const team = [
     {
       role: "Directora",
-      name: "Dra. María González",
-      description: "Más de 20 años de experiencia en educación",
+      name: "Dra. Lucrecia Amador Meza",
     },
     {
-      role: "Subdirector Académico",
-      name: "Lic. Carlos Rodríguez",
-      description: "Especialista en pedagogía innovadora",
+      role: "Asistente de Dirección",
+      name: "Maureen Fallas Marín",
     },
     {
-      role: "Coordinador de Disciplina",
-      name: "Prof. Ana Martínez",
-      description: "Enfoque en desarrollo integral del estudiante.",
+      role: "Coordinador Académico",
+      name: "Manuel Mora Quirós",
     },
   ];
 
@@ -159,10 +156,6 @@ export default function SobreNosotros() {
                   </Badge>
 
                   <h3 className="text-lg font-semibold mb-2">{member.name}</h3>
-
-                  <p className="text-sm text-muted-foreground">
-                    {member.description}
-                  </p>
                 </CardContent>
               </MotionCard>
             ))}
