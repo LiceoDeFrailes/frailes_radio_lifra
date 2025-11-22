@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-white">
       <head>
+        <meta name="google-site-verification" content="hT1EfEVVK9fe3-0Uaxqo-ntUofJPw1HQh6NDzGL3378" />
         <link
           rel="preconnect"
           href="https://frailesradiolifra.firebaseapp.com"
