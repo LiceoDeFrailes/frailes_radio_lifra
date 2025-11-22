@@ -180,9 +180,6 @@ export default function Home() {
             <Button size="lg" variant="outline" asChild>
               <Link href="/contacto" className='text-black'>Solicitar información</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/admisiones" className='text-black'>Proceso de admisión</Link>
-            </Button>
           </div>
         </motion.div>
       </section>
