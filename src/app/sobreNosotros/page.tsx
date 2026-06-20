@@ -167,8 +167,8 @@ export default function SobreNosotros() {
                     className="text-center border-0 shadow-md"
                   >
                     <CardContent className="p-6">
-                      <div className="w-20 h-20 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                        <span className="text-primary-foreground font-bold text-lg">
+                      <div className="w-20 h-20 bg-Dark-Green-Lifra rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">
                           {member.name
                             .split(" ")
                             .map((n) => n[0])
