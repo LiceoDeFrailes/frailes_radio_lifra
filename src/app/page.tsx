@@ -77,7 +77,7 @@ export default function Home() {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="border-2 border-white text-white hover:bg-white hover:text-Dark-Green-Lifra font-semibold transition-all duration-300"
+                  className="border-2 border-white text-white hover:bg-white text-Dark-Green-Lifra font-semibold transition-all duration-300"
                   asChild
                 >
                   <Link href="/contacto">Solicitar información</Link>
@@ -107,7 +107,7 @@ export default function Home() {
                 </div>
                 <div className="mt-4 text-center px-2">
                   <h3 className="text-lg font-bold text-gray-800 mb-1">
-                    Nuestro Equipo Directivo
+                    Liceo con Orientación Tecnológica.
                   </h3>
                   <p className="text-sm text-gray-600">
                     Profesionales comprometidos con la excelencia educativa
