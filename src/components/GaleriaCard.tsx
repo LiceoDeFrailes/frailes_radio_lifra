@@ -4,10 +4,11 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Check, Trash2 } from "lucide-react";
+import { Check, Trash2, Pencil } from "lucide-react";
 import { rechazarGaleria, aceptarGaleria } from "@/lib/actions/general.actions";
 import { toast } from "sonner";
 import { Spinner } from "./ui/spinner";
+import GaleriaEditDialog from "@/components/GaleriaEditDialog";
 import dynamic from 'next/dynamic';
 
 const Carousel = dynamic(() => import("@/components/ui/carousel").then(mod => mod.Carousel), {
@@ -26,6 +27,7 @@ const GaleriaCard = ({
   isAdmin = false,
 }: any) => {
   const [visible, setVisible] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleAceptar = async () => {
     const toastId = toast.custom(
@@ -43,7 +45,6 @@ const GaleriaCard = ({
       toast.dismiss(toastId);
       setVisible(false);
     } catch (error) {
-      console.error("Error al aprobar galería:", error);
       toast.dismiss(toastId);
       toast.error("Ocurrió un error");
     }
@@ -65,13 +66,13 @@ const GaleriaCard = ({
       toast.dismiss(toastId);
       setVisible(false);
     } catch (error) {
-      console.error("Error al eliminar galería:", error);
       toast.dismiss(toastId);
       toast.error("Ocurrió un error");
     }
   };
   if (!visible) return null;
   return (
+    <>
     <Card className="flex flex-col justify-center items-center px-3 md:py-3 gap-3 hover:shadow-md transition-all">
       <div className="flex flex-col w-full mb-auto mr-auto">
         <Link
@@ -141,6 +142,16 @@ const GaleriaCard = ({
           {validationMode && (
             <>
               <Button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDialogOpen(true);
+                }}
+                className="bg-transparent hover:bg-blue-100"
+              >
+                <Pencil className="text-black size-5" />
+              </Button>
+              <Button
                 onClick={(e) => {
                   e.preventDefault();
                   handleAceptar();
@@ -174,6 +185,16 @@ const GaleriaCard = ({
         </div>
       </div>
     </Card>
+    <GaleriaEditDialog
+      item={item}
+      open={dialogOpen}
+      onOpenChange={setDialogOpen}
+      onSaved={(approved) => {
+        if (approved) setVisible(false);
+        setDialogOpen(false);
+      }}
+    />
+    </>
   );
 };
 
