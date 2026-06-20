@@ -187,7 +187,13 @@ export default function SobreNosotros() {
                 ))}
               </div>
 
-              <div className="mt-16 max-w-4xl mx-auto">
+              <motion.div
+                className="mt-16 max-w-4xl mx-auto"
+                initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-slate-900 mb-2">
                     Conoce a Nuestro Equipo
@@ -205,7 +211,7 @@ export default function SobreNosotros() {
                     priority
                   />
                 </div>
-              </div>
+              </motion.div>
             </>
           )}
         </motion.div>
