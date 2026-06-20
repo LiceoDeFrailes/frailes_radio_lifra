@@ -60,16 +60,26 @@ export default function Home() {
               className="text-center lg:text-left"
             >
               <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6">
-                Bienvenidos al Liceo de Frailes
+                Bienvenidos al{' '}
+                <span className="text-Light-Green-Lifra">Liceo de Frailes</span>
               </h1>
-              <p className="text-xl lg:text-2xl mb-8 max-w-2xl">
+              <p className="text-xl lg:text-2xl mb-8 max-w-2xl text-white/90">
                 Formando líderes del mañana con educación de calidad y valores humanos
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/sobreNosotros" className='text-black'>Conoce más</Link>
+                <Button 
+                  size="lg" 
+                  className="bg-Light-Green-Lifra hover:bg-white text-slate-900 hover:text-Dark-Green-Lifra font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  asChild
+                >
+                  <Link href="/sobreNosotros">Conoce más</Link>
                 </Button>
-                <Button size="lg" variant="outline" className='text-black' asChild>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-2 border-white text-white hover:bg-white hover:text-Dark-Green-Lifra font-semibold transition-all duration-300"
+                  asChild
+                >
                   <Link href="/contacto">Solicitar información</Link>
                 </Button>
               </div>
@@ -85,21 +95,22 @@ export default function Home() {
               transition={{ duration: 0.7 }}
               className="flex justify-center lg:justify-end"
             >
-              <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-200 max-w-md transform hover:scale-105 transition-transform duration-300">
-                <Image 
-                  src="/entradaFrailes.webp" 
-                  alt="Ciclo Diversificado Vocacional - Liceo de Frailes"
-                  width={400}
-                  height={300}
-                  className="rounded-md w-full h-auto border-1 border-gray-300"
-                  priority
-                />
-                <div className="mt-4 text-center">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">
-                    Liceo con Orientación Tecnológica.
+              <div className="bg-white p-4 rounded-2xl shadow-2xl border border-gray-100 max-w-lg transform hover:scale-[1.02] transition-transform duration-300">
+                <div className="relative aspect-[16/10] rounded-xl overflow-hidden">
+                  <Image 
+                    src="/images/equipo-grupal.jpg" 
+                    alt="Equipo directivo del Liceo de Frailes"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                <div className="mt-4 text-center px-2">
+                  <h3 className="text-lg font-bold text-gray-800 mb-1">
+                    Nuestro Equipo Directivo
                   </h3>
-                  <p className="text-gray-600 mb-4">
-                    Programas especializados para el desarrollo profesional y académico
+                  <p className="text-sm text-gray-600">
+                    Profesionales comprometidos con la excelencia educativa
                   </p>
                 </div>
               </div>
