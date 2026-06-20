@@ -167,8 +167,8 @@ export default function SobreNosotros() {
                     className="text-center border-0 shadow-md"
                   >
                     <CardContent className="p-6">
-                      <div className="w-20 h-20 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                        <span className="text-primary-foreground font-bold text-lg">
+                      <div className="w-20 h-20 bg-Dark-Green-Lifra rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">
                           {member.name
                             .split(" ")
                             .map((n) => n[0])
@@ -187,14 +187,31 @@ export default function SobreNosotros() {
                 ))}
               </div>
 
-              <Image
-                src={fotoGrupalUrl || "/images/equipo-grupal.jpg"}
-                alt="Foto grupal del equipo directivo del Liceo de Frailes"
-                width={800}
-                height={450}
-                className="rounded-lg shadow-md mx-auto mt-12"
-                priority
-              />
+              <motion.div
+                className="mt-16 max-w-4xl mx-auto"
+                initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                    Conoce a Nuestro Equipo
+                  </h3>
+                  <p className="text-slate-600">
+                    Profesionales dedicados a la educación y el bienestar de nuestra comunidad estudiantil
+                  </p>
+                </div>
+                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                  <Image
+                    src={fotoGrupalUrl || "/images/equipo-grupal.jpg"}
+                    alt="Foto grupal del equipo directivo del Liceo de Frailes"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </motion.div>
             </>
           )}
         </motion.div>
