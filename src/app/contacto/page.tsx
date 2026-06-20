@@ -1,12 +1,46 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Layout from "@/components/Layout/LayoutLiceo";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
+import { getConfigContacto } from "@/lib/actions/configuracion.actions";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Globe,
+  Facebook,
+  Instagram,
+  Youtube,
+  Camera,
+  MessageCircle,
+  HelpCircle,
+} from "lucide-react";
 
 const MotionCard = motion(Card);
 const MotionDiv = motion.div;
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Globe,
+  Facebook,
+  Instagram,
+  Youtube,
+  Camera,
+  MessageCircle,
+};
+
+function ContactIcon({ name }: { name: string }) {
+  const Icon = iconMap[name] || HelpCircle;
+  return <Icon className="size-9 mx-auto text-Dark-Green-Lifra" />;
+}
 
 export default function Contacto() {
   const fadeUp = {
@@ -14,32 +48,12 @@ export default function Contacto() {
     show: { opacity: 1, y: 0 },
   };
 
-  const contactInfo = [
-    {
-      icon: "📞",
-      title: "Teléfono",
-      content: "(+506) 2544-0166",
-      description: "Lunes a Viernes 7:00 AM - 4:15 PM",
-    },
-    {
-      icon: "✉️",
-      title: "Email",
-      content: "lic.defrailes@mep.go.cr",
-      description: "Atendemos tus consultas",
-    },
-    {
-      icon: "📍",
-      title: "Dirección",
-      content: "Liceo de Frailes, Desamparados",
-      description: "San José, #10306",
-    },
-    {
-      icon: "🕒",
-      title: "Horario",
-      content: "7:00 AM - 4:15 PM",
-      description: "Lunes a Viernes",
-    },
-  ];
+  const [contactInfo, setContactInfo] = useState<ContactMethod[]>([]);
+  const [contactLoading, setContactLoading] = useState(true);
+
+  useEffect(() => {
+    getConfigContacto().then((data) => { setContactInfo(data); setContactLoading(false); });
+  }, []);
 
   return (
     <Layout>
@@ -83,7 +97,9 @@ export default function Contacto() {
           </MotionDiv>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {contactInfo.map((info, index) => (
+            {contactLoading
+              ? [1,2,3,4].map((i) => <Skeleton key={i} className="h-48 rounded-xl" />)
+              : contactInfo.map((info, index) => (
               <MotionCard
                 key={info.title}
                 initial="hidden"
@@ -94,14 +110,16 @@ export default function Contacto() {
                 className="border-0 shadow-lg text-center hover:shadow-xl transition-shadow"
               >
                 <CardContent className="p-8">
-                  <div className="text-4xl mb-4">{info.icon}</div>
-                  <h3 className="text-xl font-semibold mb-3">{info.title}</h3>
-                  <p className="text-primary font-medium mb-2 text-lg">
+                  <ContactIcon name={info.icon} />
+                  <h3 className="text-xl font-semibold mt-4 mb-3 text-center">{info.title}</h3>
+                  <p className="text-primary font-medium mb-2 text-lg text-center">
                     {info.content}
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    {info.description}
-                  </p>
+                  {info.description && (
+                    <p className="text-sm text-muted-foreground text-center">
+                      {info.description}
+                    </p>
+                  )}
                 </CardContent>
               </MotionCard>
             ))}

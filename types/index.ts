@@ -107,3 +107,29 @@ interface PublicacionBase {
     item: any,
     type: "noticia" | "galeria" | "video";
   }
+
+interface TeamMember {
+  role: string
+  name: string
+  degree: string
+}
+
+interface ContactMethod {
+  icon: string
+  title: string
+  content: string
+  description?: string
+}
+
+interface StatsDoc {
+  items: Stat[]
+}
+
+interface EquipoDoc {
+  fotoGrupalUrl: string
+  miembros: TeamMember[]
+}
+
+interface ContactoDoc {
+  metodos: ContactMethod[]
+}

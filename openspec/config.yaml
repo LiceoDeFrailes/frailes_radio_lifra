@@ -1,0 +1,44 @@
+schema: spec-driven
+
+context: |
+  Tech stack: Next.js 15.5.9 + React 19.1.0 + TypeScript 5 + Tailwind CSS v4 + Turbopack
+  Architecture: Next.js App Router with Pages Router API fallback, shadcn/ui components, Firebase (client + admin)
+  Testing: No test runner detected — no jest, vitest, playwright, or cypress configured
+  Style: ESLint 9 with next/core-web-vitals + next/typescript, no Prettier, no formatter configured
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: "next build --turbopack"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
+
+testing:
+  runner: none
+  layers:
+    unit: not_configured
+    integration: not_configured
+    e2e: not_configured
+  coverage: none
+  quality:
+    linter: eslint 9 (next/core-web-vitals, next/typescript)
+    type_checker: typescript 5 (strict: true)
+    formatter: none
+
+strict_tdd: false

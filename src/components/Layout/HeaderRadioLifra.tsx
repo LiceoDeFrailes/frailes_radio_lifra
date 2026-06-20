@@ -56,6 +56,10 @@ export default function HeaderRadioLifra() {
 ]
 const gestionItems: { title: string; href: string; }[] = [
   {
+    title: "Configuración",
+    href: "/radioLifra/configuracion",
+  },
+  {
     title: "Crear Nuevo Usuario",
     href: "/radioLifra/gestion/nuevoUsuario",
   },

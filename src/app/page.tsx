@@ -1,15 +1,24 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Layout from '@/components/Layout/LayoutLiceo'
 import FeatureCard from '@/components/FeatureCard'
 import StatsSection from '@/components/StatsSection'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from "framer-motion";
+import { getConfigStats } from "@/lib/actions/configuracion.actions";
 
 export default function Home() {
+  const [stats, setStats] = useState<Stat[]>([]);
+  const [statsLoading, setStatsLoading] = useState(true);
+
+  useEffect(() => {
+    getConfigStats().then((data) => { setStats(data); setStatsLoading(false); });
+  }, []);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -32,13 +41,6 @@ export default function Home() {
       title: 'Formación Integral',
       description: 'Desarrollo de habilidades académicas, sociales y emocionales'
     }
-  ]
-
-  const stats: Stat[] = [
-    { number: '250+', label: 'Estudiantes' },
-    { number: '25+', label: 'Años de experiencia' },
-    { number: '9+', label: 'Alumnos de Distintos Sectores' },
-    { number: '3+', label: 'Talleres Tecnologicos' }
   ]
 
   return (
@@ -93,7 +95,7 @@ export default function Home() {
                 />
                 <div className="mt-4 text-center">
                   <h3 className="text-xl font-bold text-gray-800 mb-2">
-                    Liceo en Orientacion Tecnologica
+                    Liceo con Orientación Tecnológica.
                   </h3>
                   <p className="text-gray-600 mb-4">
                     Programas especializados para el desarrollo profesional y académico
@@ -155,7 +157,19 @@ export default function Home() {
         variants={fadeUp}
         transition={{ duration: 0.6 }}
       >
-        <StatsSection stats={stats} />
+        {statsLoading ? (
+          <section className="py-20">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                {[1,2,3,4].map((i) => (
+                  <Skeleton key={i} className="h-32 rounded-xl" />
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : (
+          <StatsSection stats={stats} />
+        )}
       </motion.div>
 
 

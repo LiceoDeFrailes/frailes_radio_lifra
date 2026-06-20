@@ -1,9 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Layout from "@/components/Layout/LayoutLiceo";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { getConfigEquipo } from "@/lib/actions/configuracion.actions";
 
 const MotionCard = motion(Card);
 const MotionCardContent = motion(CardContent);
@@ -13,6 +17,18 @@ export default function SobreNosotros() {
     hidden: { opacity: 0, y: 40 },
     show: { opacity: 1, y: 0 },
   };
+
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [fotoGrupalUrl, setFotoGrupalUrl] = useState("");
+  const [teamLoading, setTeamLoading] = useState(true);
+
+  useEffect(() => {
+    getConfigEquipo().then((data) => {
+      setTeam(data.miembros ?? []);
+      setFotoGrupalUrl(data.fotoGrupalUrl ?? "");
+      setTeamLoading(false);
+    });
+  }, []);
 
   const values = [
     {
@@ -29,21 +45,6 @@ export default function SobreNosotros() {
       title: "Valores",
       description:
         "Familiaridad, Compromiso, Respeto, Responsabilidad, Igualdad, Solidaridad.",
-    },
-  ];
-
-  const team = [
-    {
-      role: "Directora",
-      name: "Dra. Lucrecia Amador Meza",
-    },
-    {
-      role: "Asistente de Dirección",
-      name: "Maureen Fallas Marín",
-    },
-    {
-      role: "Coordinador Académico",
-      name: "Manuel Mora Quirós",
     },
   ];
 
@@ -66,7 +67,7 @@ export default function SobreNosotros() {
           </h1>
 
           <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-            Más de 25 años formando líderes con excelencia académica y valores
+            Más de 30 años formando líderes con excelencia académica y valores
             humanos
           </p>
         </motion.div>
@@ -146,36 +147,56 @@ export default function SobreNosotros() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map((member, index) => (
-              <MotionCard
-                key={member.role}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center border-0 shadow-md"
-              >
-                <CardContent className="p-6">
-                  <div className="w-20 h-20 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-lg">
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </span>
-                  </div>
+          {teamLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[1,2,3].map((i) => (
+                <Skeleton key={i} className="h-48 rounded-xl" />
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {team.map((member, index) => (
+                  <MotionCard
+                    key={`${member.role}-${member.name}`}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true }}
+                    variants={fadeUp}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="text-center border-0 shadow-md"
+                  >
+                    <CardContent className="p-6">
+                      <div className="w-20 h-20 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span className="text-primary-foreground font-bold text-lg">
+                          {member.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </span>
+                      </div>
+                      <Badge variant="outline" className="mb-2">
+                        {member.role}
+                      </Badge>
+                      <h3 className="text-lg font-semibold mb-2">{member.name}</h3>
+                      {member.degree && (
+                        <p className="text-sm text-muted-foreground">{member.degree}</p>
+                      )}
+                    </CardContent>
+                  </MotionCard>
+                ))}
+              </div>
 
-                  <Badge variant="outline" className="mb-2">
-                    {member.role}
-                  </Badge>
-
-                  <h3 className="text-lg font-semibold mb-2">{member.name}</h3>
-                </CardContent>
-              </MotionCard>
-            ))}
-          </div>
+              <Image
+                src={fotoGrupalUrl || "/images/equipo-grupal.jpg"}
+                alt="Foto grupal del equipo directivo del Liceo de Frailes"
+                width={800}
+                height={450}
+                className="rounded-lg shadow-md mx-auto mt-12"
+                priority
+              />
+            </>
+          )}
         </motion.div>
       </section>
     </Layout>
