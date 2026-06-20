@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const MotionCard = motion(Card);
 
 interface FeatureCardProps {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   description: string;
   delay?: number;
@@ -22,10 +22,12 @@ export default function FeatureCard({ icon, title, description, delay = 0 }: Fea
       className="group hover:shadow-xl transition-all duration-300 border-0 shadow-md"
     >
       <CardContent className="p-8 text-center">
-        <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-300">
-          {icon}
+        <div className="mb-6 flex justify-center group-hover:scale-110 transition-transform duration-300">
+          <div className="w-16 h-16 rounded-full bg-Dark-Green-Lifra/10 flex items-center justify-center text-Dark-Green-Lifra">
+            {icon}
+          </div>
         </div>
-        <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">
+        <h3 className="text-xl font-semibold mb-4 group-hover:text-Dark-Green-Lifra transition-colors">
           {title}
         </h3>
         <p className="text-muted-foreground leading-relaxed">

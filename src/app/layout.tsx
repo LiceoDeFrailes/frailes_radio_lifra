@@ -11,8 +11,9 @@ const roboto = Roboto({
 
 
 export const metadata: Metadata = {
-  title: "Liceo De Frailes",
-  description: "Liceo de Frailes de Desamparados",
+  title: "Liceo De Frailes | Educación de Calidad en Desamparados",
+  description: "Institución educativa con orientación tecnológica. Formando líderes del mañana con excelencia académica y valores humanos desde 1976.",
+  keywords: ["liceo", "frailes", "desamparados", "educación", "tecnología", "costa rica", "MEP"],
 };
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-white">
+    <html lang="es" className="bg-white">
       <head>
         <meta name="google-site-verification" content="hT1EfEVVK9fe3-0Uaxqo-ntUofJPw1HQh6NDzGL3378" />
         <link

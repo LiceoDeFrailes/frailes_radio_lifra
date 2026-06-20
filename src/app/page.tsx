@@ -11,6 +11,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from "framer-motion";
 import { getConfigStats } from "@/lib/actions/configuracion.actions";
+import { GraduationCap, Building2, HeartHandshake } from "lucide-react";
 
 export default function Home() {
   const [stats, setStats] = useState<Stat[]>([]);
@@ -25,19 +26,19 @@ export default function Home() {
     show: { opacity: 1, y: 0 }
   };
 
-  const features: Feature[] = [
+  const features = [
     {
-      icon: '🎓',
+      icon: <GraduationCap className="w-8 h-8" />,
       title: 'Excelencia Académica',
       description: 'Programas educativos de vanguardia con profesores altamente calificados'
     },
     {
-      icon: '🏫',
+      icon: <Building2 className="w-8 h-8" />,
       title: 'Ambientes Educativos Innovadores',
       description: 'Espacios diseñados para inspirar la creatividad y el aprendizaje'
     },
     {
-      icon: '🌟',
+      icon: <HeartHandshake className="w-8 h-8" />,
       title: 'Formación Integral',
       description: 'Desarrollo de habilidades académicas, sociales y emocionales'
     }
