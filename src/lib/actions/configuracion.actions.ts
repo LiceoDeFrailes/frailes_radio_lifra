@@ -68,20 +68,17 @@ export async function saveConfigEquipo(
   try {
     let fotoGrupalUrl = "";
     if (file) {
-      console.log("Subiendo archivo a Storage:", file.name, file.size, file.type);
       const storageRef = ref(storage, "equipo/foto-grupal.jpg");
       await uploadBytes(storageRef, file);
       fotoGrupalUrl = await getDownloadURL(storageRef);
-      console.log("Foto subida exitosamente:", fotoGrupalUrl);
     } else {
       const snap = await getDoc(doc(db, "configuracion", "equipo"));
       fotoGrupalUrl = snap.exists() ? (snap.data() as EquipoDoc).fotoGrupalUrl ?? "" : "";
     }
     await setDoc(doc(db, "configuracion", "equipo"), { fotoGrupalUrl, miembros });
     return { ok: true, fotoUrl: fotoGrupalUrl };
-  } catch (error: any) {
-    console.error("Error en saveConfigEquipo:", error);
-    return { ok: false, error: { message: error?.message || "Error desconocido", code: error?.code } };
+  } catch (error) {
+    return { ok: false, error };
   }
 }
 
