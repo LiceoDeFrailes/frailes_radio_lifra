@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import Editor from "@/components/Editor";
 import { updateNoticia } from "@/lib/actions/general.actions";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export default function NoticiaEditDialog({
   item,
@@ -103,7 +104,7 @@ export default function NoticiaEditDialog({
             {content && (
               <div
                 className="prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: content }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
               />
             )}
             {!content && !item?.imageUrl && (

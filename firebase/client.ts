@@ -6,12 +6,12 @@ import { getStorage } from "firebase/storage";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBB4neDbym5ImKch-3PL1P8jyYsT1SHQWU",
-  authDomain: "frailesradiolifra.firebaseapp.com",
-  projectId: "frailesradiolifra",
-  storageBucket: "frailesradiolifra.firebasestorage.app",
-  messagingSenderId: "278765070275",
-  appId: "1:278765070275:web:708eba9f1c40e3b29d7f76"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID!,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
 };
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
