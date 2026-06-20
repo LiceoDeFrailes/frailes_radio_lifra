@@ -59,7 +59,7 @@ const AgregarVideos = () => {
           </>
            : 
            <>
-           No hay galerias disponibles
+            No hay videos disponibles
            </>
            }
         </p>

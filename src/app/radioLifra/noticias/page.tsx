@@ -54,7 +54,7 @@ const AgregarNoticia = () => {
           </>
            : 
            <>
-           No hay galerias disponibles
+           No hay noticias disponibles
            </>
            }
         </p>

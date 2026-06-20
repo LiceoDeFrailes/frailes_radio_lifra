@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, Trash2 } from "lucide-react";
+import { Check, Trash2, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { aceptarPodcast, rechazarPodcast } from "@/lib/actions/general.actions";
 import { Spinner } from "./ui/spinner";
+import PodcastEditDialog from "@/components/PodcastEditDialog";
 
 const PodcastCard = ({
   item,
@@ -13,6 +14,7 @@ const PodcastCard = ({
   isAdmin = false,
 }: any) => {
   const [visible, setVisible] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleAceptar = async () => {
     const toastId = toast.custom(
@@ -30,7 +32,6 @@ const PodcastCard = ({
       setVisible(false);
       toast.dismiss(toastId);
     } catch (error) {
-      console.log("Ocurrio un Error", error);
       toast.dismiss(toastId);
       toast.error("Ocurrio un Error");
     }
@@ -52,13 +53,13 @@ const PodcastCard = ({
       setVisible(false);
       toast.dismiss(toastId);
     } catch (error) {
-      console.log("Ocurrio un Error", error);
       toast.dismiss(toastId);
       toast.error("Ocurrio un Error");
     }
   };
   if (!visible) return null;
   return (
+    <>
     <Card className="flex flex-col md:flex-row-reverse justify-center items-center px-3 md:py-3 gap-3">
       <div className="flex flex-col gap-2 justify-center">
         <iframe
@@ -71,6 +72,16 @@ const PodcastCard = ({
         <div className="hidden md:flex gap-2 justify-end mt-2 md:-mt-10">
           {validationMode && (
             <>
+              <Button
+                type="button"
+                className="bg-transparent hover:bg-blue-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDialogOpen(true);
+                }}
+              >
+                <Pencil className="text-black size-5" />
+              </Button>
               <Button
                 className="bg-transparent hover:bg-green-100"
                 onClick={(e) => {
@@ -114,6 +125,16 @@ const PodcastCard = ({
           {validationMode && (
             <>
               <Button
+                type="button"
+                className="bg-transparent hover:bg-blue-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDialogOpen(true);
+                }}
+              >
+                <Pencil className="text-black size-5" />
+              </Button>
+              <Button
                 className="bg-transparent hover:bg-green-100"
                 onClick={(e) => {
                   e.preventDefault();
@@ -146,6 +167,16 @@ const PodcastCard = ({
         </div>
       </div>
     </Card>
+    <PodcastEditDialog
+      item={item}
+      open={dialogOpen}
+      onOpenChange={setDialogOpen}
+      onSaved={(approved) => {
+        if (approved) setVisible(false);
+        setDialogOpen(false);
+      }}
+    />
+    </>
   );
 };
 

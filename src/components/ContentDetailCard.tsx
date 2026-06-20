@@ -4,6 +4,7 @@ import { CircleUserRound, Divide } from "lucide-react";
 import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { Spinner } from "./ui/spinner";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 const Carousel = dynamic(() => import("@/components/ui/carousel").then(mod => mod.Carousel), {
   loading: () => <div className="min-h-[170px] flex items-center justify-center"><Spinner className="w-4 h-4" /></div>,
@@ -135,7 +136,7 @@ const ContentDetailCard = ({ item, type }: DetailCardType) => {
 
         {type === "noticia" ? (
           <div
-            dangerouslySetInnerHTML={{ __html: item.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.content) }}
             className="max-h-[450px] md:max-h-[900px] overflow-y-auto p-2"
           ></div>
         ) : null}

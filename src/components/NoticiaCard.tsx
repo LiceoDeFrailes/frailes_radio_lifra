@@ -3,10 +3,11 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Check, Trash2 } from "lucide-react";
+import { Check, Trash2, Pencil } from "lucide-react";
 import { rechazarNoticia, aceptarNoticia } from "@/lib/actions/general.actions";
 import { toast } from "sonner";
 import { Spinner } from "./ui/spinner";
+import NoticiaEditDialog from "@/components/NoticiaEditDialog";
 
 const NoticiaCard = ({
   item,
@@ -14,6 +15,7 @@ const NoticiaCard = ({
   isAdmin = false,
 }: any) => {
   const [visible, setVisible] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleAceptar = async () => {
     const toastId = toast.custom(
@@ -31,7 +33,6 @@ const NoticiaCard = ({
       toast.dismiss(toastId);
       setVisible(false);
     } catch (error) {
-      console.log("Ocurrio un Error", error);
       toast.dismiss(toastId);
       toast.error("Ocurrio un Error");
     }
@@ -53,13 +54,13 @@ const NoticiaCard = ({
       toast.dismiss(toastId);
       setVisible(false);
     } catch (error) {
-      console.log("Ocurrio un Error", error);
       toast.dismiss(toastId);
       toast.error("Ocurrio un Error");
     }
   };
   if (!visible) return null;
   return (
+    <>
     <Card className="flex flex-col md:flex-row-reverse justify-center items-center px-3 md:py-3 gap-3">
       <div className="flex flex-col gap-2 ">
         <Image
@@ -75,6 +76,16 @@ const NoticiaCard = ({
         <div className="hidden md:flex gap-2 justify-end mt-2">
           {validationMode && (
             <>
+              <Button
+                type="button"
+                className="bg-transparent hover:bg-blue-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDialogOpen(true);
+                }}
+              >
+                <Pencil className="text-black size-5" />
+              </Button>
               <Button
                 className="bg-transparent hover:bg-green-100"
                 onClick={(e) => {
@@ -126,6 +137,16 @@ const NoticiaCard = ({
           {validationMode && (
             <>
               <Button
+                type="button"
+                className="bg-transparent hover:bg-blue-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDialogOpen(true);
+                }}
+              >
+                <Pencil className="text-black size-5" />
+              </Button>
+              <Button
                 className="bg-transparent hover:bg-green-100"
                 onClick={(e) => {
                   e.preventDefault();
@@ -159,6 +180,16 @@ const NoticiaCard = ({
         </div>
       </div>
     </Card>
+    <NoticiaEditDialog
+      item={item}
+      open={dialogOpen}
+      onOpenChange={setDialogOpen}
+      onSaved={(approved) => {
+        if (approved) setVisible(false);
+        setDialogOpen(false);
+      }}
+    />
+    </>
   );
 };
 

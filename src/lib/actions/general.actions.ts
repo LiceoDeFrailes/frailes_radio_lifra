@@ -387,3 +387,69 @@ export async function getVideoById(id: string) {
   const docSnap = await getDoc(ref);
   return docSnap.data();
 }
+
+// --- Update actions (edición en validación) ---
+
+export async function updateNoticia(
+  id: string,
+  data: UpdateNoticiaFields,
+  approve?: boolean
+) {
+  try {
+    const ref = doc(db, "noticias", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updateVideo(
+  id: string,
+  data: UpdateVideoFields,
+  approve?: boolean
+) {
+  try {
+    const ref = doc(db, "videos", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updateGaleria(
+  id: string,
+  data: UpdateGaleriaFields,
+  approve?: boolean
+) {
+  try {
+    const ref = doc(db, "galerias", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updatePodcast(
+  id: string,
+  data: UpdatePodcastFields,
+  approve?: boolean
+) {
+  try {
+    const ref = doc(db, "podcasts", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}

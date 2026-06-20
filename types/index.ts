@@ -133,3 +133,36 @@ interface EquipoDoc {
 interface ContactoDoc {
   metodos: ContactMethod[]
 }
+
+// --- Update field interfaces (edición en validación) ---
+
+interface UpdateNoticiaFields {
+  title: string
+  description: string
+  content: string
+  imageUrl?: string
+}
+
+interface UpdateVideoFields {
+  title: string
+  description: string
+  url: string
+}
+
+interface UpdateGaleriaFields {
+  title: string
+  description: string
+}
+
+interface UpdatePodcastFields {
+  title: string
+  description: string
+  url: string
+}
+
+interface EditDialogProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  item: PublicacionBase
+  onSaved: (approved: boolean) => void
+}

@@ -22,9 +22,11 @@ import { ListOrdered, List } from "lucide-react";
 export default function Editor({
   onChange,
   reset,
+  initialContent,
 }: {
   onChange: (html: string) => void;
   reset?: boolean;
+  initialContent?: string;
 }) {
   const editor = useEditor({
     extensions: [
@@ -71,6 +73,13 @@ export default function Editor({
       editor.chain().focus().run();
     }
   }, [reset, editor]);
+
+  // Para cargar contenido inicial (edición)
+  useEffect(() => {
+    if (editor && initialContent !== undefined) {
+      editor.commands.setContent(initialContent);
+    }
+  }, [editor, initialContent]);
 
   if (!editor) return null;
 
