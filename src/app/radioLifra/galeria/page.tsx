@@ -54,7 +54,7 @@ const AgregarGaleria = () => {
             {loading ? (
               <>Cargando publicaciones...</>
             ) : (
-              <>No hay galerias disponibles</>
+              <>No hay galerías disponibles</>
             )}
           </p>
         </div>

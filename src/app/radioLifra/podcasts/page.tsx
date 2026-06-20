@@ -55,7 +55,7 @@ const PodcastPage = () => {
             {loading ? (
               <>Cargando publicaciones...</>
             ) : (
-              <>No hay galerias disponibles</>
+              <>No hay podcasts disponibles</>
             )}
           </p>
         </div>
