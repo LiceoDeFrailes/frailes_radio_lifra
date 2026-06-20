@@ -187,14 +187,25 @@ export default function SobreNosotros() {
                 ))}
               </div>
 
-              <Image
-                src={fotoGrupalUrl || "/images/equipo-grupal.jpg"}
-                alt="Foto grupal del equipo directivo del Liceo de Frailes"
-                width={800}
-                height={450}
-                className="rounded-lg shadow-md mx-auto mt-12"
-                priority
-              />
+              <div className="mt-16 max-w-4xl mx-auto">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                    Conoce a Nuestro Equipo
+                  </h3>
+                  <p className="text-slate-600">
+                    Profesionales dedicados a la educación y el bienestar de nuestra comunidad estudiantil
+                  </p>
+                </div>
+                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                  <Image
+                    src={fotoGrupalUrl || "/images/equipo-grupal.jpg"}
+                    alt="Foto grupal del equipo directivo del Liceo de Frailes"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </div>
             </>
           )}
         </motion.div>
