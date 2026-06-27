@@ -23,47 +23,78 @@ export default function PodcastEditDialog({
   open,
   onOpenChange,
   onSaved,
-}: EditDialogProps) {
-  const [title, setTitle] = useState(item?.title ?? "");
+  mode = "admin",
+}: EditDialogProps) {  const [title, setTitle] = useState(item?.title ?? "");
   const [description, setDescription] = useState(item?.description ?? "");
   const [url, setUrl] = useState(item?.url ?? "");
   const [saving, setSaving] = useState(false);
-  const [titleError, setTitleError] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (open) {
       setTitle(item?.title ?? "");
       setDescription(item?.description ?? "");
       setUrl(item?.url ?? "");
-      setTitleError("");
+      setErrors({});
     }
   }, [open, item]);
 
+  const isSpotifyURL = (url: string) => {
+    const regex =
+      /^(https?:\/\/)?(open\.spotify\.com)\/(episode|show|playlist|track)\/[A-Za-z0-9]+/;
+    return regex.test(url);
+  };
+
+  const getEmbedUrl = (url: string) => {
+    return url.replace("open.spotify.com", "open.spotify.com/embed");
+  };
+
   const validate = (): boolean => {
-    if (!title.trim()) {
-      setTitleError("El título es obligatorio");
-      return false;
+    const newErrors: Record<string, string> = {};
+    const trimmedTitle = title.trim();
+    const trimmedDesc = description.trim();
+    const trimmedUrl = url.trim();
+
+    if (!trimmedTitle) {
+      newErrors.title = "El título es obligatorio";
+    } else if (trimmedTitle.length < 3) {
+      newErrors.title = "El título debe tener al menos 3 caracteres";
+    } else if (trimmedTitle.length > 100) {
+      newErrors.title = "El título no puede exceder 100 caracteres";
     }
-    if (!url.trim()) {
-      toast.error("La URL es obligatoria");
-      return false;
+
+    if (!trimmedDesc) {
+      newErrors.description = "La descripción es obligatoria";
+    } else if (trimmedDesc.length < 10) {
+      newErrors.description = "La descripción debe tener al menos 10 caracteres";
+    } else if (trimmedDesc.length > 300) {
+      newErrors.description = "La descripción no puede exceder 300 caracteres";
     }
-    setTitleError("");
-    return true;
+
+    if (!trimmedUrl) {
+      newErrors.url = "La URL es obligatoria";
+    } else if (!isSpotifyURL(trimmedUrl)) {
+      newErrors.url = "Ingresá una URL válida de Spotify (ej: https://open.spotify.com/episode/...)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSave = async (approve: boolean) => {
     if (!validate()) return;
     setSaving(true);
+    const shouldApprove = mode === "admin" ? approve : false;
+    const embedUrl = getEmbedUrl(url.trim());
     const result = await updatePodcast(
       item.id,
-      { title: title.trim(), description: description.trim(), url: url.trim() },
-      approve
+      { title: title.trim(), description: description.trim(), url: embedUrl },
+      shouldApprove || undefined
     );
     setSaving(false);
     if (result.ok) {
-      toast.success(approve ? "Podcast aprobado" : "Cambios guardados");
-      onSaved(approve);
+      toast.success(shouldApprove ? "Podcast aprobado" : "Cambios guardados");
+      onSaved(mode === "admin" ? approve : undefined);
       onOpenChange(false);
     } else {
       toast.error("Error al guardar los cambios");
@@ -76,15 +107,17 @@ export default function PodcastEditDialog({
         <DialogHeader>
           <DialogTitle>Editar Podcast</DialogTitle>
           <DialogDescription>
-            Modificá los campos y elegí guardar o aprobar directamente.
+            {mode === "admin"
+              ? "Modifica los campos y elegi guardar o aprobar directamente."
+              : "Modifica los campos y guarda los cambios. El podcast seguira pendiente de aprobacion."}
           </DialogDescription>
         </DialogHeader>
 
         {/* Preview */}
-        {url && (
+        {url && isSpotifyURL(url) && (
           <div className="rounded-md border overflow-hidden">
             <iframe
-              src={url}
+              src={getEmbedUrl(url)}
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
               className="w-full min-h-[190px]"
@@ -98,23 +131,29 @@ export default function PodcastEditDialog({
             <Input
               id="p-title"
               value={title}
-              onChange={(e) => { setTitle(e.target.value); setTitleError(""); }}
+              onChange={(e) => { setTitle(e.target.value); if (errors.title) setErrors(prev => ({ ...prev, title: "" })); }}
               placeholder="Título del podcast"
               disabled={saving}
+              className={errors.title ? "border-destructive" : ""}
             />
-            {titleError && <p className="text-sm text-destructive">{titleError}</p>}
+            {errors.title && <p className="text-sm text-destructive">{errors.title}</p>}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="p-desc">Descripción</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="p-desc">Descripción *</Label>
+              <span className="text-xs text-muted-foreground">{description.length}/300</span>
+            </div>
             <Textarea
               id="p-desc"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => { setDescription(e.target.value); if (errors.description) setErrors(prev => ({ ...prev, description: "" })); }}
               placeholder="Breve descripción"
               rows={2}
               disabled={saving}
+              className={errors.description ? "border-destructive" : ""}
             />
+            {errors.description && <p className="text-sm text-destructive">{errors.description}</p>}
           </div>
 
           <div className="space-y-2">
@@ -122,10 +161,12 @@ export default function PodcastEditDialog({
             <Input
               id="p-url"
               value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://open.spotify.com/embed/..."
+              onChange={(e) => { setUrl(e.target.value); if (errors.url) setErrors(prev => ({ ...prev, url: "" })); }}
+              placeholder="https://open.spotify.com/episode/..."
               disabled={saving}
+              className={errors.url ? "border-destructive" : ""}
             />
+            {errors.url && <p className="text-sm text-destructive">{errors.url}</p>}
           </div>
         </div>
 
@@ -144,15 +185,17 @@ export default function PodcastEditDialog({
             {saving && <Spinner className="mr-2" />}
             Guardar Cambios
           </Button>
-          <Button
-            type="button"
-            className="bg-Dark-Green-Lifra hover:bg-Dark-Green-Lifra/90 text-white"
-            onClick={() => handleSave(true)}
-            disabled={saving}
-          >
-            {saving && <Spinner className="mr-2" />}
-            Guardar y Aprobar
-          </Button>
+          {mode === "admin" && (
+            <Button
+              type="button"
+              className="bg-Dark-Green-Lifra hover:bg-Dark-Green-Lifra/90 text-white"
+              onClick={() => handleSave(true)}
+              disabled={saving}
+            >
+              {saving && <Spinner className="mr-2" />}
+              Guardar y Aprobar
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

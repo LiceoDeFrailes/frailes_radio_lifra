@@ -21,7 +21,8 @@ import { Menu, User, LogOut } from 'lucide-react'
 import { Separator } from "@/components/ui/separator";
 import { signUserOut } from '@/lib/actions/general.actions'
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +36,15 @@ export default function HeaderRadioLifra() {
   const { user, loading } = useAuth();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (!pathname) return false;
+    if (href === "/radioLifra") {
+      return pathname === "/radioLifra" || pathname.startsWith("/radioLifra/noticias");
+    }
+    return pathname.startsWith(href);
+  };
 
   const navItems: { title: string; href: string; }[] = [
   {
@@ -116,10 +126,16 @@ const gestionItems: { title: string; href: string; }[] = [
           <NavigationMenuList>
             {navItems.map((item) => (
               <NavigationMenuItem key={item.href}>
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink
+                  asChild
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    isActive(item.href) && "text-Dark-Green-Lifra font-semibold"
+                  )}
+                >
                   <Link href={item.href}>{item.title}</Link>
                 </NavigationMenuLink>
-              </NavigationMenuItem> 
+              </NavigationMenuItem>
             ))}
 
             {user?.role === 'admin' && (
@@ -136,6 +152,20 @@ const gestionItems: { title: string; href: string; }[] = [
                     ))}
                   </ul>
                 </NavigationMenuContent>
+              </NavigationMenuItem>
+            )}
+
+            {user?.role === 'estudiante' && (
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    isActive("/radioLifra/mis-publicaciones") && "text-Dark-Green-Lifra font-semibold"
+                  )}
+                >
+                  <Link href="/radioLifra/mis-publicaciones/en-revision">Mis publicaciones</Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
             )}
           </NavigationMenuList>
@@ -157,7 +187,10 @@ const gestionItems: { title: string; href: string; }[] = [
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-lg font-medium transition-colors hover:text-primary"
+                  className={cn(
+                    "text-lg font-medium transition-colors hover:text-primary",
+                    isActive(item.href) && "text-Dark-Green-Lifra font-semibold"
+                  )}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.title}
@@ -180,6 +213,19 @@ const gestionItems: { title: string; href: string; }[] = [
                     ))}
                   </div>
                 </div>
+              )}
+
+              {user?.role === 'estudiante' && (
+                <Link
+                  href="/radioLifra/mis-publicaciones/en-revision"
+                  className={cn(
+                    "text-lg font-medium transition-colors hover:text-primary",
+                    isActive("/radioLifra/mis-publicaciones") && "text-Dark-Green-Lifra font-semibold"
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Mis publicaciones
+                </Link>
               )}
     
               {user === null ? (

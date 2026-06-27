@@ -222,6 +222,108 @@ export async function getAllPendingPublications(): Promise<PublicacionBase[]> {
   return all;
 }
 
+// --- Update actions (edición en validación) ---
+
+export async function updateNoticia(
+  id: string,
+  data: UpdateNoticiaFields,
+  approve?: boolean
+) {
+  try {
+    if (approve) {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "usuarios", currentUser.uid));
+        if (userDoc.exists() && userDoc.data().role !== "admin") {
+          return { ok: false, error: "Unauthorized" };
+        }
+      }
+    }
+    const ref = doc(db, "noticias", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updateVideo(
+  id: string,
+  data: UpdateVideoFields,
+  approve?: boolean
+) {
+  try {
+    if (approve) {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "usuarios", currentUser.uid));
+        if (userDoc.exists() && userDoc.data().role !== "admin") {
+          return { ok: false, error: "Unauthorized" };
+        }
+      }
+    }
+    const ref = doc(db, "videos", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updateGaleria(
+  id: string,
+  data: UpdateGaleriaFields,
+  approve?: boolean
+) {
+  try {
+    if (approve) {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "usuarios", currentUser.uid));
+        if (userDoc.exists() && userDoc.data().role !== "admin") {
+          return { ok: false, error: "Unauthorized" };
+        }
+      }
+    }
+    const ref = doc(db, "galerias", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updatePodcast(
+  id: string,
+  data: UpdatePodcastFields,
+  approve?: boolean
+) {
+  try {
+    if (approve) {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "usuarios", currentUser.uid));
+        if (userDoc.exists() && userDoc.data().role !== "admin") {
+          return { ok: false, error: "Unauthorized" };
+        }
+      }
+    }
+    const ref = doc(db, "podcasts", id);
+    const payload: Record<string, unknown> = { ...data };
+    if (approve) payload.state = "aprobado";
+    await updateDoc(ref, payload);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function aceptarNoticia(id: string) {
   try {
     const ref = doc(db, "noticias", id);
@@ -330,6 +432,90 @@ export async function rechazarPodcast(id: string) {
   }
 }
 
+export async function updateNoticiaImage(
+  id: string,
+  imageFile: File,
+  oldImageUrl: string
+): Promise<{ ok: true; imageUrl: string } | { ok: false; error: unknown }> {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) return { ok: false, error: "Unauthorized" };
+
+    // Upload new image
+    const imageRef = ref(
+      storage,
+      `noticias/${currentUser.uid}/${Date.now()}-${imageFile.name}`
+    );
+    await uploadBytes(imageRef, imageFile);
+    const imageUrl = await getDownloadURL(imageRef);
+
+    // Delete old image from Storage
+    if (oldImageUrl && oldImageUrl.startsWith("http")) {
+      try {
+        const base = oldImageUrl.split("/o/")[1].split("?")[0];
+        const imagePath = decodeURIComponent(base);
+        await deleteObject(ref(storage, imagePath));
+      } catch (err) {
+        console.warn("No se pudo eliminar la imagen anterior", err);
+      }
+    }
+
+    // Update Firestore doc with new imageUrl
+    await updateDoc(doc(db, "noticias", id), { imageUrl });
+
+    return { ok: true, imageUrl };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updateGaleriaImages(
+  id: string,
+  imageFiles: File[],
+  oldImageUrls: string[]
+): Promise<{ ok: true; imageUrls: string[] } | { ok: false; error: unknown }> {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) return { ok: false, error: "Unauthorized" };
+
+    const imageUrls: string[] = [];
+
+    // Upload each new image
+    for (const file of Array.from(imageFiles)) {
+      const imgRef = ref(
+        storage,
+        `galerias/${currentUser.uid}/${Date.now()}-${file.name}`
+      );
+      await uploadBytes(imgRef, file);
+      const url = await getDownloadURL(imgRef);
+      imageUrls.push(url);
+    }
+
+    // Delete all old images from Storage
+    if (Array.isArray(oldImageUrls) && oldImageUrls.length > 0) {
+      for (const path of oldImageUrls) {
+        try {
+          let imagePath = path;
+          if (path.startsWith("http")) {
+            const base = path.split("/o/")[1].split("?")[0];
+            imagePath = decodeURIComponent(base);
+          }
+          await deleteObject(ref(storage, imagePath));
+        } catch (err) {
+          console.warn("No se pudo eliminar la imagen anterior", err);
+        }
+      }
+    }
+
+    // Update Firestore doc with new imageUrls
+    await updateDoc(doc(db, "galerias", id), { imageUrls });
+
+    return { ok: true, imageUrls };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function getNoticias() {
   const q = await query(
     collection(db, "noticias"),
@@ -388,68 +574,31 @@ export async function getVideoById(id: string) {
   return docSnap.data();
 }
 
-// --- Update actions (edición en validación) ---
+// --- Student publications query ---
 
-export async function updateNoticia(
-  id: string,
-  data: UpdateNoticiaFields,
-  approve?: boolean
-) {
-  try {
-    const ref = doc(db, "noticias", id);
-    const payload: Record<string, unknown> = { ...data };
-    if (approve) payload.state = "aprobado";
-    await updateDoc(ref, payload);
-    return { ok: true };
-  } catch (error) {
-    return { ok: false, error };
-  }
-}
+const COLLECTION_MAP: Record<string, string> = {
+  noticia: "noticias",
+  video: "videos",
+  galeria: "galerias",
+  podcast: "podcasts",
+};
 
-export async function updateVideo(
-  id: string,
-  data: UpdateVideoFields,
-  approve?: boolean
-) {
-  try {
-    const ref = doc(db, "videos", id);
-    const payload: Record<string, unknown> = { ...data };
-    if (approve) payload.state = "aprobado";
-    await updateDoc(ref, payload);
-    return { ok: true };
-  } catch (error) {
-    return { ok: false, error };
-  }
-}
-
-export async function updateGaleria(
-  id: string,
-  data: UpdateGaleriaFields,
-  approve?: boolean
-) {
-  try {
-    const ref = doc(db, "galerias", id);
-    const payload: Record<string, unknown> = { ...data };
-    if (approve) payload.state = "aprobado";
-    await updateDoc(ref, payload);
-    return { ok: true };
-  } catch (error) {
-    return { ok: false, error };
-  }
-}
-
-export async function updatePodcast(
-  id: string,
-  data: UpdatePodcastFields,
-  approve?: boolean
-) {
-  try {
-    const ref = doc(db, "podcasts", id);
-    const payload: Record<string, unknown> = { ...data };
-    if (approve) payload.state = "aprobado";
-    await updateDoc(ref, payload);
-    return { ok: true };
-  } catch (error) {
-    return { ok: false, error };
-  }
+export async function getStudentPublications(
+  uid: string,
+  state: "pendiente" | "aprobado",
+  type: "noticia" | "video" | "galeria" | "podcast"
+): Promise<PublicacionBase[]> {
+  const collectionName = COLLECTION_MAP[type];
+  const q = query(
+    collection(db, collectionName),
+    where("idAuthor", "==", uid),
+    where("state", "==", state),
+    orderBy("createdAt", "desc")
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((d) => ({
+    id: d.id,
+    tipo: type,
+    ...d.data(),
+  })) as PublicacionBase[];
 }

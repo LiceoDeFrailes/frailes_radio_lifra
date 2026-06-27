@@ -12,8 +12,7 @@ const VideoCard = ({
   item,
   validationMode = false,
   isAdmin = false,
-}: any) => {
-  const [visible, setVisible] = useState(true);
+}: any) => {  const [visible, setVisible] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleAceptar = async () => {

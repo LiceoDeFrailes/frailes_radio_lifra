@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { CirclePlus } from "lucide-react";
+import { PenLine } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import NoticiaCard from "@/components/NoticiaCard";
 import { useEffect, useState } from "react";
@@ -36,7 +37,10 @@ const AgregarNoticia = () => {
     <div className="flex flex-col gap-3">
       {user?.role === "estudiante" ? (
         <Link href="/radioLifra/noticias/agregarNoticia">
-          <CirclePlus className="hover:text-Light-Green-Lifra"/>
+          <Button className="w-fit gap-2 bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white">
+            <PenLine className="size-4" />
+            Publicar una noticia
+          </Button>
         </Link>
       ) : null}
 
