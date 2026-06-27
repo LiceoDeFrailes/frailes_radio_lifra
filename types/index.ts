@@ -152,6 +152,7 @@ interface UpdateVideoFields {
 interface UpdateGaleriaFields {
   title: string
   description: string
+  imageUrls?: string[]
 }
 
 interface UpdatePodcastFields {
@@ -164,5 +165,6 @@ interface EditDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: PublicacionBase
-  onSaved: (approved: boolean) => void
+  onSaved: (approved?: boolean) => void
+  mode?: "admin" | "student"
 }

@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { CirclePlus } from "lucide-react";
+import { PenLine } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { getVideos } from "@/lib/actions/general.actions";
@@ -36,7 +37,10 @@ const AgregarVideos = () => {
     <div className="flex flex-col gap-3">
       {user?.role === "estudiante" ? (
         <Link href="/radioLifra/videos/agregarVideos">
-          <CirclePlus className="hover:text-Light-Green-Lifra"/>
+          <Button className="w-fit gap-2 bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white">
+            <PenLine className="size-4" />
+            Publicar un video
+          </Button>
         </Link>
       ) : null}
 

@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { CirclePlus } from "lucide-react";
+import { PenLine } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import GaleriaCard from "@/components/GaleriaCard";
 import { useEffect, useState } from "react";
@@ -35,7 +36,10 @@ const AgregarGaleria = () => {
     <div className="flex flex-col gap-3">
       {user?.role === "estudiante" ? (
         <Link href="/radioLifra/galeria/agregarGaleria">
-          <CirclePlus className="hover:text-Light-Green-Lifra" />
+          <Button className="w-fit gap-2 bg-Light-Green-Lifra hover:bg-Dark-Green-Lifra text-white">
+            <PenLine className="size-4" />
+            Publicar una galeria
+          </Button>
         </Link>
       ) : null}
       {galerias.length > 0 ? (
